@@ -28,6 +28,13 @@ type User {
   dateJoined: Date
 }
 
+# Profile of someone who has been associated with shows
+type Person {
+  id: Int!
+  firstName: String
+  lastName: String
+}
+
 # the schema allows the following query:
 type Query {
   posts: [Post]
