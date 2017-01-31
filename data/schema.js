@@ -15,8 +15,24 @@ scalar PhoneNumber # TODO: implement
 scalar Email # TODO: implement
 scalar Password # TODO: Should we actually store the password as something that is queryable?
 
+enum Genre {
+  COMEDY
+  DRAMA
+  INDIE
+}
+
+enum Language {
+  ENGLISH
+  JAPANESE
+}
+
+enum MediaType {
+  SHOW
+  MOVIE
+}
+
 type User {
-  id: Int!
+  id: Int! # TODO: Should we use the ID type instead?
   username: String
   firstName: String
   lastName: String
@@ -33,6 +49,29 @@ type Person {
   id: Int!
   firstName: String
   lastName: String
+}
+
+type Media {
+  imdb_id: String
+  title: String
+  released: String
+  plot: String
+  full_plot: String
+  genres: [Genre]
+  directors: [Person]
+  writers: [Person]
+  banner: String
+  poster: String
+  year: Int
+  rating: Rating # TODO: Implement
+  runtime: Float
+  cast: [Person]
+  metacritic: Float
+  imdb_rating: Float
+  imdb_votes: Int
+  language: [Language]
+  last_updated: Date
+  type: MediaType
 }
 
 # the schema allows the following query:
