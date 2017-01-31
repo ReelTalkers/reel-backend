@@ -42,6 +42,7 @@ type User {
   isActive: Boolean!
   lastLogin: Date
   dateJoined: Date
+  private: Boolean
 }
 
 # Profile of someone who has been associated with shows
@@ -72,6 +73,12 @@ type Media {
   language: [Language]
   last_updated: Date
   type: MediaType
+}
+
+type Review {
+  score: Rating
+  media: Media
+  user: User
 }
 
 # the schema allows the following query:
