@@ -10,11 +10,16 @@ type Author {
   posts: [Post] # the list of Posts by this author
 }
 
-type Post {
+type User {
   id: Int!
-  title: String
-  author: Author
-  votes: Int
+  username: String
+  firstName: String
+  lastName: String
+  phone: String # TODO: maybe should make phone type
+  email: String # TODO: maybe should make email type
+  isActive: Boolean!
+  lastLogin: Date
+  dateJoined: Date
 }
 
 # the schema allows the following query:
