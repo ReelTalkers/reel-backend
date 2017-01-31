@@ -11,6 +11,8 @@ type Author {
 }
 
 scalar Date
+scalar PhoneNumber
+scalar Email
 
 type User {
   id: Int!
