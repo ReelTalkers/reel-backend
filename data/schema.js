@@ -17,8 +17,8 @@ type User {
   username: String
   firstName: String
   lastName: String
-  phone: String # TODO: maybe should make phone type
-  email: String # TODO: maybe should make email type
+  phone: PhoneNumber # TODO: maybe should make phone type
+  email: Email # TODO: maybe should make email type
   isActive: Boolean!
   lastLogin: Date
   dateJoined: Date
