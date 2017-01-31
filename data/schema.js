@@ -11,16 +11,18 @@ type Author {
 }
 
 scalar Date
-scalar PhoneNumber
-scalar Email
+scalar PhoneNumber # TODO: implement
+scalar Email # TODO: implement
+scalar Password # TODO: Should we actually store the password as something that is queryable?
 
 type User {
   id: Int!
   username: String
   firstName: String
   lastName: String
-  phone: PhoneNumber # TODO: implement
-  email: Email # TODO: implement
+  password: Password
+  phone: PhoneNumber
+  email: Email
   isActive: Boolean!
   lastLogin: Date
   dateJoined: Date
