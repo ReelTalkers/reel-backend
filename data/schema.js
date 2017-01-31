@@ -10,6 +10,8 @@ type Author {
   posts: [Post] # the list of Posts by this author
 }
 
+scalar Date
+
 type User {
   id: Int!
   username: String
