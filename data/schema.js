@@ -26,7 +26,7 @@ enum MediaType {
 
 type User {
   id: ID! # TODO: Should we use the ID type instead?
-  username: String
+  userName: String
   firstName: String
   lastName: String
   password: Password
