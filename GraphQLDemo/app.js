@@ -27,8 +27,8 @@ var users = {
 var userType = new GraphQLObjectType({
   name: 'User',
   fields: {
-    count: { GraphQLInt },
-    name: { GraphQLString }
+    count: { type: GraphQLInt },
+    name: { type: GraphQLString },
   }
 });
 
@@ -38,9 +38,9 @@ var queryType = new GraphQLObjectType({
     user: {
       type: userType,
       args: {
-        name: { GraphQLString }
+        name: { type: GraphQLString },
       },
-      resolve: function(_, {name}) {
+      resolve: function(_, { name }) {
         return users[name];
       }
     }
@@ -57,39 +57,24 @@ var queryType = new GraphQLObjectType({
 
 */
 let myGraphQLSchema = new GraphQLSchema({
-  query: new GraphQLObjectType({
-    name: 'RootQueryType',
-    fields: {
-      count: {
-        type: GraphQLInt,
-        resolve: function() {
-          return count;
-        }
-      },
-      author: {
-        type: GraphQLString,
-        resolve: function() {
-          return "Mitchell Baller"
-        }
-      }
-    }
-  }),
+  query: queryType,
   /* You can call this mutation in the GraphIQL explorer with:
 
   *  mutation {
   *      updateCount
   *  }
 
-  */
+*/
+
   mutation: new GraphQLObjectType({
     name: 'RootMutationType',
     fields: {
-      args:  {
-        name: { GraphQLString },
-      },
       updateCount: {
         type: GraphQLInt,
         description: 'Updates the count',
+        args:  {
+          name: { type: GraphQLString },
+        },
         resolve: function(_, { name }) {
           users[name].count +=1;
           return users[name].count;
