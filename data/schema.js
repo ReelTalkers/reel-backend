@@ -32,7 +32,7 @@ enum MediaType {
 }
 
 type User {
-  id: Int! # TODO: Should we use the ID type instead?
+  id: ID! # TODO: Should we use the ID type instead?
   username: String
   firstName: String
   lastName: String
@@ -47,12 +47,13 @@ type User {
 
 # Profile of someone who has been associated with shows
 type Person {
-  id: Int!
+  id: ID!
   firstName: String
   lastName: String
 }
 
 type Media {
+  id: ID!
   imdb_id: String
   title: String
   released: String
@@ -76,6 +77,7 @@ type Media {
 }
 
 type Review {
+  id: ID!
   score: Rating
   media: Media
   user: User
