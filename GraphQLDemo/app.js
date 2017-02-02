@@ -32,6 +32,18 @@ var userType = new GraphQLObjectType({
   }
 });
 
+/* You can run this query in the GraphIQL explorer with any combination
+    of the following fields:
+
+*  {
+*      user(name:"Galen") {
+*        count,
+*        name
+*      }
+*  }
+
+*/
+
 var queryType = new GraphQLObjectType({
   name: 'Query',
   fields: {
@@ -47,41 +59,34 @@ var queryType = new GraphQLObjectType({
   }
 });
 
-/* You can run this query in the GraphIQL explorer with any combination
-    of the following fields:
+/* You can call this mutation in the GraphIQL explorer with:
 
-*  {
-*      count
-*      author
+*  mutation {
+*      updateCount(name:"Mitchell")
 *  }
 
 */
+
+var mutationType = new GraphQLObjectType({
+  name: 'RootMutationType',
+  fields: {
+    updateCount: {
+      type: GraphQLInt,
+      description: 'Updates the count',
+      args:  {
+        name: { type: GraphQLString },
+      },
+      resolve: function(_, { name }) {
+        users[name].count +=1;
+        return users[name].count;
+      }
+    },
+  }
+})
+
 let myGraphQLSchema = new GraphQLSchema({
   query: queryType,
-  /* You can call this mutation in the GraphIQL explorer with:
-
-  *  mutation {
-  *      updateCount
-  *  }
-
-*/
-
-  mutation: new GraphQLObjectType({
-    name: 'RootMutationType',
-    fields: {
-      updateCount: {
-        type: GraphQLInt,
-        description: 'Updates the count',
-        args:  {
-          name: { type: GraphQLString },
-        },
-        resolve: function(_, { name }) {
-          users[name].count +=1;
-          return users[name].count;
-        }
-      }
-    }
-  })
+  mutation: mutationType
 })
 
 // A response to a simple root level get request
