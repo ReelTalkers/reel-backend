@@ -9,32 +9,12 @@ import {
   GraphQLScalarType
 } from 'graphql';
 var types = require('./types.js');
+var data = require('./data.js');
 
 const PORT = 3000;
 var app = express();
 
-let count = 0;
-
-var users = {
-  'Galen' : {
-    name: 'Galen',
-    count: 777,
-    birthDate: {
-      day: 17,
-      month: 10,
-      year: 1994
-    },
-  },
-  'Mitchell' : {
-    name: 'Mitchell',
-    count: 0,
-    birthDate: {
-      day: "Hi",
-      month: 7,
-      year: 1995
-    },
-  },
-}
+var users = data.users;
 
 var userType = new GraphQLObjectType({
   name: 'User',
