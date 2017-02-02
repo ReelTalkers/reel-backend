@@ -84,12 +84,15 @@ let myGraphQLSchema = new GraphQLSchema({
   mutation: new GraphQLObjectType({
     name: 'RootMutationType',
     fields: {
+      args:  {
+        name: { GraphQLString },
+      },
       updateCount: {
         type: GraphQLInt,
         description: 'Updates the count',
-        resolve: function() {
-          count +=1;
-          return count;
+        resolve: function(_, { name }) {
+          users[name].count +=1;
+          return users[name].count;
         }
       }
     }
