@@ -94,6 +94,12 @@ type Mutation {
   upvotePost (
     postId: Int!
   ): Post
+  createUser (
+    username: String
+    firstName: String
+    lastName: String
+    password: Password
+  ): User
 }
 
 # we need to tell the server which types represent the root query
