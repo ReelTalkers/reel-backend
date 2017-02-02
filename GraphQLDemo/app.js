@@ -5,7 +5,8 @@ import {
   GraphQLObjectType,
   GraphQLSchema,
   GraphQLInt,
-  GraphQLString
+  GraphQLString,
+  GraphQLScalarType
 } from 'graphql';
 
 const PORT = 3000;
@@ -17,18 +18,38 @@ var users = {
   'Galen' : {
     name: 'Galen',
     count: 777,
+    birthDate: {
+      day: 17,
+      month: 10,
+      year: 1994
+    },
   },
   'Mitchell' : {
     name: 'Mitchell',
     count: 0,
+    birthDate: {
+      day: 7,
+      month: 7,
+      year: 1995
+    },
   },
 }
+
+var serializeDate = function(value) {
+  return value.month + '/' + value.day + "/" + value.year;
+}
+
+var date = new GraphQLScalarType({
+  name: "Date",
+  serialize: serializeDate
+})
 
 var userType = new GraphQLObjectType({
   name: 'User',
   fields: {
     count: { type: GraphQLInt },
     name: { type: GraphQLString },
+    birthDate: { type: date },
   }
 });
 
