@@ -85,7 +85,8 @@ type Review {
 
 # the schema allows the following query:
 type Query {
-  posts: [Post]
+  media: [Media]
+  users: [User]
 }
 
 # this schema allows the following mutation:
