@@ -28,7 +28,7 @@ var users = {
     name: 'Mitchell',
     count: 0,
     birthDate: {
-      day: 7,
+      day: "Hi",
       month: 7,
       year: 1995
     },
@@ -39,9 +39,26 @@ var serializeDate = function(value) {
   return value.month + '/' + value.day + "/" + value.year;
 }
 
+var parseDate = function(value) {
+  var date = {
+    day: 0,
+    month: 0,
+    year: 0,
+  }
+  if (parseInt(value.day) && parseInt(value.month) && parseInt(value.year)) {
+    date.day = parseInt(value.day)
+    date.month = parseInt(value.month)
+    date.year = parseInt(value.year)
+
+    return date
+  } else {
+    return null
+  }
+}
+
 var date = new GraphQLScalarType({
   name: "Date",
-  serialize: serializeDate
+  serialize: serializeDate,
 })
 
 var userType = new GraphQLObjectType({
@@ -102,6 +119,20 @@ var mutationType = new GraphQLObjectType({
         return users[name].count;
       }
     },
+    updateBirthDate: {
+      type: date,
+      description: 'Updates a users birthdate',
+      args: {
+        name: { type: GraphQLString },
+        newDay: { type: GraphQLInt},
+        newMonth: { type: GraphQLInt },
+        newYear: { type: GraphQLInt },
+      },
+      resolve: function(_, { name, newDay, newMonth, newYear }) {
+        users[name].birthDate = { day: newDay, month: newMonth, year: newYear }
+        return users[name].birthDate
+      },
+    }
   }
 })
 
