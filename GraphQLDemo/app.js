@@ -8,6 +8,7 @@ import {
   GraphQLString,
   GraphQLScalarType
 } from 'graphql';
+var types = require('./types.js');
 
 const PORT = 3000;
 var app = express();
@@ -35,38 +36,12 @@ var users = {
   },
 }
 
-var serializeDate = function(value) {
-  return value.month + '/' + value.day + "/" + value.year;
-}
-
-var parseDate = function(value) {
-  var date = {
-    day: 0,
-    month: 0,
-    year: 0,
-  }
-  if (parseInt(value.day) && parseInt(value.month) && parseInt(value.year)) {
-    date.day = parseInt(value.day)
-    date.month = parseInt(value.month)
-    date.year = parseInt(value.year)
-
-    return date
-  } else {
-    return null
-  }
-}
-
-var date = new GraphQLScalarType({
-  name: "Date",
-  serialize: serializeDate,
-})
-
 var userType = new GraphQLObjectType({
   name: 'User',
   fields: {
     count: { type: GraphQLInt },
     name: { type: GraphQLString },
-    birthDate: { type: date },
+    birthDate: { type: types.date },
   }
 });
 
@@ -120,7 +95,7 @@ var mutationType = new GraphQLObjectType({
       }
     },
     updateBirthDate: {
-      type: date,
+      type: types.date,
       description: 'Updates a users birthdate',
       args: {
         name: { type: GraphQLString },
