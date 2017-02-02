@@ -13,6 +13,40 @@ var app = express();
 
 let count = 0;
 
+var users = {
+  'Galen' : {
+    name: 'Galen',
+    count: 777,
+  },
+  'Mitchell' : {
+    name: 'Mitchell',
+    count: 0,
+  },
+}
+
+var userType = new GraphQLObjectType({
+  name: 'User',
+  fields: {
+    count: { GraphQLInt },
+    name: { GraphQLString }
+  }
+});
+
+var queryType = new GraphQLObjectType({
+  name: 'Query',
+  fields: {
+    user: {
+      type: userType,
+      args: {
+        name: { GraphQLString }
+      },
+      resolve: function(_, {name}) {
+        return users[name];
+      }
+    }
+  }
+});
+
 /* You can run this query in the GraphIQL explorer with any combination
     of the following fields:
 
