@@ -1,7 +1,14 @@
+import { GraphQLScalarType } from 'graphql';
+import { User } from './connectors';
+
 const resolveFunctions = {
   Query: {
-    posts() {
-      return posts;
+    user(_, { userName }) {
+      let where = { userName};
+      return User.find({ where });
+    },
+    users() {
+      return User.findAll();
     },
   },
   Mutation: {
