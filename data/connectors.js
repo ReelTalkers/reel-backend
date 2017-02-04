@@ -3,7 +3,7 @@ import _ from 'lodash';
 
 const db = new Sequelize('database', null, null, {
   dialect: 'sqlite',
-  storage: './databse.sqlite'
+  storage: './database.sqlite'
 });
 
 const User = db.define('user', {
