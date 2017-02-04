@@ -4,91 +4,90 @@ import resolvers from './resolvers';
 
 const schema = `
 scalar Date
-scalar PhoneNumber # TODO: implement
-scalar Email # TODO: implement
-scalar Password # TODO: Should we actually store the password as something that is queryable?
-
-enum Genre {
-  COMEDY
-  DRAMA
-  INDIE
-}
-
-enum Language {
-  ENGLISH
-  JAPANESE
-}
-
-enum MediaType {
-  SHOW
-  MOVIE
-}
+# scalar PhoneNumber # TODO: implement
+# scalar Email # TODO: implement
+# scalar Password # TODO: Should we actually store the password as something that is queryable?
+#
+# enum Genre {
+#   COMEDY
+#   DRAMA
+#   INDIE
+# }
+#
+# enum Language {
+#   ENGLISH
+#   JAPANESE
+# }
+#
+# enum MediaType {
+#   SHOW
+#   MOVIE
+# }
 
 type User {
-  id: ID! # TODO: Should we use the ID type instead?
+  id: Int! # TODO: Should we use the ID type instead?
   userName: String
   firstName: String
   lastName: String
-  password: Password
-  phone: PhoneNumber
-  email: Email
-  isActive: Boolean!
-  lastLogin: Date
-  dateJoined: Date
-  private: Boolean
+  # password: Password
+  # phone: PhoneNumber
+  # email: Email
+  # isActive: Boolean!
+  # lastLogin: Date
+  # dateJoined: Date
+  # private: Boolean
 }
 
-# Profile of someone who has been associated with shows
-type Person {
-  id: ID!
-  firstName: String
-  lastName: String
-}
-
-type Media {
-  id: ID!
-  imdb_id: String
-  title: String
-  released: String
-  plot: String
-  full_plot: String
-  genres: [Genre]
-  directors: [Person]
-  writers: [Person]
-  banner: String
-  poster: String
-  year: Int
-  rating: Rating # TODO: Implement
-  runtime: Float
-  cast: [Person]
-  metacritic: Float
-  imdb_rating: Float
-  imdb_votes: Int
-  language: [Language]
-  last_updated: Date
-  type: MediaType
-}
-
-type Review {
-  id: ID!
-  score: Rating
-  media: Media
-  user: User
-}
+# # Profile of someone who has been associated with shows
+# type Person {
+#   id: ID!
+#   firstName: String
+#   lastName: String
+# }
+#
+# type Media {
+#   id: ID!
+#   imdb_id: String
+#   title: String
+#   released: String
+#   plot: String
+#   full_plot: String
+#   genres: [Genre]
+#   directors: [Person]
+#   writers: [Person]
+#   banner: String
+#   poster: String
+#   year: Int
+#   rating: Rating # TODO: Implement
+#   runtime: Float
+#   cast: [Person]
+#   metacritic: Float
+#   imdb_rating: Float
+#   imdb_votes: Int
+#   language: [Language]
+#   last_updated: Date
+#   type: MediaType
+# }
+#
+# type Review {
+#   id: ID!
+#   score: Rating
+#   media: Media
+#   user: User
+# }
 
 # the schema allows the following query:
 type Query {
-  media: [Media]
+  user(userName: String): User
   users: [User]
 }
 
 # this schema allows the following mutation:
 type Mutation {
   createUser (
-    username: String
+    userName: String
     firstName: String
     lastName: String
-    password: Password
   ): User
 }
 
