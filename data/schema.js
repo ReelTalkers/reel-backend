@@ -34,7 +34,7 @@ type User {
   # email: Email
   # isActive: Boolean!
   # lastLogin: Date
-  # dateJoined: Date
+  dateJoined: Date
   # private: Boolean
 }
 

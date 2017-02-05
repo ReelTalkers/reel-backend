@@ -17,6 +17,9 @@ const User = db.define('user', {
   lastName: {
     type: Sequelize.STRING,
   },
+  dateJoined: {
+    type: Sequelize.DATE,
+  }
 });
 
 const Person = db.define('person', {
@@ -34,7 +37,8 @@ User.sync({ force: true }).then(() => {
     return User.create({
       userName: casual.username,
       firstName: casual.first_name,
-      lastName: casual.last_name
+      lastName: casual.last_name,
+      dateJoined: casual.date('YYYY-MM-DD HH:mm:ss')
     });
   });
 });
