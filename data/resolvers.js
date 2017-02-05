@@ -23,7 +23,7 @@ const resolveFunctions = {
   },
   Mutation: {
     createUser(_, args) {
-      // add date joined as now
+      // default dateJoined must be in resolver because it must be run every time
       args.dateJoined = new Date();
       return User.create(args);
     }
