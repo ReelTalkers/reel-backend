@@ -19,6 +19,7 @@ const User = db.define('user', {
   },
 });
 
+casual.seed(123);
 db.sync({ force: true }).then(() => {
   _.times(2, () => {
     return User.create({
