@@ -3,7 +3,6 @@ import { makeExecutableSchema } from 'graphql-tools';
 import resolvers from './resolvers';
 
 const schema = `
-scalar Date
 # scalar PhoneNumber # TODO: implement
 # scalar Email # TODO: implement
 # scalar Password # TODO: Should we actually store the password as something that is queryable?
@@ -23,6 +22,11 @@ scalar Date
 #   SHOW
 #   MOVIE
 # }
+scalar GraphQLEmail
+scalar GraphQLURL
+scalar GraphQLDateTime
+scalar GraphQLLimitedString
+scalar GraphQLPassword
 
 type User {
   id: Int! # TODO: Should we use the ID type instead?
@@ -34,7 +38,7 @@ type User {
   # email: Email
   # isActive: Boolean!
   # lastLogin: Date
-  dateJoined: Date
+  dateJoined: GraphQLDateTime
   # private: Boolean
 }
 
