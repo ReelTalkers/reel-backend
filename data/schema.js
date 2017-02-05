@@ -39,11 +39,11 @@ type User {
 }
 
 # # Profile of someone who has been associated with shows
-# type Person {
-#   id: ID!
-#   firstName: String
-#   lastName: String
-# }
+type Person {
+  id: ID!
+  firstName: String
+  lastName: String
+}
 #
 # type Media {
 #   id: ID!
@@ -80,6 +80,7 @@ type User {
 type Query {
   user(userName: String): User
   users: [User]
+  people: [Person]
 }
 
 # this schema allows the following mutation:

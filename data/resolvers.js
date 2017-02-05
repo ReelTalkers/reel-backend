@@ -1,5 +1,5 @@
 import { GraphQLScalarType } from 'graphql';
-import { User } from './connectors';
+import { User, Person } from './connectors';
 
 const resolveFunctions = {
   Query: {
@@ -10,6 +10,9 @@ const resolveFunctions = {
     users() {
       return User.findAll();
     },
+    people() {
+      return Person.findAll();
+    }
   },
   Mutation: {
     createUser(_, args) {

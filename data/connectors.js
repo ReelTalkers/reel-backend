@@ -19,8 +19,17 @@ const User = db.define('user', {
   },
 });
 
+const Person = db.define('person', {
+  firstName: {
+    type: Sequelize.STRING,
+  },
+  lastName: {
+    type: Sequelize.STRING,
+  },
+});
+
 casual.seed(123);
-db.sync({ force: true }).then(() => {
+User.sync({ force: true }).then(() => {
   _.times(2, () => {
     return User.create({
       userName: casual.username,
@@ -30,4 +39,13 @@ db.sync({ force: true }).then(() => {
   });
 });
 
-export { User };
+Person.sync({ force: true }).then(() => {
+  _.times(2, () => {
+    return Person.create({
+      firstName: casual.first_name,
+      lastName: casual.last_name
+    });
+  });
+});
+
+export { User, Person };
