@@ -23,6 +23,8 @@ const resolveFunctions = {
   },
   Mutation: {
     createUser(_, args) {
+      // add date joined as now
+      args.dateJoined = new Date();
       return User.create(args);
     }
   },
