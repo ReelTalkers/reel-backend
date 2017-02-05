@@ -1,4 +1,5 @@
 import Sequelize from 'sequelize';
+import casual from 'casual';
 import _ from 'lodash';
 
 const db = new Sequelize('database', null, null, {
@@ -18,12 +19,13 @@ const User = db.define('user', {
   },
 });
 
-User.sync({force: true}).then(function () {
-  // Table created
-  return User.create({
-    userName: 'johncock',
-    firstName: 'John',
-    lastName: 'Hancock'
+db.sync({ force: true }).then(() => {
+  _.times(2, () => {
+    return User.create({
+      userName: casual.username,
+      firstName: casual.first_name,
+      lastName: casual.last_name
+    });
   });
 });
 
