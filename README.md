@@ -1,6 +1,9 @@
 #Reel Backend
 
 ##Setup
+* Install Postgress
+* Create 'reel' database with no username or password
+
 ###Mac
 ```sh
 brew install postgres # install postgres
