@@ -27,6 +27,7 @@ scalar GraphQLURL
 scalar GraphQLDateTime
 scalar GraphQLLimitedString
 scalar GraphQLPassword
+scalar GraphQLPhoneNumber
 
 type User {
   id: Int! # TODO: Should we use the ID type instead?
@@ -34,7 +35,7 @@ type User {
   firstName: String
   lastName: String
   # password: Password
-  # phone: PhoneNumber
+  phone: GraphQLPhoneNumber
   # email: Email
   # isActive: Boolean!
   # lastLogin: Date
