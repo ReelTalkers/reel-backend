@@ -34,6 +34,12 @@ const Person = db.define('person', {
   },
 });
 
+const Media = db.define('media', {
+  title: {
+    type: Sequelize.STRING
+  },
+});
+
 casual.seed(123);
 User.sync({ force: true }).then(() => {
   _.times(2, () => {
@@ -56,4 +62,12 @@ Person.sync({ force: true }).then(() => {
   });
 });
 
-export { User, Person };
+Media.sync({ force: true }).then(() => {
+  _.times(2, () => {
+    return Media.create({
+        title: casual.title
+    });
+  });
+});
+
+export { User, Person, Media };

@@ -47,10 +47,10 @@ type Person {
   lastName: String
 }
 #
-# type Media {
-#   id: ID!
+type Media {
+   id: ID!
 #   imdb_id: String
-#   title: String
+   title: String
 #   released: String
 #   plot: String
 #   full_plot: String
@@ -69,7 +69,7 @@ type Person {
 #   language: [Language]
 #   last_updated: Date
 #   type: MediaType
-# }
+ }
 #
 # type Review {
 #   id: ID!
@@ -83,6 +83,7 @@ type Query {
   user(userName: String): User
   users: [User]
   people: [Person]
+  media: [Media]
 }
 
 # this schema allows the following mutation:
