@@ -35,7 +35,7 @@ type User {
   lastName: String
   # password: Password
   # phone: PhoneNumber
-  # email: Email
+  email: GraphQLEmail
   # isActive: Boolean!
   # lastLogin: Date
   dateJoined: GraphQLDateTime
@@ -93,6 +93,7 @@ type Mutation {
     userName: String
     firstName: String
     lastName: String
+    email: String
   ): User
 }
 
