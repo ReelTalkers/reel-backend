@@ -91,6 +91,7 @@ type Mutation {
     userName: String
     firstName: String
     lastName: String
+    email: String
   ): User
 }
 

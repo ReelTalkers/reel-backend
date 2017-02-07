@@ -19,6 +19,9 @@ const User = db.define('user', {
   },
   dateJoined: {
     type: Sequelize.DATE,
+  },
+  email: {
+    type: Sequelize.STRING,
   }
 });
 
@@ -38,7 +41,8 @@ User.sync({ force: true }).then(() => {
       userName: casual.username,
       firstName: casual.first_name,
       lastName: casual.last_name,
-      dateJoined: casual.date('YYYY-MM-DD HH:mm:ss')
+      dateJoined: casual.date('YYYY-MM-DD HH:mm:ss'),
+      email: casual.email
     });
   });
 });
