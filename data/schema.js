@@ -34,8 +34,6 @@ type User {
   firstName: String
   lastName: String
   # password: Password
-  # phone: PhoneNumber
-  # email: Email
   # isActive: Boolean!
   # lastLogin: Date
   dateJoined: GraphQLDateTime
@@ -62,7 +60,7 @@ type Person {
 #   banner: String
 #   poster: String
 #   year: Int
-#   rating: Rating # TODO: Implement
+#   rating: Float # TODO: Implement
 #   runtime: Float
 #   cast: [Person]
 #   metacritic: Float
@@ -93,6 +91,7 @@ type Mutation {
     userName: String
     firstName: String
     lastName: String
+    email: String
   ): User
 }
 

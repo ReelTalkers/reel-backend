@@ -1,12 +1,15 @@
 import { GraphQLScalarType } from 'graphql';
 import { User, Person } from './connectors';
 import {
-  GraphQLEmail,
   GraphQLURL,
   GraphQLDateTime,
   GraphQLLimitedString,
   GraphQLPassword
 } from 'graphql-custom-types';
+
+var parsePhoneNumber = function(value) {
+  return value
+}
 
 const resolveFunctions = {
   Query: {
@@ -28,7 +31,6 @@ const resolveFunctions = {
       return User.create(args);
     }
   },
-  GraphQLEmail: GraphQLEmail,
   GraphQLURL: GraphQLURL,
   GraphQLDateTime: GraphQLDateTime,
   GraphQLLimitedString: GraphQLLimitedString,
