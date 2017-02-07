@@ -8,6 +8,10 @@ import {
   GraphQLPassword
 } from 'graphql-custom-types';
 
+var parsePhoneNumber = function(value) {
+  return value
+}
+
 const resolveFunctions = {
   Query: {
     user(_, { userName }) {
