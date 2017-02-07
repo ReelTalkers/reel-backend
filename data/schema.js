@@ -60,7 +60,7 @@ type Person {
 #   banner: String
 #   poster: String
 #   year: Int
-#   rating: Rating # TODO: Implement
+#   rating: Float # TODO: Implement
 #   runtime: Float
 #   cast: [Person]
 #   metacritic: Float

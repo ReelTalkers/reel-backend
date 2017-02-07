@@ -1,7 +1,6 @@
 import { GraphQLScalarType } from 'graphql';
 import { User, Person } from './connectors';
 import {
-  GraphQLEmail,
   GraphQLURL,
   GraphQLDateTime,
   GraphQLLimitedString,
@@ -32,7 +31,6 @@ const resolveFunctions = {
       return User.create(args);
     }
   },
-  GraphQLEmail: GraphQLEmail,
   GraphQLURL: GraphQLURL,
   GraphQLDateTime: GraphQLDateTime,
   GraphQLLimitedString: GraphQLLimitedString,
