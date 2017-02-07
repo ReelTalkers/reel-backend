@@ -2,9 +2,8 @@ import Sequelize from 'sequelize';
 import casual from 'casual';
 import _ from 'lodash';
 
-const db = new Sequelize('database', null, null, {
-  dialect: 'sqlite',
-  storage: './database.sqlite'
+const db = new Sequelize('reel', null, null, {
+  dialect: 'postgres',
 });
 
 const User = db.define('user', {
