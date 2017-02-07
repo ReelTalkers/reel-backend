@@ -1,15 +1,10 @@
 #Reel Backend
 
 ##Setup
-###Install Postgres
-####Mac
+###Mac
 ```sh
-brew install postgres
-```
-###Start postgres
-####Mac
-```sh
-brew services start postgres
+brew install postgres # install postgres
+brew services start postgres # start postgres
 ```
 ###Create db
 ```sh
