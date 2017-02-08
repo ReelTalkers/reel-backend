@@ -87,6 +87,7 @@ type Query {
   users: [User]
   people: [Person]
   movies: [Media]
+  search(query: String): [Media]
 }
 
 # this schema allows the following mutation:

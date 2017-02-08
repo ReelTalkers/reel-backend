@@ -25,8 +25,11 @@ const resolveFunctions = {
       return Person.findAll();
     },
     movies() {
-      return Movie.findAll()
+      return Movie.findAll();
     },
+    search(_, { query }) {
+      return Movie.search(query);
+    }
   },
   Mutation: {
     createUser(_, args) {
@@ -42,7 +45,7 @@ const resolveFunctions = {
 };
 
 var movieOptions = {
-    uri: 'http://api-public.guidebox.com/v2/movies',
+    uri: 'http://api-public.guidebox.com/v2/',
     qs: {
         api_key: 'a93c4bd3b872b34ef4a7c912af43e7eac553c0b6' // -> uri + '?api_key=xxxxx%20xxxxx'
     },
@@ -54,11 +57,20 @@ var movieOptions = {
 
 const Movie = {
   findAll() {
+    movieOptions.uri += "movies"
+    return rp(movieOptions)
+      .then((res) => {
+        return res.results;
+      });
+  },
+  search(query) {
+    movieOptions.uri += "search?type=movie&field=title&query=" + query
     return rp(movieOptions)
       .then((res) => {
         return res.results;
       });
   }
 }
+
 
 export default resolveFunctions;
