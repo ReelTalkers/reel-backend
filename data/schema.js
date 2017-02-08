@@ -29,7 +29,7 @@ scalar GraphQLLimitedString
 scalar GraphQLPassword
 
 type User {
-  id: Int! # TODO: Should we use the ID type instead?
+  id: ID!
   userName: String
   firstName: String
   lastName: String
