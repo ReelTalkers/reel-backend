@@ -65,7 +65,8 @@ Person.sync({ force: true }).then(() => {
 Media.sync({ force: true }).then(() => {
   _.times(2, () => {
     return Media.create({
-        title: casual.title
+        title: casual.title,
+        rating: casual.first_name
     });
   });
 });

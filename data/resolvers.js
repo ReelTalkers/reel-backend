@@ -6,6 +6,7 @@ import {
   GraphQLLimitedString,
   GraphQLPassword
 } from 'graphql-custom-types';
+import rp from "request-promise";
 
 var parsePhoneNumber = function(value) {
   return value
@@ -23,9 +24,9 @@ const resolveFunctions = {
     people() {
       return Person.findAll();
     },
-    media() {
-      return Media.findAll()
-    }
+    movies() {
+      return Movie.findAll()
+    },
   },
   Mutation: {
     createUser(_, args) {
@@ -39,5 +40,25 @@ const resolveFunctions = {
   GraphQLLimitedString: GraphQLLimitedString,
   GraphQLPassword: GraphQLPassword,
 };
+
+var movieOptions = {
+    uri: 'http://api-public.guidebox.com/v2/movies',
+    qs: {
+        api_key: 'a93c4bd3b872b34ef4a7c912af43e7eac553c0b6' // -> uri + '?api_key=xxxxx%20xxxxx'
+    },
+    headers: {
+        'User-Agent': 'Request-Promise'
+    },
+    json: true // Automatically parses the JSON string in the response
+};
+
+const Movie = {
+  findAll() {
+    return rp(movieOptions)
+      .then((res) => {
+        return res.results;
+      });
+  }
+}
 
 export default resolveFunctions;

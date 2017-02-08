@@ -83,7 +83,7 @@ type Query {
   user(userName: String): User
   users: [User]
   people: [Person]
-  media: [Media]
+  movies: [Media]
 }
 
 # this schema allows the following mutation:
