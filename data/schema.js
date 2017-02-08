@@ -49,16 +49,19 @@ type Person {
 #
 type Media {
    id: ID!
-#   imdb_id: String
+   imdb: String
    title: String
-#   released: String
+   poster_120x171: String
+   poster_240x342: String
+   poster_400x570: String
+   release_date: String
+   rating: String
 #   plot: String
 #   full_plot: String
 #   genres: [Genre]
 #   directors: [Person]
 #   writers: [Person]
 #   banner: String
-#   poster: String
 #   year: Int
 #   rating: Float # TODO: Implement
 #   runtime: Float
