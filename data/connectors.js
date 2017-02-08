@@ -40,6 +40,17 @@ const Media = db.define('media', {
   },
 });
 
+var movieOptions = {
+    uri: 'http://api-public.guidebox.com/v2/',
+    qs: {
+        api_key: 'a93c4bd3b872b34ef4a7c912af43e7eac553c0b6' // -> uri + '?api_key=xxxxx%20xxxxx'
+    },
+    headers: {
+        'User-Agent': 'Request-Promise'
+    },
+    json: true // Automatically parses the JSON string in the response
+};
+
 const Movie = {
   findAll() {
     movieOptions.uri += "movies"
