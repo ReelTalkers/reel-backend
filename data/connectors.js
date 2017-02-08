@@ -40,6 +40,23 @@ const Media = db.define('media', {
   },
 });
 
+const Movie = {
+  findAll() {
+    movieOptions.uri += "movies"
+    return rp(movieOptions)
+      .then((res) => {
+        return res.results;
+      });
+  },
+  search(query) {
+    movieOptions.uri += "search?type=movie&field=title&query=" + query
+    return rp(movieOptions)
+      .then((res) => {
+        return res.results;
+      });
+  }
+}
+
 casual.seed(123);
 User.sync({ force: true }).then(() => {
   _.times(2, () => {

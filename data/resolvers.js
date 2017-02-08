@@ -55,22 +55,4 @@ var movieOptions = {
     json: true // Automatically parses the JSON string in the response
 };
 
-const Movie = {
-  findAll() {
-    movieOptions.uri += "movies"
-    return rp(movieOptions)
-      .then((res) => {
-        return res.results;
-      });
-  },
-  search(query) {
-    movieOptions.uri += "search?type=movie&field=title&query=" + query
-    return rp(movieOptions)
-      .then((res) => {
-        return res.results;
-      });
-  }
-}
-
-
 export default resolveFunctions;
