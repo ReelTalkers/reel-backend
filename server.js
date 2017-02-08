@@ -22,7 +22,7 @@ var movieOptions = {
 app.use('/graphql', bodyParser.json(), graphqlExpress({ schema: schema }));
 app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql', }));
 
-# This get endpoint is used for testing purposes
+// This get endpoint is used for testing purposes
 app.get('/',
   function(req, response){
     rp(movieOptions)
