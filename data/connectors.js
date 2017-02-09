@@ -1,6 +1,7 @@
 import Sequelize from 'sequelize';
 import casual from 'casual';
 import _ from 'lodash';
+import rp from "request-promise";
 
 const db = new Sequelize('database', null, null, {
   dialect: 'sqlite',
