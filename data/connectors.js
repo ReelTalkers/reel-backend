@@ -2,6 +2,7 @@ import Sequelize from 'sequelize';
 import casual from 'casual';
 import _ from 'lodash';
 import rp from "request-promise";
+import { randomPoster, randomRating } from "./mockingUtils"
 
 const db = new Sequelize('database', null, null, {
   dialect: 'sqlite',
@@ -38,6 +39,15 @@ const Person = db.define('person', {
 const Media = db.define('media', {
   title: {
     type: Sequelize.STRING
+  },
+  rating: {
+    type: Sequelize.STRING
+  },
+  poster_400x570: {
+    type: Sequelize.STRING
+  },
+  release_date: {
+    type: Sequelize.DATE,
   },
 });
 
@@ -102,7 +112,9 @@ Media.sync({ force: true }).then(() => {
   _.times(2, () => {
     return Media.create({
         title: casual.title,
-        rating: casual.first_name
+        rating: randomRating(),
+        poster_400x570: randomPoster(),
+        release_date: casual.date(),
     });
   });
 });

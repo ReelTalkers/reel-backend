@@ -86,6 +86,7 @@ type Query {
   user(userName: String): User
   users: [User]
   people: [Person]
+  movieMocks: [Media]
   movie(id: ID): Media
   movies: [Media]
   search(query: String): [Media]
