@@ -53,15 +53,22 @@ var movieOptions = {
 };
 
 const Movie = {
+  find(id) {
+    movieOptions.uri = "http://api-public.guidebox.com/v2/movies/" + id
+    return rp(movieOptions)
+      .then((res) => {
+        return res;
+      });
+  },
   findAll() {
-    movieOptions.uri += "movies"
+    movieOptions.uri = "http://api-public.guidebox.com/v2/movies"
     return rp(movieOptions)
       .then((res) => {
         return res.results;
       });
   },
   search(query) {
-    movieOptions.uri += "search?type=movie&field=title&query=" + query
+    movieOptions.uri = "http://api-public.guidebox.com/v2/search?type=movie&field=title&query=" + query
     return rp(movieOptions)
       .then((res) => {
         return res.results;

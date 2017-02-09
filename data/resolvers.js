@@ -6,7 +6,6 @@ import {
   GraphQLLimitedString,
   GraphQLPassword
 } from 'graphql-custom-types';
-import rp from "request-promise";
 
 var parsePhoneNumber = function(value) {
   return value
@@ -23,6 +22,9 @@ const resolveFunctions = {
     },
     people() {
       return Person.findAll();
+    },
+    movie(_, { id }) {
+      return Movie.find(id);
     },
     movies() {
       return Movie.findAll();
