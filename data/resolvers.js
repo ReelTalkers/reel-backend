@@ -1,5 +1,5 @@
 import { GraphQLScalarType } from 'graphql';
-import { User, Person, Media } from './connectors';
+import { User, Person, Media, Movie } from './connectors';
 import {
   GraphQLURL,
   GraphQLDateTime,

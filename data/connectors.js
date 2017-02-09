@@ -99,4 +99,4 @@ Media.sync({ force: true }).then(() => {
   });
 });
 
-export { User, Person, Media };
+export { User, Person, Media, Movie };
