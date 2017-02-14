@@ -14,7 +14,7 @@ app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql', }));
 // This get endpoint is used for testing purposes
 app.get('/',
   function(req, response){
-    response.send("Hello World!")
+    response.send('Hello World!')
   }
 )
 

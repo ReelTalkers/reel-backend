@@ -2,6 +2,10 @@ import Sequelize from 'sequelize';
 import casual from 'casual';
 import _ from 'lodash';
 import rp from "request-promise";
+var fs = require('fs');
+
+var tmdbkey = fs.readFileSync('tmdbkey.key', 'utf8');
+var guideboxkey = fs.readFileSync('guideboxkey.key', 'utf8')
 
 const db = new Sequelize('database', null, null, {
   dialect: 'sqlite',
@@ -44,7 +48,7 @@ const Media = db.define('media', {
 var movieOptions = {
     uri: 'http://api-public.guidebox.com/v2/',
     qs: {
-        api_key: 'a93c4bd3b872b34ef4a7c912af43e7eac553c0b6' // -> uri + '?api_key=xxxxx%20xxxxx'
+        api_key: guideboxkey // -> uri + '?api_key=xxxxx%20xxxxx'
     },
     headers: {
         'User-Agent': 'Request-Promise'
