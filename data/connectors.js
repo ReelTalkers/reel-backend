@@ -39,10 +39,39 @@ const Person = db.define('person', {
   },
 });
 
+// See sequailize enums to update some of these fields
+// .ARRAY is a type if we are using PostgreSQL (deal with genres then?)
 const Media = db.define('media', {
+  backdrop_path: {
+    type: Sequelize.STRING
+  },
+  budget: {
+    type: Sequelize.INTEGER
+  },
+  original_language: {
+    type: Sequelize.STRING
+  },
+  overview: {
+    type: Sequelize.TEXT
+  },
+  poster_path: {
+    type: Sequelize.STRING
+  },
+  release_date: {
+    type: Sequelize.STRING
+  },
+  revenue: {
+    Sequelize.INTEGER
+  },
+  runtime: {
+    Sequalize.INTEGER
+  },
+  status: {
+    Sequelize.STRING
+  },
   title: {
     type: Sequelize.STRING
-  }
+  },
 });
 
 var movieOptions = {

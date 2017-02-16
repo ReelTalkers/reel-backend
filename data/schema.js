@@ -48,6 +48,7 @@ type Person {
 }
 #
 type Media {
+   backdrop_path: String
    id: ID!
    imdb: String
    title: String
