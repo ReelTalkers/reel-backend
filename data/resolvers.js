@@ -23,6 +23,9 @@ const resolveFunctions = {
     people() {
       return Person.findAll();
     },
+    media() {
+      return Media.findAll()
+    },
     movie(_, { id }) {
       return Movie.find(id);
     },

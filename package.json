@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon ./server.js --exec babel-node",
+    "cache_data":"babel-node ./data/cacheTMDb.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

@@ -15,7 +15,9 @@ var movieOptions = {
     json: true // Automatically parses the JSON string in the response
 };
 
-movieOptions.uri = "http://api-public.guidebox.com/v2/movies/" + 862
+console.log(tmdbkey);
+
+movieOptions.uri = "https://api.themoviedb.org/3/movie/" + 8844
 rp(movieOptions)
   .then((res) => {
     console.log(Media.create(res));
