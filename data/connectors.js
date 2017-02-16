@@ -42,7 +42,7 @@ const Person = db.define('person', {
 const Media = db.define('media', {
   title: {
     type: Sequelize.STRING
-  },
+  }
 });
 
 var movieOptions = {
