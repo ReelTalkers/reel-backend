@@ -49,14 +49,20 @@ type Person {
 #
 type Media {
    backdrop_path: String
+   budget: Int
    id: ID!
-   imdb: String
-   title: String
-   poster_120x171: String
-   poster_240x342: String
-   poster_400x570: String
+   imdb_id: String
+   genres: [String]
+   original_language: String
+   overview: String
+   poster_path: String
+   production_companies: [String]
    release_date: String
-   rating: String
+   runtime: Int
+   status: Boolean
+   tagline: String
+   title: String
+
 #   plot: String
 #   full_plot: String
 #   genres: [Genre]
