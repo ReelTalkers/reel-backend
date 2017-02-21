@@ -61,13 +61,13 @@ const Media = db.define('media', {
     type: Sequelize.STRING
   },
   revenue: {
-    Sequelize.INTEGER
+    type: Sequelize.INTEGER
   },
   runtime: {
-    Sequalize.INTEGER
+    type: Sequelize.INTEGER
   },
   status: {
-    Sequelize.STRING
+    type: Sequelize.STRING
   },
   title: {
     type: Sequelize.STRING
