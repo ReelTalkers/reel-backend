@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon ./server.js --exec babel-node",
-    "cache_data":"babel-node ./data/cacheTMDb.js",
+    "cache_data": "babel-node ./data/cacheTMDb.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -14,6 +14,7 @@
     "body-parser": "^1.16.0",
     "casual": "^1.5.10",
     "express": "^4.14.0",
+    "fast-csv": "^2.3.1",
     "graphql": "^0.9.0",
     "graphql-custom-types": "^0.7.1",
     "graphql-server-express": "^0.5.2",
