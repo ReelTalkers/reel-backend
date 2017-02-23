@@ -51,13 +51,13 @@ type Media {
    backdrop_path: String
    budget: Int
    id: ID!
-   imdb_id: String
    genres: [String]
    original_language: String
    overview: String
    poster_path: String
    production_companies: [String]
    release_date: String
+   revenue: Int
    runtime: Int
    status: Boolean
    tagline: String

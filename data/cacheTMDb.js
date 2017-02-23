@@ -33,6 +33,7 @@ var getMovie = function(id) {
   movieOptions.uri = "https://api.themoviedb.org/3/movie/" + id
   rp(movieOptions)
     .then((res) => {
+      res.id = res.imdb_id;
       console.log(Media.create(res));
     });
 }

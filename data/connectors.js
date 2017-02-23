@@ -48,6 +48,9 @@ const Media = db.define('media', {
   budget: {
     type: Sequelize.INTEGER
   },
+  id: {
+    type: Sequelize.STRING, primaryKey: true
+  },
   original_language: {
     type: Sequelize.STRING
   },
