@@ -77,6 +77,8 @@ type Media {
    status: Boolean
    tagline: String
    title: String
+   tmdb_average: Float
+   tmdb_votes: Int
    writers: [Person]
 
 #   plot: String

@@ -26,6 +26,8 @@ var getMovie = function(id) {
   rp(movieOptions)
     .then((res) => {
       res.id = res.imdb_id;
+      res.tmdb_average = res.vote_average;
+      res.tmdb_votes = res.vote_count;
       Media.create(res);
       console.log("Request successful for TMDb id: " + id)
     }).catch(function (err) {

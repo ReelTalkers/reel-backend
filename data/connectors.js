@@ -75,6 +75,12 @@ const Media = db.define('media', {
   title: {
     type: Sequelize.STRING
   },
+  tmdb_average: {
+    type: Sequelize.FLOAT
+  },
+  tmdb_votes: {
+    type: Sequelize.INTEGER
+  }
 });
 
 var movieOptions = {
