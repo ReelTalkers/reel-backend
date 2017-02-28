@@ -8,14 +8,6 @@ var idStream = fs.createReadStream("data/movieIDs.csv");
 
 var tmdbIDs = []
 
-csv.fromStream(idStream)
-  .on("data", function(data) {
-    tmdbIDs.push(data[0]);
-  })
-  .on("end",function() {
-    console.log(tmdbIDs);
-  });
-
 var movieOptions = {
     uri: 'https://api.themoviedb.org/3/movie/',
     qs: {
@@ -27,20 +19,24 @@ var movieOptions = {
     json: true // Automatically parses the JSON string in the response
 };
 
-var globalIndex = 0
+var globalIndex = 1
 
 var getMovie = function(id) {
   movieOptions.uri = "https://api.themoviedb.org/3/movie/" + id
   rp(movieOptions)
     .then((res) => {
       res.id = res.imdb_id;
-      console.log(Media.create(res));
+      Media.create(res);
+      console.log("Request successful for TMDb id: " + id)
+    }).catch(function (err) {
+      console.log("Requst failed for TMDb id: " + id);
     });
 }
 
 var getMovieBatch = function() {
   var index = globalIndex;
   while(index<globalIndex+40) {
+    console.log(tmdbIDs[index]);
     getMovie(tmdbIDs[index]);
     index++;
   }
@@ -49,4 +45,12 @@ var getMovieBatch = function() {
 }
 
 var timerID = setInterval(getMovieBatch, 11000);
-getMovieBatch(globalIndex)
+
+csv.fromStream(idStream)
+  .on("data", function(data) {
+    tmdbIDs.push(data[2]);
+  })
+  .on("end",function() {
+    console.log(tmdbIDs);
+    getMovieBatch(globalIndex)
+  });
