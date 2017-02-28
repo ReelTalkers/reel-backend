@@ -28,6 +28,11 @@ scalar GraphQLDateTime
 scalar GraphQLLimitedString
 scalar GraphQLPassword
 
+enum SourceType {
+  SUBSCRIPTION
+  PAID
+}
+
 type User {
   id: ID!
   userName: String
@@ -46,6 +51,13 @@ type Person {
   firstName: String
   lastName: String
 }
+
+# Where you can watch a movie
+type Source {
+  name: String
+  link: String
+  type: SourceType
+}
 #
 type Media {
    backdrop_path: String
@@ -59,6 +71,7 @@ type Media {
    release_date: String
    revenue: Int
    runtime: Int
+   sources: [Source]
    status: Boolean
    tagline: String
    title: String
