@@ -62,6 +62,8 @@ type Source {
 type Media {
    backdrop_path: String
    budget: Int
+   cast: [Person]
+   directors: [Person]
    id: ID!
    genres: [String]
    original_language: String
@@ -75,17 +77,13 @@ type Media {
    status: Boolean
    tagline: String
    title: String
+   writers: [Person]
 
 #   plot: String
 #   full_plot: String
 #   genres: [Genre]
-#   directors: [Person]
-#   writers: [Person]
 #   banner: String
-#   year: Int
 #   rating: Float # TODO: Implement
-#   runtime: Float
-#   cast: [Person]
 #   metacritic: Float
 #   imdb_rating: Float
 #   imdb_votes: Int
