@@ -30,14 +30,36 @@ const User = db.define('user', {
   }
 });
 
-const Person = db.define('person', {
-  firstName: {
-    type: Sequelize.STRING,
+// Junction between people and movies for production roles
+const Credit = db.define('credit', {
+  department: {
+    type: Sequelize.STRING
   },
-  lastName: {
-    type: Sequelize.STRING,
-  },
+  job: {
+    type: Sequelize.STRING
+  }
 });
+
+const Cast = db.define('cast', {
+  character: {
+    type: Sequelize.STRING
+  },
+  order: {
+    type Sequelize.INTEGER
+  }
+});
+
+const Person = db.define('person', {
+  name: {
+    type: Sequelize.STRING,
+  },
+  profile_path: {
+    type: Sequelize.STRING,
+  }
+});
+
+Person.hasMany(Credit);
+Person.hasMany(Cast);
 
 // See sequailize enums to update some of these fields
 // .ARRAY is a type if we are using PostgreSQL (deal with genres then?)
@@ -82,6 +104,9 @@ const Media = db.define('media', {
     type: Sequelize.INTEGER
   }
 });
+
+Media.hasMany(Credit);
+Media.hasMany(Cast);
 
 var movieOptions = {
     uri: 'http://api-public.guidebox.com/v2/',
