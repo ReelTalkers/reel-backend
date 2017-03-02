@@ -4,8 +4,7 @@ import _ from 'lodash';
 import rp from "request-promise";
 
 const db = new Sequelize('database', null, null, {
-  dialect: 'sqlite',
-  storage: './database.sqlite'
+  dialect: 'postgres'
 });
 
 const User = db.define('user', {
