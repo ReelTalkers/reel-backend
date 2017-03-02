@@ -28,6 +28,11 @@ scalar GraphQLDateTime
 scalar GraphQLLimitedString
 scalar GraphQLPassword
 
+enum SourceType {
+  SUBSCRIPTION
+  PAID
+}
+
 type User {
   id: ID!
   userName: String
@@ -46,26 +51,41 @@ type Person {
   firstName: String
   lastName: String
 }
+
+# Where you can watch a movie
+type Source {
+  name: String
+  link: String
+  type: SourceType
+}
 #
 type Media {
+   backdrop_path: String
+   budget: Int
+   cast: [Person]
+   directors: [Person]
    id: ID!
-   imdb: String
-   title: String
-   poster_120x171: String
-   poster_240x342: String
-   poster_400x570: String
+   genres: [String]
+   original_language: String
+   overview: String
+   poster_path: String
+   production_companies: [String]
    release_date: String
-   rating: String
+   revenue: Int
+   runtime: Int
+   sources: [Source]
+   status: Boolean
+   tagline: String
+   title: String
+   tmdb_average: Float
+   tmdb_votes: Int
+   writers: [Person]
+
 #   plot: String
 #   full_plot: String
 #   genres: [Genre]
-#   directors: [Person]
-#   writers: [Person]
 #   banner: String
-#   year: Int
 #   rating: Float # TODO: Implement
-#   runtime: Float
-#   cast: [Person]
 #   metacritic: Float
 #   imdb_rating: Float
 #   imdb_votes: Int
@@ -86,6 +106,7 @@ type Query {
   user(userName: String): User
   users: [User]
   people: [Person]
+  media: [Media]
   movie(id: ID): Media
   movies: [Media]
   search(query: String): [Media]

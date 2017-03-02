@@ -2,6 +2,10 @@ import Sequelize from 'sequelize';
 import casual from 'casual';
 import _ from 'lodash';
 import rp from "request-promise";
+var fs = require('fs');
+
+var tmdbkey = fs.readFileSync('tmdbkey.key', 'utf8');
+var guideboxkey = fs.readFileSync('guideboxkey.key', 'utf8')
 
 const db = new Sequelize('database', null, null, {
   dialect: 'postgres'
@@ -25,25 +29,88 @@ const User = db.define('user', {
   }
 });
 
-const Person = db.define('person', {
-  firstName: {
-    type: Sequelize.STRING,
+// Junction between people and movies for production roles
+const Credit = db.define('credit', {
+  department: {
+    type: Sequelize.STRING
   },
-  lastName: {
-    type: Sequelize.STRING,
-  },
+  job: {
+    type: Sequelize.STRING
+  }
 });
 
+const Cast = db.define('cast', {
+  character: {
+    type: Sequelize.STRING
+  },
+  order: {
+    type Sequelize.INTEGER
+  }
+});
+
+const Person = db.define('person', {
+  name: {
+    type: Sequelize.STRING,
+  },
+  profile_path: {
+    type: Sequelize.STRING,
+  }
+});
+
+Person.hasMany(Credit);
+Person.hasMany(Cast);
+
+// See sequailize enums to update some of these fields
+// .ARRAY is a type if we are using PostgreSQL (deal with genres then?)
 const Media = db.define('media', {
+  backdrop_path: {
+    type: Sequelize.STRING
+  },
+  budget: {
+    type: Sequelize.INTEGER
+  },
+  id: {
+    type: Sequelize.STRING, primaryKey: true
+  },
+  original_language: {
+    type: Sequelize.STRING
+  },
+  overview: {
+    type: Sequelize.TEXT
+  },
+  poster_path: {
+    type: Sequelize.STRING
+  },
+  release_date: {
+    type: Sequelize.STRING
+  },
+  revenue: {
+    type: Sequelize.INTEGER
+  },
+  runtime: {
+    type: Sequelize.INTEGER
+  },
+  status: {
+    type: Sequelize.STRING
+  },
   title: {
     type: Sequelize.STRING
   },
+  tmdb_average: {
+    type: Sequelize.FLOAT
+  },
+  tmdb_votes: {
+    type: Sequelize.INTEGER
+  }
 });
+
+Media.hasMany(Credit);
+Media.hasMany(Cast);
 
 var movieOptions = {
     uri: 'http://api-public.guidebox.com/v2/',
     qs: {
-        api_key: 'a93c4bd3b872b34ef4a7c912af43e7eac553c0b6' // -> uri + '?api_key=xxxxx%20xxxxx'
+        api_key: guideboxkey // -> uri + '?api_key=xxxxx%20xxxxx'
     },
     headers: {
         'User-Agent': 'Request-Promise'
