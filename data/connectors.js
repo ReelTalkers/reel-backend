@@ -8,7 +8,7 @@ var tmdbkey = fs.readFileSync('tmdbkey.key', 'utf8');
 var guideboxkey = fs.readFileSync('guideboxkey.key', 'utf8')
 
 const db = new Sequelize('database', null, null, {
-  dialect: 'postgres'
+  dialect: 'postgres',
 });
 
 const User = db.define('user', {
