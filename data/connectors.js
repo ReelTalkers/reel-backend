@@ -70,6 +70,9 @@ const Media = db.define('media', {
   budget: {
     type: Sequelize.INTEGER
   },
+  guideboxID: {
+    type: Sequelize.INTEGER
+  },
   id: {
     type: Sequelize.STRING, primaryKey: true
   },
