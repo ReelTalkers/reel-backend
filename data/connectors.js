@@ -6,8 +6,9 @@ var fs = require('fs');
 
 var tmdbkey = fs.readFileSync('tmdbkey.key', 'utf8');
 var guideboxkey = fs.readFileSync('guideboxkey.key', 'utf8')
+var databasekey = fs.readFileSync('database.key','utf8')
 
-const db = new Sequelize('database', null, null, {
+const db = new Sequelize('test', 'tester', databasekey, {
   dialect: 'postgres',
 });
 
