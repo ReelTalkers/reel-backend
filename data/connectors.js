@@ -45,7 +45,7 @@ const Cast = db.define('cast', {
     type: Sequelize.STRING
   },
   order: {
-    type Sequelize.INTEGER
+    type: Sequelize.INTEGER
   }
 });
 
