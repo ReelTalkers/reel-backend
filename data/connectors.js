@@ -157,10 +157,10 @@ const Movie = {
 }
 
 casual.seed(123);
-User.sync({ logging=console.log });
+User.sync({ logging:console.log });
 
-Person.sync({ logging=console.log });
+Person.sync({ logging:console.log });
 
-Media.sync({ logging=console.log });
+Media.sync({ logging:console.log });
 
 export { User, Person, Media, Movie };
