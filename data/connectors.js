@@ -147,7 +147,7 @@ const Movie = {
 }
 
 casual.seed(123);
-User.sync({ force: true }).then(() => {
+User.sync({ force: false }).then(() => {
   _.times(2, () => {
     return User.create({
       userName: casual.username,
@@ -159,7 +159,7 @@ User.sync({ force: true }).then(() => {
   });
 });
 
-Person.sync({ force: true }).then(() => {
+Person.sync({ force: false }).then(() => {
   _.times(2, () => {
     return Person.create({
       firstName: casual.first_name,
@@ -168,7 +168,7 @@ Person.sync({ force: true }).then(() => {
   });
 });
 
-Media.sync({ force: true }).then(() => {
+Media.sync({ force: false }).then(() => {
   _.times(2, () => {
     return Media.create({
         title: casual.title,
