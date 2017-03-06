@@ -157,34 +157,10 @@ const Movie = {
 }
 
 casual.seed(123);
-User.sync({ force: false }).then(() => {
-  _.times(2, () => {
-    return User.create({
-      userName: casual.username,
-      firstName: casual.first_name,
-      lastName: casual.last_name,
-      dateJoined: casual.date('YYYY-MM-DD HH:mm:ss'),
-      email: casual.email
-    });
-  });
-});
+User.sync({ options.logging=console.log });
 
-Person.sync({ force: false }).then(() => {
-  _.times(2, () => {
-    return Person.create({
-      name: casual.first_name,
-    });
-  });
-});
+Person.sync({ options.logging=console.log });
 
-Media.sync({ force: false }).then(() => {
-  _.times(2, () => {
-    return Media.create({
-	id: casual.word,
-        title: casual.title,
-        rating: casual.first_name
-    });
-  });
-});
+Media.sync({ options.logging=console.log });
 
 export { User, Person, Media, Movie };
