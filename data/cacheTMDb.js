@@ -4,6 +4,8 @@ import csv from "fast-csv";
 var fs = require('fs');
 
 var tmdbkey = fs.readFileSync('tmdbkey.key', 'utf8');
+// Hack to get rid of extra line we're reading from the file
+tmdbkey = tmdbkey.slice(0,-1);
 var idStream = fs.createReadStream("data/movieIDs.csv");
 
 var tmdbIDs = []
@@ -25,13 +27,25 @@ var getMovie = function(id) {
   movieOptions.uri = "https://api.themoviedb.org/3/movie/" + id
   rp(movieOptions)
     .then((res) => {
+      var genres = [];
+      for(var id in res.genres) {
+         var genre = res.genres[id]
+         genres.push(genre["name"]);
+      }
+      res.genres = genres;
+      var production_companies = [];
+      for(var id in res.production_companies) {
+         var company = res.production_companies[id]
+         production_companies.push(company.name);
+      }
+      res.production_companies = production_companies;
       res.id = res.imdb_id;
       res.tmdb_average = res.vote_average;
       res.tmdb_votes = res.vote_count;
       Media.create(res);
       console.log("Request successful for TMDb id: " + id)
     }).catch(function (err) {
-      console.log("Requst failed for TMDb id: " + id);
+      console.log("Requst failed for TMDb id: " + id + "\n" + err);
     });
 }
 
@@ -53,6 +67,5 @@ csv.fromStream(idStream)
     tmdbIDs.push(data[2]);
   })
   .on("end",function() {
-    console.log(tmdbIDs);
-    getMovieBatch(globalIndex)
+    getMovieBatch();
   });

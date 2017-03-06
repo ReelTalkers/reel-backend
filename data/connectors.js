@@ -74,6 +74,9 @@ const Media = db.define('media', {
   budget: {
     type: Sequelize.INTEGER
   },
+  genres: {
+    type: Sequelize.ARRAY(Sequelize.STRING)
+  },
   guideboxID: {
     type: Sequelize.INTEGER
   },
@@ -88,6 +91,9 @@ const Media = db.define('media', {
   },
   poster_path: {
     type: Sequelize.STRING
+  },
+  production_companies: {
+    type: Sequelize.ARRAY(Sequelize.STRING)
   },
   release_date: {
     type: Sequelize.STRING
@@ -166,8 +172,7 @@ User.sync({ force: true }).then(() => {
 Person.sync({ force: true }).then(() => {
   _.times(2, () => {
     return Person.create({
-      firstName: casual.first_name,
-      lastName: casual.last_name
+      name: casual.first_name,
     });
   });
 });
@@ -175,6 +180,7 @@ Person.sync({ force: true }).then(() => {
 Media.sync({ force: true }).then(() => {
   _.times(2, () => {
     return Media.create({
+	id: casual.word,
         title: casual.title,
         rating: casual.first_name
     });
