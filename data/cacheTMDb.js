@@ -20,6 +20,7 @@ var movieOptions = {
 };
 
 var globalIndex = 1
+var unsuccessfulRequests = []
 
 var getMovie = function(id) {
   movieOptions.uri = "https://api.themoviedb.org/3/movie/" + id
@@ -32,18 +33,30 @@ var getMovie = function(id) {
       console.log("Request successful for TMDb id: " + id)
     }).catch(function (err) {
       console.log("Requst failed for TMDb id: " + id);
+      unsuccessfulRequests.push(id);
     });
 }
 
 var getMovieBatch = function() {
   var index = globalIndex;
-  while(index<globalIndex+40) {
-    console.log(tmdbIDs[index]);
+  while(index<globalIndex+40 && globalIndex<80) {
+    console.log("Current ID: " + tmdbIDs[index]);
     getMovie(tmdbIDs[index]);
-    index++;
+    index++
   }
   globalIndex = index;
-  console.log(globalIndex);
+  console.log("Global index: " + globalIndex);
+  if(globalIndex>=80) {
+    clearInterval(timerID);
+    setTimeout(function() {
+      fs.writeFile("unsuccessfulRequests.txt", unsuccessfulRequests, function(err) {
+        if(err) {
+          return console.log(err);
+        }
+        console.log("The file was saved!");
+      });
+    }, 15000)
+  }
 }
 
 var timerID = setInterval(getMovieBatch, 11000);
@@ -53,6 +66,5 @@ csv.fromStream(idStream)
     tmdbIDs.push(data[2]);
   })
   .on("end",function() {
-    console.log(tmdbIDs);
     getMovieBatch(globalIndex)
   });
