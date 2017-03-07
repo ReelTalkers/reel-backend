@@ -107,9 +107,6 @@ type Query {
   users: [User]
   people: [Person]
   media: [Media]
-  movie(id: ID): Media
-  movies: [Media]
-  search(query: String): [Media]
 }
 
 # this schema allows the following mutation:

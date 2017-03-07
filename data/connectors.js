@@ -132,6 +132,8 @@ var movieOptions = {
     json: true // Automatically parses the JSON string in the response
 };
 
+// We no longer use this, but it is still useful as an example for api queries
+/* This was useful for finding
 const Movie = {
   find(id) {
     movieOptions.uri = "http://api-public.guidebox.com/v2/movies/" + id
@@ -155,6 +157,7 @@ const Movie = {
       });
   }
 }
+*/
 
 casual.seed(123);
 User.sync({ logging:console.log });
@@ -163,4 +166,4 @@ Person.sync({ logging:console.log });
 
 Media.sync({ logging:console.log });
 
-export { User, Person, Media, Movie };
+export { User, Person, Media };
