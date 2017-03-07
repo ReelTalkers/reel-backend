@@ -39,14 +39,14 @@ var getMovie = function(id) {
 
 var getMovieBatch = function() {
   var index = globalIndex;
-  while(index<globalIndex+40 && globalIndex<80) {
+  while(index<globalIndex+40 && globalIndex<tmdbIDs.length) {
     console.log("Current ID: " + tmdbIDs[index]);
     getMovie(tmdbIDs[index]);
     index++
   }
   globalIndex = index;
   console.log("Global index: " + globalIndex);
-  if(globalIndex>=80) {
+  if(globalIndex>=tmdbIDs.length) {
     clearInterval(timerID);
     setTimeout(function() {
       fs.writeFile("unsuccessfulRequests.txt", unsuccessfulRequests, function(err) {
