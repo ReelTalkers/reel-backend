@@ -1,5 +1,5 @@
 import { GraphQLScalarType } from 'graphql';
-import { User, Person, Media, Movie } from './connectors';
+import { User, Person, Media } from './connectors';
 import {
   GraphQLURL,
   GraphQLDateTime,
@@ -25,15 +25,6 @@ const resolveFunctions = {
     },
     media() {
       return Media.findAll()
-    },
-    movie(_, { id }) {
-      return Movie.find(id);
-    },
-    movies() {
-      return Movie.findAll();
-    },
-    search(_, { query }) {
-      return Movie.search(query);
     }
   },
   Mutation: {

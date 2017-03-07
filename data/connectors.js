@@ -45,7 +45,7 @@ const Cast = db.define('cast', {
     type: Sequelize.STRING
   },
   order: {
-    type Sequelize.INTEGER
+    type: Sequelize.INTEGER
   }
 });
 
@@ -122,6 +122,8 @@ var movieOptions = {
     json: true // Automatically parses the JSON string in the response
 };
 
+// We no longer use this, but it is still useful as an example for api queries
+/* This was useful for finding
 const Movie = {
   find(id) {
     movieOptions.uri = "http://api-public.guidebox.com/v2/movies/" + id
@@ -145,6 +147,7 @@ const Movie = {
       });
   }
 }
+*/
 
 casual.seed(123);
 User.sync({ force: true }).then(() => {
@@ -168,13 +171,6 @@ Person.sync({ force: true }).then(() => {
   });
 });
 
-Media.sync({ force: true }).then(() => {
-  _.times(2, () => {
-    return Media.create({
-        title: casual.title,
-        rating: casual.first_name
-    });
-  });
-});
+Media.sync({ force: false });
 
-export { User, Person, Media, Movie };
+export { User, Person, Media };
