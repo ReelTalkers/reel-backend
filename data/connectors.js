@@ -10,7 +10,7 @@ var databasekey = fs.readFileSync('database.key','utf8')
 // Cut out the new line at the end of the file read for the db key
 databasekey = databasekey.slice(0,-1)
 
-const db = new Sequelize('test', 'tester', databasekey, {
+const db = new Sequelize('reeldb', 'reelservice', databasekey, {
   host: 'localhost',
   port: 5432,
   dialect: 'postgres',
