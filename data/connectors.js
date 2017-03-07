@@ -164,6 +164,10 @@ User.sync({ logging:console.log });
 
 Person.sync({ logging:console.log });
 
+<<<<<<< HEAD
 Media.sync({ logging:console.log });
+=======
+Media.sync({ force: true });
+>>>>>>> media
 
 export { User, Person, Media };

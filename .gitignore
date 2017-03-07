@@ -8,3 +8,4 @@ npm-debug.log*
 database.sqlite
 
 *.key
+unsuccessfulRequests.txt
