@@ -23,9 +23,19 @@ const resolveFunctions = {
     people() {
       return Person.findAll();
     },
-    media() {
+    all_media() {
       return Media.findAll()
-    }
+    },
+    media(_, { id }) {
+      return Media.findById(id);
+    },
+    search_media(_, { title }) {
+      return Media.findAll({
+        where: {
+          title: title
+        }
+      })
+    },
   },
   Mutation: {
     createUser(_, args) {

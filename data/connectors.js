@@ -171,6 +171,6 @@ Person.sync({ force: true }).then(() => {
   });
 });
 
-Media.sync({ force: true });
+Media.sync({ force: false });
 
 export { User, Person, Media };
