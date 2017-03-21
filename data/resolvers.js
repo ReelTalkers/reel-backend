@@ -33,10 +33,16 @@ const resolveFunctions = {
       return Media.findAll({
         where: {
           title: {
-            $like: ('%'+title+'%')
+            $like: ('%'+title+'%'),
           }
         }
       })
+    },
+    movie_reviews(_, { movieID }) {
+      return Media.findById(movieID).getReviews();
+    },
+    user_reviews(_, { userID }) {
+      return User.findById(userID).getReviews();
     },
   },
   Mutation: {

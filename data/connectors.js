@@ -30,37 +30,6 @@ const User = db.define('user', {
   }
 });
 
-// Junction between people and movies for production roles
-const Credit = db.define('credit', {
-  department: {
-    type: Sequelize.STRING
-  },
-  job: {
-    type: Sequelize.STRING
-  }
-});
-
-const Cast = db.define('cast', {
-  character: {
-    type: Sequelize.STRING
-  },
-  order: {
-    type: Sequelize.INTEGER
-  }
-});
-
-const Person = db.define('person', {
-  name: {
-    type: Sequelize.STRING,
-  },
-  profile_path: {
-    type: Sequelize.STRING,
-  }
-});
-
-Person.hasMany(Credit);
-Person.hasMany(Cast);
-
 // See sequailize enums to update some of these fields
 // .ARRAY is a type if we are using PostgreSQL (deal with genres then?)
 const Media = db.define('media', {
@@ -108,46 +77,51 @@ const Media = db.define('media', {
   }
 });
 
-Media.hasMany(Credit);
-Media.hasMany(Cast);
-
-var movieOptions = {
-    uri: 'http://api-public.guidebox.com/v2/',
-    qs: {
-        api_key: guideboxkey // -> uri + '?api_key=xxxxx%20xxxxx'
-    },
-    headers: {
-        'User-Agent': 'Request-Promise'
-    },
-    json: true // Automatically parses the JSON string in the response
-};
-
-// We no longer use this, but it is still useful as an example for api queries
-/* This was useful for finding
-const Movie = {
-  find(id) {
-    movieOptions.uri = "http://api-public.guidebox.com/v2/movies/" + id
-    return rp(movieOptions)
-      .then((res) => {
-        return res;
-      });
-  },
-  findAll() {
-    movieOptions.uri = "http://api-public.guidebox.com/v2/movies"
-    return rp(movieOptions)
-      .then((res) => {
-        return res.results;
-      });
-  },
-  search(query) {
-    movieOptions.uri = "http://api-public.guidebox.com/v2/search?type=movie&field=title&query=" + query
-    return rp(movieOptions)
-      .then((res) => {
-        return res.results;
-      });
+const Review = db.define('review', {
+  score: {
+    type: Sequelize.INTEGER
   }
-}
-*/
+})
+
+Media.hasMany(Review, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+User.hasMany(Review, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+
+const Person = db.define('person', {
+  name: {
+    type: Sequelize.STRING,
+  },
+  profile_path: {
+    type: Sequelize.STRING,
+  }
+});
+
+// Junction between people and movies for production roles
+const Credit = db.define('credit', {
+  department: {
+    type: Sequelize.STRING
+  },
+  job: {
+    type: Sequelize.STRING
+  }
+});
+
+Media.hasMany(Credit, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+Person.hasMany(Credit, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+
+const Cast = db.define('cast', {
+  character: {
+    type: Sequelize.STRING
+  },
+  order: {
+    type: Sequelize.INTEGER
+  }
+});
+
+Person.hasMany(Cast, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+Media.hasMany(Cast, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+
+
+// Sync models we have declared with our database
 
 casual.seed(123);
 User.sync({ force: true }).then(() => {
@@ -172,5 +146,43 @@ Person.sync({ force: true }).then(() => {
 });
 
 Media.sync({ force: false });
+
+// We no longer use this, but it is still useful as an example for api queries
+/*
+var movieOptions = {
+    uri: 'http://api-public.guidebox.com/v2/',
+    qs: {
+        api_key: guideboxkey // -> uri + '?api_key=xxxxx%20xxxxx'
+    },
+    headers: {
+        'User-Agent': 'Request-Promise'
+    },
+    json: true // Automatically parses the JSON string in the response
+};
+
+const Movie = {
+  find(id) {
+    movieOptions.uri = "http://api-public.guidebox.com/v2/movies/" + id
+    return rp(movieOptions)
+      .then((res) => {
+        return res;
+      });
+  },
+  findAll() {
+    movieOptions.uri = "http://api-public.guidebox.com/v2/movies"
+    return rp(movieOptions)
+      .then((res) => {
+        return res.results;
+      });
+  },
+  search(query) {
+    movieOptions.uri = "http://api-public.guidebox.com/v2/search?type=movie&field=title&query=" + query
+    return rp(movieOptions)
+      .then((res) => {
+        return res.results;
+      });
+  }
+}
+*/
 
 export { User, Person, Media };

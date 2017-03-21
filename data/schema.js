@@ -94,12 +94,12 @@ type Media {
 #   type: MediaType
  }
 #
-# type Review {
-#   id: ID!
-#   score: Rating
-#   media: Media
-#   user: User
-# }
+type Review {
+   id: ID!
+   score: Int
+   media: Media
+   user: User
+}
 
 # the schema allows the following query:
 type Query {
@@ -109,6 +109,8 @@ type Query {
   all_media: [Media]
   media(id: String): Media
   search_media(title: String): [Media]
+  user_reviews(userID: ID): [Review]
+  movie_reviews(movieID: ID): [Review]
 }
 
 # this schema allows the following mutation:
