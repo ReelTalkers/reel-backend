@@ -32,7 +32,9 @@ const resolveFunctions = {
     search_media(_, { title }) {
       return Media.findAll({
         where: {
-          title: title
+          title: {
+            $like: ('%'+title+'%')
+          }
         }
       })
     },
