@@ -115,6 +115,11 @@ type Query {
 
 # this schema allows the following mutation:
 type Mutation {
+  createReview (
+    userId: ID
+    mediaId: ID
+    score: Int
+  ): Review
   createUser (
     userName: String
     firstName: String

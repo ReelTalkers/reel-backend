@@ -1,5 +1,5 @@
 import { GraphQLScalarType } from 'graphql';
-import { User, Person, Media } from './connectors';
+import { User, Person, Media, Review } from './connectors';
 import {
   GraphQLURL,
   GraphQLDateTime,
@@ -39,13 +39,30 @@ const resolveFunctions = {
       })
     },
     movie_reviews(_, { movieID }) {
-      return Media.findById(movieID).getReviews();
+      return Media.findById(movieID)
+        .then(function (res) {
+          return res.getReviews()
+        });
     },
     user_reviews(_, { userID }) {
-      return User.findById(userID).getReviews();
+      return User.findById(userID)
+        .then(function (res) {
+          return res.getReviews()
+        });
+    },
+  },
+  Review: {
+    media(obj, args, context) {
+      return Media.findById(obj.mediaId);
+    },
+    user(obj, args, context) {
+      return User.findById(obj.userId)
     },
   },
   Mutation: {
+    createReview(_, args) {
+      return Review.create(args);
+    },
     createUser(_, args) {
       // default dateJoined must be in resolver because it must be run every time
       args.dateJoined = new Date();

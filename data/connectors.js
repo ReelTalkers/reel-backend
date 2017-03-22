@@ -83,8 +83,11 @@ const Review = db.define('review', {
   }
 })
 
-Media.hasMany(Review, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
-User.hasMany(Review, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+// I saw these added in some examples but I'm not sure why
+//Review.belongsTo(Media, { foreignKey: { field:'mediaId', allowNull: false }, onDelete: 'CASCADE' });
+Media.hasMany(Review, { foreignKey: { name:'mediaId', allowNull: false }, onDelete: 'CASCADE' });
+//Review.belongsTo(User, { foreignKey: { field:'userId', allowNull: false }, onDelete: 'CASCADE' });
+User.hasMany(Review, { foreignKey: { name:'userId', allowNull: false }, onDelete: 'CASCADE' });
 
 const Person = db.define('person', {
   name: {
@@ -120,7 +123,6 @@ const Cast = db.define('cast', {
 Person.hasMany(Cast, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
 Media.hasMany(Cast, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
 
-
 // Sync models we have declared with our database
 
 casual.seed(123);
@@ -144,6 +146,8 @@ Person.sync({ force: true }).then(() => {
     });
   });
 });
+
+Review.sync({ force: true });
 
 Media.sync({ force: false });
 
@@ -185,4 +189,4 @@ const Movie = {
 }
 */
 
-export { User, Person, Media };
+export { User, Person, Media, Review };
