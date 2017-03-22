@@ -34,37 +34,6 @@ const User = db.define('user', {
   }
 });
 
-// Junction between people and movies for production roles
-const Credit = db.define('credit', {
-  department: {
-    type: Sequelize.STRING
-  },
-  job: {
-    type: Sequelize.STRING
-  }
-});
-
-const Cast = db.define('cast', {
-  character: {
-    type: Sequelize.STRING
-  },
-  order: {
-    type: Sequelize.INTEGER
-  }
-});
-
-const Person = db.define('person', {
-  name: {
-    type: Sequelize.STRING,
-  },
-  profile_path: {
-    type: Sequelize.STRING,
-  }
-});
-
-Person.hasMany(Credit);
-Person.hasMany(Cast);
-
 // See sequailize enums to update some of these fields
 // .ARRAY is a type if we are using PostgreSQL (deal with genres then?)
 const Media = db.define('media', {
@@ -118,9 +87,82 @@ const Media = db.define('media', {
   }
 });
 
-Media.hasMany(Credit);
-Media.hasMany(Cast);
+const Review = db.define('review', {
+  score: {
+    type: Sequelize.INTEGER
+  }
+})
 
+// I saw these added in some examples but I'm not sure why
+//Review.belongsTo(Media, { foreignKey: { field:'mediaId', allowNull: false }, onDelete: 'CASCADE' });
+Media.hasMany(Review, { foreignKey: { name:'mediaId', allowNull: false }, onDelete: 'CASCADE' });
+//Review.belongsTo(User, { foreignKey: { field:'userId', allowNull: false }, onDelete: 'CASCADE' });
+User.hasMany(Review, { foreignKey: { name:'userId', allowNull: false }, onDelete: 'CASCADE' });
+
+const Person = db.define('person', {
+  name: {
+    type: Sequelize.STRING,
+  },
+  profile_path: {
+    type: Sequelize.STRING,
+  }
+});
+
+// Junction between people and movies for production roles
+const Credit = db.define('credit', {
+  department: {
+    type: Sequelize.STRING
+  },
+  job: {
+    type: Sequelize.STRING
+  }
+});
+
+Media.hasMany(Credit, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+Person.hasMany(Credit, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+
+const Cast = db.define('cast', {
+  character: {
+    type: Sequelize.STRING
+  },
+  order: {
+    type: Sequelize.INTEGER
+  }
+});
+
+Person.hasMany(Cast, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+Media.hasMany(Cast, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+
+// Sync models we have declared with our database
+
+casual.seed(123);
+User.sync({ force: true }).then(() => {
+  _.times(2, () => {
+    return User.create({
+      userName: casual.username,
+      firstName: casual.first_name,
+      lastName: casual.last_name,
+      dateJoined: casual.date('YYYY-MM-DD HH:mm:ss'),
+      email: casual.email
+    });
+  });
+});
+
+Person.sync({ force: true }).then(() => {
+  _.times(2, () => {
+    return Person.create({
+      firstName: casual.first_name,
+      lastName: casual.last_name
+    });
+  });
+});
+
+Review.sync({ force: true });
+
+Media.sync({ force: false });
+
+// We no longer use this, but it is still useful as an example for api queries
+/*
 var movieOptions = {
     uri: 'http://api-public.guidebox.com/v2/',
     qs: {
@@ -132,8 +174,6 @@ var movieOptions = {
     json: true // Automatically parses the JSON string in the response
 };
 
-// We no longer use this, but it is still useful as an example for api queries
-/* This was useful for finding
 const Movie = {
   find(id) {
     movieOptions.uri = "http://api-public.guidebox.com/v2/movies/" + id
@@ -159,11 +199,4 @@ const Movie = {
 }
 */
 
-casual.seed(123);
-User.sync({ logging:console.log });
-
-Person.sync({ logging:console.log });
-
-Media.sync({ logging:console.log });
-
-export { User, Person, Media };
+export { User, Person, Media, Review };
