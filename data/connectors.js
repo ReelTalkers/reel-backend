@@ -136,7 +136,13 @@ Media.hasMany(Cast, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
 // Sync models we have declared with our database
 
 casual.seed(123);
+
+// Reviews depend on users for foreign key constraints, so we have to make sure
+//   the users relation is synced before we sync reviews. Other tables weren't conflicting
+//   specifically media, because we aren't re-syncing it for now, but we may want to re-evaluate
+//   in the future.
 User.sync({ force: true }).then(() => {
+  Review.sync({ force: true });
   _.times(2, () => {
     return User.create({
       userName: casual.username,
@@ -156,8 +162,6 @@ Person.sync({ force: true }).then(() => {
     });
   });
 });
-
-Review.sync({ force: true });
 
 Media.sync({ force: false });
 
