@@ -105,14 +105,12 @@ type Review {
 
 # the schema allows the following query:
 type Query {
-  user(userName: String): User
+  user(id: String): User
   users: [User]
   people: [Person]
   all_media: [Media]
   media(id: String): Media
   search_media(title: String): [Media]
-  user_reviews(userID: ID): [Review]
-  movie_reviews(movieID: ID): [Review]
 }
 
 # this schema allows the following mutation:

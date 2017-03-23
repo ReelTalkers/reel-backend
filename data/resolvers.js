@@ -13,8 +13,8 @@ var parsePhoneNumber = function(value) {
 
 const resolveFunctions = {
   Query: {
-    user(_, { userName }) {
-      let where = { userName};
+    user(_, { id }) {
+      let where = { id };
       return User.find({ where });
     },
     users() {
@@ -37,18 +37,6 @@ const resolveFunctions = {
           }
         }
       })
-    },
-    movie_reviews(_, { movieID }) {
-      return Media.findById(movieID)
-        .then(function (res) {
-          return res.getReviews()
-        });
-    },
-    user_reviews(_, { userID }) {
-      return User.findById(userID)
-        .then(function (res) {
-          return res.getReviews()
-        });
     },
   },
   Media: {
