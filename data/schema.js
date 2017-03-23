@@ -38,6 +38,7 @@ type User {
   userName: String
   firstName: String
   lastName: String
+  reviews: [Review]
   # password: Password
   # isActive: Boolean!
   # lastLogin: Date
@@ -72,6 +73,7 @@ type Media {
    production_companies: [String]
    release_date: String
    revenue: Int
+   reviews: [Review]
    runtime: Int
    sources: [Source]
    status: Boolean

@@ -51,6 +51,11 @@ const resolveFunctions = {
         });
     },
   },
+  Media: {
+    reviews(obj, args, context) {
+      return obj.getReviews();
+    }
+  },
   Review: {
     media(obj, args, context) {
       return Media.findById(obj.mediaId);
@@ -58,6 +63,11 @@ const resolveFunctions = {
     user(obj, args, context) {
       return User.findById(obj.userId)
     },
+  },
+  User: {
+    reviews(obj, args, context) {
+      return obj.getReviews();
+    }
   },
   Mutation: {
     createReview(_, args) {
