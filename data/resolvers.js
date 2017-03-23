@@ -59,7 +59,7 @@ const resolveFunctions = {
           return user.getReviews();
         })
         .then(reviews => {
-          reviews = reviews.map((review) => { return { imdb: review.id, rating: review.score } });
+          reviews = reviews.map((review) => { return { imdb: review.mediaId, rating: review.score } });
           requestOptions.body.ratings = reviews;
           return rp(requestOptions);
         })
