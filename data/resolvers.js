@@ -13,8 +13,13 @@ var parsePhoneNumber = function(value) {
 
 const resolveFunctions = {
   Query: {
-    user(_, { id }) {
-      let where = { id };
+    user(_, { id, userName }) {
+      let where = {}
+      if(id==null) {
+        where = { userName };
+      } else {
+        where = { id };
+      }
       return User.find({ where });
     },
     users() {

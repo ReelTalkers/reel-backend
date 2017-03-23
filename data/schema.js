@@ -105,7 +105,8 @@ type Review {
 
 # the schema allows the following query:
 type Query {
-  user(id: String): User
+  # Query uses id by default, but will resort to userName if id is not specified
+  user(id: String, userName: String): User
   users: [User]
   people: [Person]
   all_media: [Media]
