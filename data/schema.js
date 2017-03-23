@@ -38,6 +38,7 @@ type User {
   userName: String
   firstName: String
   lastName: String
+  reviews: [Review]
   # password: Password
   # isActive: Boolean!
   # lastLogin: Date
@@ -72,6 +73,7 @@ type Media {
    production_companies: [String]
    release_date: String
    revenue: Int
+   reviews: [Review]
    runtime: Int
    sources: [Source]
    status: Boolean
@@ -103,14 +105,14 @@ type Review {
 
 # the schema allows the following query:
 type Query {
-  user(userName: String): User
+  # Query uses id by default, but will resort to userName if id is not specified
+  user(id: String, userName: String): User
   users: [User]
   people: [Person]
   all_media: [Media]
   media(id: String): Media
   search_media(title: String): [Media]
-  user_reviews(userID: ID): [Review]
-  movie_reviews(movieID: ID): [Review]
+  recommendations(userId: String): [Media]
 }
 
 # this schema allows the following mutation:

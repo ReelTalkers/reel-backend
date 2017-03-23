@@ -6,6 +6,7 @@ import {
   GraphQLLimitedString,
   GraphQLPassword
 } from 'graphql-custom-types';
+import rp from "request-promise";
 
 var parsePhoneNumber = function(value) {
   return value
@@ -13,8 +14,13 @@ var parsePhoneNumber = function(value) {
 
 const resolveFunctions = {
   Query: {
-    user(_, { userName }) {
-      let where = { userName};
+    user(_, { id, userName }) {
+      let where = {}
+      if(id==null) {
+        where = { userName };
+      } else {
+        where = { id };
+      }
       return User.find({ where });
     },
     users() {
@@ -38,18 +44,35 @@ const resolveFunctions = {
         }
       })
     },
-    movie_reviews(_, { movieID }) {
-      return Media.findById(movieID)
-        .then(function (res) {
-          return res.getReviews()
+    recommendations(_, { userId }) {
+      var requestOptions = {
+          uri: 'http://localhost:5000/recommendations',
+          method: 'POST',
+          body: { num_recs: 10 },
+          json: true // Automatically parses the JSON string in the response
+      };
+      var id = userId
+      let where = { id };
+      return User.find({ where })
+        .then(user => {
+          requestOptions.body.user = user.id;
+          return user.getReviews();
+        })
+        .then(reviews => {
+          reviews = reviews.map((review) => { return { imdb: review.id, rating: review.score } });
+          requestOptions.body.ratings = reviews;
+          return rp(requestOptions);
+        })
+        .then(ids => {
+          media = ids.map((id) => { id: imdb });
+          return media;
         });
-    },
-    user_reviews(_, { userID }) {
-      return User.findById(userID)
-        .then(function (res) {
-          return res.getReviews()
-        });
-    },
+    }
+  },
+  Media: {
+    reviews(obj, args, context) {
+      return obj.getReviews();
+    }
   },
   Review: {
     media(obj, args, context) {
@@ -58,6 +81,11 @@ const resolveFunctions = {
     user(obj, args, context) {
       return User.findById(obj.userId)
     },
+  },
+  User: {
+    reviews(obj, args, context) {
+      return obj.getReviews();
+    }
   },
   Mutation: {
     createReview(_, args) {

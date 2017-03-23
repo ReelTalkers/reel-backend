@@ -3,6 +3,7 @@ import casual from 'casual';
 import _ from 'lodash';
 import rp from "request-promise";
 var fs = require('fs');
+var mock = require('./mock.json');
 
 var tmdbkey = fs.readFileSync('tmdbkey.key', 'utf8');
 var guideboxkey = fs.readFileSync('guideboxkey.key', 'utf8')
@@ -142,16 +143,7 @@ casual.seed(123);
 //   specifically media, because we aren't re-syncing it for now, but we may want to re-evaluate
 //   in the future.
 User.sync({ force: true }).then(() => {
-  Review.sync({ force: true });
-  _.times(2, () => {
-    return User.create({
-      userName: casual.username,
-      firstName: casual.first_name,
-      lastName: casual.last_name,
-      dateJoined: casual.date('YYYY-MM-DD HH:mm:ss'),
-      email: casual.email
-    });
-  });
+    User.create(mock.user);
 });
 
 Person.sync({ force: true }).then(() => {
@@ -161,6 +153,12 @@ Person.sync({ force: true }).then(() => {
       lastName: casual.last_name
     });
   });
+});
+
+Review.sync({ force: true }).then(() => {
+  for(var review in mock.reviews) {
+    //Review.create(mock.reviews[review]);
+  }
 });
 
 Media.sync({ force: false });
