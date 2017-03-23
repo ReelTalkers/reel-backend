@@ -64,7 +64,7 @@ const resolveFunctions = {
           return rp(requestOptions);
         })
         .then(ids => {
-          media = ids.map((id) => { id: id });
+          var media = ids.map((id) => { id: id });
           return media;
         });
     }
