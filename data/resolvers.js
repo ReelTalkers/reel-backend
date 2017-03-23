@@ -6,6 +6,7 @@ import {
   GraphQLLimitedString,
   GraphQLPassword
 } from 'graphql-custom-types';
+import rp from "request-promise";
 
 var parsePhoneNumber = function(value) {
   return value
@@ -43,6 +44,30 @@ const resolveFunctions = {
         }
       })
     },
+    recommendations(_, { userId }) {
+      var requestOptions = {
+          uri: 'http://localhost:5000/recommendations',
+          method: 'POST',
+          body: { num_recs: 10 },
+          json: true // Automatically parses the JSON string in the response
+      };
+      var id = userId
+      let where = { id };
+      return User.find({ where })
+        .then(user => {
+          requestOptions.body.user = user.id;
+          return user.getReviews();
+        })
+        .then(reviews => {
+          reviews = reviews.map((review) => { return { imdb: review.id, rating: review.score } });
+          requestOptions.body.ratings = reviews;
+          return rp(requestOptions);
+        })
+        .then(ids => {
+          media = ids.map((id) => { id: imdb });
+          return media;
+        });
+    }
   },
   Media: {
     reviews(obj, args, context) {
