@@ -9,3 +9,8 @@ npm install
 ```sh
 npm start
 ```
+
+## Cache Data from TMDb
+```sh
+npm run-script cache_data
+```
