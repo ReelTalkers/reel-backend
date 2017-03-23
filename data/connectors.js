@@ -144,6 +144,12 @@ casual.seed(123);
 //   in the future.
 User.sync({ force: true }).then(() => {
     User.create(mock.user);
+}).then(() => {
+  Review.sync({ force: true }).then(() => {
+    for(var review in mock.reviews) {
+      Review.create(mock.reviews[review]);
+    }
+  });
 });
 
 Person.sync({ force: true }).then(() => {
@@ -153,12 +159,6 @@ Person.sync({ force: true }).then(() => {
       lastName: casual.last_name
     });
   });
-});
-
-Review.sync({ force: true }).then(() => {
-  for(var review in mock.reviews) {
-    Review.create(mock.reviews[review]);
-  }
 });
 
 Media.sync({ force: false });
