@@ -1,11 +1,11 @@
-#Reel Backend
+# Reel Backend
 
-##Setup
+## Setup
 ```sh
 npm install
 ```
 
-##Run
+## Run
 ```sh
 npm start
 ```
