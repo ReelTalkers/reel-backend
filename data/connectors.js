@@ -142,7 +142,7 @@ Person.sync({ force: true }).then(() => {
 
 Review.sync({ force: true }).then(() => {
   for(var review in mock.reviews) {
-    Review.create(mock.reviews[review]);
+    //Review.create(mock.reviews[review]);
   }
 });
 
