@@ -90,7 +90,7 @@ const Media = db.define('media', {
 
 const Review = db.define('review', {
   score: {
-    type: Sequelize.INTEGER
+    type: Sequelize.FLOAT
   }
 })
 
