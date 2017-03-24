@@ -80,9 +80,8 @@ const resolveFunctions = {
       var users = [];
       for(var id in userIds) {
         var user = {};
-        userPromise = User.findById(userIds[id]).then(u => {
+        var userPromise = User.findById(userIds[id]).then(u => {
           user.user = u.id;
-          console.log(u.id);
           return u.getReviews();
         })
         .then(reviews => {
@@ -95,6 +94,7 @@ const resolveFunctions = {
 
       users = Q.all(users);
       return users.then((users) => {
+        console.log(users);
         requestOptions.body.users = users;
         return rp(requestOptions);
       }).then(ids => {
