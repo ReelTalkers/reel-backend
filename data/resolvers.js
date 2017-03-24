@@ -65,7 +65,7 @@ const resolveFunctions = {
         })
         .then(ids => {
           console.log(ids);
-          var media = ids.map((imdb) => { id: imdb });
+          var media = ids.map((imdb) => { return { id: imdb } });
           console.log(media);
           return media;
         });
