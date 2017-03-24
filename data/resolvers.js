@@ -49,7 +49,7 @@ const resolveFunctions = {
       var requestOptions = {
           uri: 'http://localhost:5000/recommendations',
           method: 'POST',
-          body: { num_recs: 10 },
+          body: { quantity: 10 },
           json: true // Automatically parses the JSON string in the response
       };
       var id = userId
@@ -68,6 +68,38 @@ const resolveFunctions = {
           var media = ids.map((id) => { return Media.findById(id) });
           return Q.all(media);
         });
+    },
+    group_recommendations(_, { userIds }) {
+      var requestOptions = {
+          uri: 'http://localhost:5000/recommendations',
+          method: 'POST',
+          body: { quantity: 10, group: "Default" },
+          json: true // Automatically parses the JSON string in the response
+      };
+
+      var users = [];
+      for(id in userIds) {
+        let where = { id };
+        var user = {};
+        users.push(User.find({ where }).then(u => {
+          user.id = u.id;
+          return u.getReviews();
+        })
+        .then(reviews => {
+          reviews = reviews.map((review) => { return { imdb: review.mediaId, rating: review.score } });
+          user.ratings = reviews;
+          return user;
+        }))
+      }
+      
+      users = Q.all(users);
+      return users.then((users) => {
+        requestOptions.body.users = users;
+        return rp(requestOptions);
+      }).then(ids => {
+        var media = ids.map((id) => { return Media.findById(id) });
+        return Q.all(media);
+      });
     }
   },
   Media: {
