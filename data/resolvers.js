@@ -79,14 +79,15 @@ const resolveFunctions = {
 
       var users = [];
       for(var id in userIds) {
-        var user = {};
         var userPromise = User.findById(userIds[id]).then(u => {
           return Q.all([u.getReviews(), u.id]);
         })
         .then(u => {
           var reviews = u[0].map((review) => { return { imdb: review.mediaId, rating: review.score } });
-          user.ratings = reviews;
-          user.user = u[1];
+          var user = {
+            ratings: reviews,
+            user: u[1]
+          };
           return user;
         })
         users.push(userPromise);
