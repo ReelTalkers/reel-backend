@@ -79,12 +79,9 @@ const resolveFunctions = {
 
       var users = [];
       for(var id in userIds) {
-        let where = { id };
+        let where = { userIds[id] };
         var user = {};
         users.push(User.find({ where }).then(u => {
-          console.log(id)
-          console.log(user)
-          console.log(u)
           user.id = u.id;
           return u.getReviews();
         })
