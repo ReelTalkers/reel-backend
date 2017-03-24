@@ -84,7 +84,7 @@ const resolveFunctions = {
           return Q.all([u.getReviews(), u.id]);
         })
         .then(u => {
-          reviews = u[0].map((review) => { return { imdb: review.mediaId, rating: review.score } });
+          var reviews = u[0].map((review) => { return { imdb: review.mediaId, rating: review.score } });
           user.ratings = reviews;
           user.user = u[1];
           return user;
