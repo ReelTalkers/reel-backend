@@ -81,12 +81,12 @@ const resolveFunctions = {
       for(var id in userIds) {
         var user = {};
         var userPromise = User.findById(userIds[id]).then(u => {
-          user.user = u.id;
-          return u.getReviews();
+          return Q.all([u.getReviews(), u.id]);
         })
-        .then(reviews => {
-          reviews = reviews.map((review) => { return { imdb: review.mediaId, rating: review.score } });
+        .then(u => {
+          reviews = u[0].map((review) => { return { imdb: review.mediaId, rating: review.score } });
           user.ratings = reviews;
+          user.user = u[1];
           return user;
         })
         users.push(userPromise);
@@ -94,7 +94,6 @@ const resolveFunctions = {
 
       users = Q.all(users);
       return users.then((users) => {
-        console.log(users);
         requestOptions.body.users = users;
         return rp(requestOptions);
       }).then(ids => {
