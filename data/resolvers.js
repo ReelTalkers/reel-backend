@@ -78,7 +78,7 @@ const resolveFunctions = {
       };
 
       var users = [];
-      for(id in userIds) {
+      for(var id in userIds) {
         let where = { id };
         var user = {};
         users.push(User.find({ where }).then(u => {
@@ -91,7 +91,7 @@ const resolveFunctions = {
           return user;
         }))
       }
-      
+
       users = Q.all(users);
       return users.then((users) => {
         requestOptions.body.users = users;
