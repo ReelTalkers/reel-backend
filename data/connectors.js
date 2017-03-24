@@ -143,7 +143,9 @@ casual.seed(123);
 //   specifically media, because we aren't re-syncing it for now, but we may want to re-evaluate
 //   in the future.
 User.sync({ force: true }).then(() => {
-    User.create(mock.user);
+  for(var user in mock.users) {
+    User.create(mock.users[user]);
+  }
 }).then(() => {
   Review.sync({ force: true }).then(() => {
     for(var review in mock.reviews) {
