@@ -81,7 +81,7 @@ const resolveFunctions = {
       for(var id in userIds) {
         var user = {};
         users.push(User.findById(userIds[id]).then(u => {
-          user.id = u.id;
+          user.user = u.id;
           return u.getReviews();
         })
         .then(reviews => {
