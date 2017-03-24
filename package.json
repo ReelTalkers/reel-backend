@@ -22,6 +22,7 @@
     "lodash": "^4.17.4",
     "pg": "^6.1.2",
     "pg-hstore": "^2.3.2",
+    "q": "^1.5.0",
     "request": "^2.79.0",
     "request-promise": "^4.1.1",
     "sequelize": "^3.30.1"

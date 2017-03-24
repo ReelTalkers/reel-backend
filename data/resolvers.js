@@ -7,6 +7,7 @@ import {
   GraphQLPassword
 } from 'graphql-custom-types';
 import rp from "request-promise";
+import Q from 'q';
 
 var parsePhoneNumber = function(value) {
   return value
@@ -64,10 +65,8 @@ const resolveFunctions = {
           return rp(requestOptions);
         })
         .then(ids => {
-          console.log(ids);
-          var media = ids.map((imdb) => { return { id: imdb } });
-          console.log(media);
-          return media;
+          var media = ids.map((id) => { return Media.findById(id) });
+          return Q.all(media);
         });
     }
   },
