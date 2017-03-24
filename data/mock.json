@@ -12,13 +12,38 @@
 		{"mediaId": "tt3498820", "score": "3.5", "userId": "1"},
 		{"mediaId": "tt4172430", "score": ".5", "userId": "1"},
 		{"mediaId": "tt2488496", "score": "2.5", "userId": "1"},
-		{"mediaId": "tt3460252", "score": "3.5", "userId": "1"}
+		{"mediaId": "tt3460252", "score": "3.5", "userId": "1"},
+		{"score": "5.0", "mediaId": "tt0106611", "userId": "2"},
+		{"score": "3.0", "mediaId": "tt0268380", "userId": "2"},
+		{"score": "4.0", "mediaId": "tt0374900", "userId": "2"},
+		{"score": "5.0", "mediaId": "tt0361748", "userId": "2"},
+		{"score": "4.0", "mediaId": "tt0445922", "userId": "2"},
+		{"score": "4.0", "mediaId": "tt3544112", "userId": "2"},
+		{"score": "4.0", "mediaId": "tt1022603", "userId": "2"},
+		{"score": "5.0", "mediaId": "tt1490017", "userId": "2"},
+		{"score": "4.0", "mediaId": "tt0114709", "userId": "2"},
+		{"score": "5.0", "mediaId": "tt1748122", "userId": "2"},
+		{"score": "4.0", "mediaId": "tt2278388", "userId": "2"},
+		{"score": "3.0", "mediaId": "tt0445934", "userId": "2"},
+		{"score": "2.0", "mediaId": "tt1375666", "userId": "2"},
+		{"score": "4.0", "mediaId": "tt0499549", "userId": "2"},
+		{"score": "1.0", "mediaId": "tt0247638", "userId": "2"},
+		{"score": "0.5", "mediaId": "tt0145487", "userId": "2"},
 	],
-	"user": {
-		"userName": "gccaldwell",
-		"firstName": "Galen",
-		"lastName": "Caldwell",
-		"dateJoined": "1994-10-21 12:12:12",
-		"email": "hey@gmail.com"
-	}
+	"users": [
+		{
+			"userName": "gccaldwell",
+			"firstName": "Galen",
+			"lastName": "Caldwell",
+			"dateJoined": "1994-10-21 12:12:12",
+			"email": "hey@gmail.com"
+		},
+		{
+			"userName": "atahamm",
+			"firstName": "Drew",
+			"lastName": "Hamm",
+			"dateJoined": "1914-10-21 12:12:12",
+			"email": "heythere@gmail.com"
+		},
+	]
 }
