@@ -71,7 +71,7 @@ const resolveFunctions = {
     },
     group_recommendations(_, { userIds }) {
       var requestOptions = {
-          uri: 'http://localhost:5000/recommendations',
+          uri: 'http://localhost:5000/group_recommendations',
           method: 'POST',
           body: { quantity: 10, group: "Default" },
           json: true // Automatically parses the JSON string in the response
@@ -79,12 +79,9 @@ const resolveFunctions = {
 
       var users = [];
       for(var id in userIds) {
-        let where = { id };
         var user = {};
-        users.push(User.find({ where }).then(u => {
-          console.log(user)
-          console.log(u)
-          user.id = u.id;
+        users.push(User.findById(userIds[id]).then(u => {
+          user.user = u.id;
           return u.getReviews();
         })
         .then(reviews => {
