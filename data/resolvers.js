@@ -80,14 +80,15 @@ const resolveFunctions = {
       var users = [];
       for(var id in userIds) {
         var user = {};
-        users.push(User.findById(userIds[id]).then(u => {
+        User.findById(userIds[id]).then(u => {
           user.user = u.id;
+          console.log(u.id);
           return u.getReviews();
         })
         .then(reviews => {
           reviews = reviews.map((review) => { return { imdb: review.mediaId, rating: review.score } });
           user.ratings = reviews;
-          return user;
+          users.push(user);
         }))
       }
 
