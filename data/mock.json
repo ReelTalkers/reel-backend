@@ -15,6 +15,8 @@
 		{"mediaId": "tt3460252", "score": "3.5", "userId": "1"},
 		{"mediaId": "tt0110912", "score": "5", "userId": "1"},
 		{"mediaId": "tt0076759", "score": ".5", "userId": "1"},
+		{"mediaId": "tt0109830", "score": "4.5", "userId": "1"},
+		{"mediaId": "tt0108052", "score": "1.5", "userId": "1"},
 		{"score": "5.0", "mediaId": "tt0106611", "userId": "2"},
 		{"score": "3.0", "mediaId": "tt0268380", "userId": "2"},
 		{"score": "4.0", "mediaId": "tt0374900", "userId": "2"},
@@ -29,6 +31,7 @@
 		{"score": "3.0", "mediaId": "tt0445934", "userId": "2"},
 		{"score": "2.0", "mediaId": "tt1375666", "userId": "2"},
 		{"score": "1.0", "mediaId": "tt0247638", "userId": "2"},
+		{"mediaId": "tt0102926", "score": "2.5", "userId": "1"},
 		{"mediaId": "tt0111161", "score": "4.5", "userId": "2"},
 		{"score": "0.5", "mediaId": "tt0145487", "userId": "2"}
 	],
