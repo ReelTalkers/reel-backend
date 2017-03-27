@@ -44,7 +44,9 @@ var getMovie = function(id) {
       res.id = res.imdb_id;
       res.tmdb_average = res.vote_average;
       res.tmdb_votes = res.vote_count;
-      Media.create(res);
+      Media.create(res).catch((res) => {
+        console.log("--- ERROR --- : "res)
+      });
       console.log("Request successful for TMDb id: " + id)
     }).catch(function (err) {
       console.log("Requst failed for TMDb id: " + id + "\n" + err);
