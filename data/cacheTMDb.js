@@ -4,6 +4,7 @@ import csv from "fast-csv";
 var fs = require('fs');
 
 var tmdbkey = fs.readFileSync('tmdbkey.key', 'utf8');
+
 // Hack to get rid of extra line we're reading from the file
 tmdbkey = tmdbkey.slice(0,-1);
 var idStream = fs.createReadStream("data/movieIDs.csv");
@@ -73,7 +74,7 @@ var getMovieBatch = function() {
   }
 }
 
-var timerID = setInterval(getMovieBatch, 11000);
+var timerID = setInterval(getMovieBatch, 13000);
 
 csv.fromStream(idStream)
   .on("data", function(data) {
