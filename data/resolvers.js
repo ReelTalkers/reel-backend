@@ -94,7 +94,9 @@ const resolveFunctions = {
     createUser(_, args) {
       // default dateJoined must be in resolver because it must be run every time
       args.dateJoined = new Date();
-      return User.create(args);
+      return User
+        .findOrCreate({where: args, defaults: {}})
+        .spread( (instance, value) => instance);
     }
   },
   GraphQLURL: GraphQLURL,
