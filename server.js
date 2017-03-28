@@ -12,7 +12,10 @@ require('./auth.js');
 const PORT = 3000;
 var app = express();
 
-app.use('/graphql', bodyParser.json(), graphqlExpress({ schema: schema }));
+app.use('/graphql', bodyParser.json(), graphqlExpress(req => ({
+  schema: schema ,
+  context: { user: req.user },
+})));
 app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql', }));
 
 app.use(session({ secret: SESSION_SECRET }));
