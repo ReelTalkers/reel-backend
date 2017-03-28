@@ -6,19 +6,16 @@ import rp from 'request-promise';
 import passport from 'passport';
 import session from 'express-session';
 
-import { User } from './data/connectors';
-import {FACEBOOK_APP_ID, FACEBOOK_APP_SECRET} from './keys.js';
-
-let FacebookStrategy = require('passport-facebook').Strategy;
+import { SESSION_SECRET } from './keys.js';
+require('./auth.js');
 
 const PORT = 3000;
-
 var app = express();
 
 app.use('/graphql', bodyParser.json(), graphqlExpress({ schema: schema }));
 app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql', }));
 
-app.use(session({ secret: 'keyboard cat' }));
+app.use(session({ secret: SESSION_SECRET }));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -28,40 +25,6 @@ app.get('/',
     response.send('Hello World!')
   }
 )
-
-passport.use(new FacebookStrategy({
-    clientID: FACEBOOK_APP_ID,
-    clientSecret: FACEBOOK_APP_SECRET,
-    callbackURL: "http://localhost:3000/auth/facebook/callback",
-    profileFields: ['id', 'displayName', 'photos', 'email']
-  },
-  function(accessToken, refreshToken, profile, done) {
-    console.log(accessToken);
-    const id = profile.id;
-    const userData = {
-      fullName: profile.displayName,
-      dateJoined: new Date(),
-      email: profile.emails[0].value,
-      smallPhoto: profile.photos[0].value,
-      completedWalkthrough: false,
-    };
-    // where: A hash of search attributes.
-    // defaults: Default values to use if building a new instance
-    return User.findOrCreate({where: {fbID: id}, defaults: userData})
-                .spread( (instance, created) => done(null, instance));
-  }
-));
-
-passport.serializeUser(function(user, done) {
-  done(null, user.id);
-});
-passport.deserializeUser(function(id, done) {
-  const err = "User Find Error";
-  let where = {
-    id: id,
-  }
-  return User.find({ where }).then(user => done(err, user))
-});
 
 app.get('/auth/facebook', passport.authenticate('facebook'));
 app.get('/auth/facebook/callback',
