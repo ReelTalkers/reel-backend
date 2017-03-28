@@ -13,20 +13,30 @@ const db = new Sequelize('database', null, null, {
   storage: './database.sqlite'
 });
 
+// TODO: add some primary key types
 const User = db.define('user', {
   userName: {
     type: Sequelize.STRING,
   },
-  firstName: {
+  fullName: {
     type: Sequelize.STRING,
   },
-  lastName: {
+  email: {
     type: Sequelize.STRING,
   },
   dateJoined: {
     type: Sequelize.DATE,
   },
   email: {
+    type: Sequelize.STRING,
+  },
+  smallPhoto: {
+    type: Sequelize.STRING,
+  },
+  completedWalkthrough: {
+    type: Sequelize.BOOLEAN,
+  },
+  fbID: {
     type: Sequelize.STRING,
   }
 });

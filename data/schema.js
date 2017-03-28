@@ -36,13 +36,13 @@ enum SourceType {
 type User {
   id: ID!
   userName: String
-  firstName: String
-  lastName: String
+  fullName: String
+  email: String
   reviews: [Review]
-  # password: Password
-  # isActive: Boolean!
-  # lastLogin: Date
   dateJoined: GraphQLDateTime
+  smallPhoto: String
+  fbID: String
+  completedWalkthrough: Boolean
   # private: Boolean
 }
 
@@ -124,8 +124,7 @@ type Mutation {
   ): Review
   createUser (
     userName: String
-    firstName: String
-    lastName: String
+    fullName: String
     email: String
   ): User
 }
