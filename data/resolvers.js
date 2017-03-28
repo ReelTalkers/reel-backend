@@ -67,7 +67,10 @@ const resolveFunctions = {
           media = ids.map((id) => { id: imdb });
           return media;
         });
-    }
+    },
+    logged_in(_, args, context) {
+      return typeof context.user !== 'undefined';
+    },
   },
   Media: {
     reviews(obj, args, context) {
