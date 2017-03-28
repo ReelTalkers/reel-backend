@@ -30,22 +30,24 @@ var getMovie = function(id) {
   rp(movieOptions)
     .then((res) => {
       var genres = [];
-      for(var id in res.genres) {
-         var genre = res.genres[id]
+      for(var genreId in res.genres) {
+         var genre = res.genres[genreId]
          genres.push(genre["name"]);
       }
       res.genres = genres;
       var production_companies = [];
-      for(var id in res.production_companies) {
-         var company = res.production_companies[id]
+      for(var companyId in res.production_companies) {
+         var company = res.production_companies[companyId]
          production_companies.push(company.name);
       }
       res.production_companies = production_companies;
       res.id = res.imdb_id;
       res.tmdb_average = res.vote_average;
       res.tmdb_votes = res.vote_count;
-      Media.create(res).catch((res) => {
-        console.log("--- ERROR --- : " + res)
+      console.log(res);
+      Media.create(res).catch((error) => {
+	console.log("--- ERROR ---  \n" + error);
+        //console.log("--- ERROR ---  \nMessaage: " + error.errors[0].message + "\nField: " + error.errors[0].path + "\nValue: " + error.errors[0].value);
       });
       console.log("Request successful for TMDb id: " + id)
     }).catch(function (err) {
@@ -56,7 +58,7 @@ var getMovie = function(id) {
 
 var getMovieBatch = function() {
   var index = globalIndex;
-  while(index<globalIndex+40 && globalIndex<tmdbIDs.length) {
+  while(index<globalIndex+40 && index<tmdbIDs.length) {
     console.log("Current ID: " + tmdbIDs[index]);
     getMovie(tmdbIDs[index]);
     index++

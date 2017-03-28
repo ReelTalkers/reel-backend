@@ -11,7 +11,7 @@ csv.fromStream(idStream)
   .on("data", function(data) {
     var imdbID = "tt" + data[1];
     i = i+1;
-    if(i>1) {
+    if(i>1 && data[2]!="") {
       Media.findById(imdbID)
         .then((media) => {
           if(media==null) {
@@ -33,4 +33,4 @@ setTimeout(function() {
     }
     console.log("The file was saved!");
   });
-}, 30000)
+}, 45000)
