@@ -5,12 +5,16 @@ import schema from './data/schema.js';
 import rp from 'request-promise';
 import passport from 'passport';
 import session from 'express-session';
+import cors from 'cors';
 
 import { SESSION_SECRET } from './keys.js';
 require('./auth.js');
 
 const PORT = 3000;
-var app = express();
+// TODO: Currently this is set up to accept requests from anywhere
+// in prod we will probably want to proxy it to /api or set up cors so that only
+// our frontend can access this
+var app = express().use('*', cors());
 
 app.use('/graphql', bodyParser.json(), graphqlExpress(req => ({
   schema: schema ,
