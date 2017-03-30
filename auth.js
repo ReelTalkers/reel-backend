@@ -19,6 +19,7 @@ passport.use(new FacebookStrategy({
       smallPhoto: profile.photos[0].value,
       completedWalkthrough: false,
     };
+    console.log("Trying to create user");
     // where: A hash of search attributes.
     // defaults: Default values to use if building a new instance
     return User.findOrCreate({where: {fbID: id}, defaults: userData})
@@ -32,9 +33,11 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  const err = "User Find Error";
-  let where = {
+  // At some point we may want to support returning error from user.find
+  // User.find({where: { id }}).then(user => done(null, user));
+  // for now lets just return the id since we dont need anything else for graphql context
+  const user = {
     id: id,
   }
-  return User.find({ where }).then(user => done(err, user))
+  done(null, user);
 });
