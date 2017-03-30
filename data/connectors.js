@@ -69,7 +69,7 @@ const Media = db.define('media', {
     type: Sequelize.STRING
   },
   revenue: {
-    type: Sequelize.INTEGER
+    type: Sequelize.BIGINT
   },
   runtime: {
     type: Sequelize.INTEGER

@@ -72,7 +72,7 @@ type Media {
    poster_path: String
    production_companies: [String]
    release_date: String
-   revenue: Int
+   revenue: String
    reviews: [Review]
    runtime: Int
    sources: [Source]
