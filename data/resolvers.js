@@ -23,6 +23,16 @@ const resolveFunctions = {
       }
       return User.find({ where });
     },
+    current_user(_, args, context) {
+      // if the user is not logged in
+      if (!context.user_id) {
+        return null
+      } else {
+        let id = context.user_id.toString();
+        let where = { id };
+        return User.find({ where });
+      }
+    },
     users() {
       return User.findAll();
     },
@@ -69,7 +79,7 @@ const resolveFunctions = {
         });
     },
     logged_in(_, args, context) {
-      return typeof context.user !== 'undefined';
+      return typeof context.user_id !== 'undefined';
     },
   },
   Media: {
