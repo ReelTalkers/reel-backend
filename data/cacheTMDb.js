@@ -4,7 +4,7 @@ import csv from "fast-csv";
 var fs = require('fs');
 
 var tmdbkey = fs.readFileSync('tmdbkey.key', 'utf8');
-var idStream = fs.createReadStream("data/movieIDs.csv");
+var idStream = fs.createReadStream("data/missingIDs.csv");
 
 var tmdbIDs = []
 
@@ -59,7 +59,7 @@ var getMovieBatch = function() {
   }
 }
 
-var timerID = setInterval(getMovieBatch, 11000);
+var timerID = setInterval(getMovieBatch, 13000);
 
 csv.fromStream(idStream)
   .on("data", function(data) {
