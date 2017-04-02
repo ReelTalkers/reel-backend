@@ -42,7 +42,6 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.use('/graphql', bodyParser.json(), graphqlExpress(request => {
-  console.log('/graphql');
   const id = request.user? request.user.id: request.user;
   return ({
     schema: schema ,
@@ -54,8 +53,7 @@ app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql', }));
 // This get endpoint is used for testing purposes
 app.get('/',
   function(req, response){
-    console.log('/');
-    response.send('<a href="/auth/facebook">Hello World!</a>')
+    response.send('Hello World!')
   }
 )
 
@@ -63,7 +61,6 @@ app.get('/auth/facebook', passport.authenticate('facebook'));
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: 'http://localhost:8080/login' }),
     function(req, res) {
-      console.log('/auth/facebook/callback');
       // Successful authentication, redirect home.
       res.redirect('http://localhost:8080/');
     });
