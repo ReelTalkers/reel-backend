@@ -41,17 +41,12 @@ app.use(session(sessionOpts))
 app.use(passport.initialize())
 app.use(passport.session())
 
-app.use((req, res, next) => {
-  console.log("All requests");
-  console.log(req.user.id);
-  next();
-});
-
 app.use('/graphql', bodyParser.json(), graphqlExpress(request => {
   console.log('/graphql');
+  const id = request.user? request.user.id: request.user;
   return ({
     schema: schema ,
-    context: { user: request.user.id },
+    context: { user_id: id },
   });
 }));
 app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql', }));
