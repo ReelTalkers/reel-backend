@@ -110,7 +110,7 @@ type Query {
   current_user: User
   users: [User]
   people: [Person]
-  all_media(num: Int): [Media]
+  all_media(limit: Int, offset: Int): [Media]
   media(id: String): Media
   search_media(title: String): [Media]
   recommendations(userId: String): [Media]
