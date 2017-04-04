@@ -39,8 +39,10 @@ const resolveFunctions = {
     people() {
       return Person.findAll();
     },
-    all_media() {
-      return Media.findAll()
+    all_media(_, { num }) {
+      return Media.findAll({
+        limit: num
+      })
     },
     media(_, { id }) {
       return Media.findById(id);
