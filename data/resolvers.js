@@ -45,31 +45,7 @@ const resolveFunctions = {
         }
       })
     },
-    recommendations(_, { userId }) {
-      var requestOptions = {
-          uri: 'http://localhost:5000/recommendations',
-          method: 'POST',
-          body: { quantity: 10 },
-          json: true // Automatically parses the JSON string in the response
-      };
-      var id = userId
-      let where = { id };
-      return User.find({ where })
-        .then(user => {
-          requestOptions.body.user = user.id;
-          return user.getReviews();
-        })
-        .then(reviews => {
-          reviews = reviews.map((review) => { return { imdb: review.mediaId, rating: review.score } });
-          requestOptions.body.ratings = reviews;
-          return rp(requestOptions);
-        })
-        .then(ids => {
-          var media = ids.map((id) => { return Media.findById(id) });
-          return Q.all(media);
-        });
-    },
-    group_recommendations(_, { userIds, genre, quantity }) {
+    recommendations(_, { userIds, genre, quantity }) {
       var requestOptions = {
           uri: 'http://localhost:5000/recommendations',
           method: 'POST',
