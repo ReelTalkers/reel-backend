@@ -69,11 +69,11 @@ const resolveFunctions = {
           return Q.all(media);
         });
     },
-    group_recommendations(_, { userIds }) {
+    group_recommendations(_, { userIds, genre }) {
       var requestOptions = {
           uri: 'http://localhost:5000/group_recommendations',
           method: 'POST',
-          body: { quantity: 10, group: "Default" },
+          body: { quantity: 10, genre: genre, method: "least_misery" },
           json: true // Automatically parses the JSON string in the response
       };
 
@@ -86,7 +86,8 @@ const resolveFunctions = {
           var reviews = u[0].map((review) => { return { imdb: review.mediaId, rating: review.score } });
           var user = {
             ratings: reviews,
-            user: u[1]
+            user: u[1],
+            is_cached: false
           };
           return user;
         })

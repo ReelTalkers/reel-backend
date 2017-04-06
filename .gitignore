@@ -9,3 +9,5 @@ database.sqlite
 
 *.key
 unsuccessfulRequests.txt
+keys.js
+sessions.db
