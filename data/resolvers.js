@@ -69,11 +69,11 @@ const resolveFunctions = {
           return Q.all(media);
         });
     },
-    group_recommendations(_, { userIds, genre }) {
+    group_recommendations(_, { userIds, genre, quantity }) {
       var requestOptions = {
           uri: 'http://localhost:5000/recommendations',
           method: 'POST',
-          body: { quantity: 10, genre: genre, method: "least_misery" },
+          body: { quantity: quantity, genre: genre, method: "least_misery" },
           json: true // Automatically parses the JSON string in the response
       };
 
