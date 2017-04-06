@@ -112,8 +112,7 @@ type Query {
   all_media: [Media]
   media(id: String): Media
   search_media(title: String): [Media]
-  recommendations(userId: String): [Media]
-  group_recommendations(userIds: [String], genre: String, quantity: Int): [Media]
+  recommendations(userIds: [String], genre: String, quantity: Int): [Media]
 }
 
 # this schema allows the following mutation:
