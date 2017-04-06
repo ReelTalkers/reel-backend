@@ -71,7 +71,7 @@ const resolveFunctions = {
     },
     group_recommendations(_, { userIds, genre }) {
       var requestOptions = {
-          uri: 'http://localhost:5000/group_recommendations',
+          uri: 'http://localhost:5000/recommendations',
           method: 'POST',
           body: { quantity: 10, genre: genre, method: "least_misery" },
           json: true // Automatically parses the JSON string in the response
