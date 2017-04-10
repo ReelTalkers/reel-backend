@@ -19,6 +19,14 @@ var movieOptions = {
     json: true // Automatically parses the JSON string in the response
 };
 
+// Return a promise telling whether a movie is present in the db
+var checkMovie = function(id) {
+  return Media.findByID(id)
+    .then((media) => {
+      return (null==media);
+    });
+}
+
 // var timerID = setInterval(someCachingFunction, 13000);
 
 csv.fromStream(idStream)
