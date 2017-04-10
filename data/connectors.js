@@ -189,4 +189,4 @@ const Movie = {
 }
 */
 
-export { User, Person, Media, Review };
+export { User, Person, Media, Review, Credit, Cast };
