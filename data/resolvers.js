@@ -83,7 +83,7 @@ const resolveFunctions = {
         users.push(userPromise);
       }
 
-      var filterGenres(genre) {
+      var filterGenres = function(genre) {
         return !genres.includes(genre);
       }
 
