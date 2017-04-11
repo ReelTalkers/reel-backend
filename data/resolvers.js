@@ -13,6 +13,7 @@ var parsePhoneNumber = function(value) {
   return value
 }
 
+// These two methods create function closures for use in recommendations query
 var createDoesNotInclude = function(list) {
   return function(obj) {
     return !list.includes(obj);
@@ -105,14 +106,18 @@ const resolveFunctions = {
       return users.then((users) => {
           requestOptions.body.users = users;
           return rp(requestOptions);
-        }).then(filterGenres(genres))
+        }).then(filterGenres(genres)) // Makes call to closure function at the top of this file
         .then(genresResponse => {
-	  console.log(genresResponse);
-          return Object.keys(genresResponse).map(function (genre) {
-            return { name: genre }
-          });
-          //var genres = genresResponse.map((genre) => { return Media.findById(id) });
-          //return Q.all(genres);
+          var genres = []
+          for(key in Object.keys(genresResponse)) {
+            var genreMedia = genresResponse[key].map(function(id) => {
+              return Media.findById(id);
+            });
+            genreMedia = Q.all(genreMedia);
+            genres.push({ name: key, media: genreMedia });
+          }
+          genres = Q.all(genres);
+          return genres;
         });
     },
     logged_in(_, args, context) {
