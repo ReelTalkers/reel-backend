@@ -27,6 +27,10 @@ var checkMovie = function(id) {
     });
 }
 
+var cacheCredits = function(tmdbID, imdbID) {
+  checkMovie(imdbID) // Function closures are going to be painful here. Can't access tmdbID inside the then
+}
+
 // var timerID = setInterval(someCachingFunction, 13000);
 
 csv.fromStream(idStream)
