@@ -36,13 +36,13 @@ enum SourceType {
 type User {
   id: ID!
   userName: String
-  firstName: String
-  lastName: String
+  fullName: String
+  email: String
   reviews: [Review]
-  # password: Password
-  # isActive: Boolean!
-  # lastLogin: Date
   dateJoined: GraphQLDateTime
+  smallPhoto: String
+  fbID: String
+  completedWalkthrough: Boolean
   # private: Boolean
 }
 
@@ -107,12 +107,14 @@ type Review {
 type Query {
   # Query uses id by default, but will resort to userName if id is not specified
   user(id: String, userName: String): User
+  current_user: User
   users: [User]
   people: [Person]
-  all_media: [Media]
+  all_media(limit: Int, offset: Int): [Media]
   media(id: String): Media
   search_media(title: String): [Media]
   recommendations(userIds: [String], genre: String, quantity: Int): [Media]
+  logged_in: Boolean
 }
 
 # this schema allows the following mutation:
@@ -124,8 +126,7 @@ type Mutation {
   ): Review
   createUser (
     userName: String
-    firstName: String
-    lastName: String
+    fullName: String
     email: String
   ): User
 }

@@ -24,14 +24,27 @@ const resolveFunctions = {
       }
       return User.find({ where });
     },
+    current_user(_, args, context) {
+      // if the user is not logged in
+      if (!context.user_id) {
+        return null
+      } else {
+        let id = context.user_id.toString();
+        let where = { id };
+        return User.find({ where });
+      }
+    },
     users() {
       return User.findAll();
     },
     people() {
       return Person.findAll();
     },
-    all_media() {
-      return Media.findAll()
+    all_media(_, { limit, offset }) {
+      return Media.findAll({
+        limit: limit,
+        offset: offset
+      })
     },
     media(_, { id }) {
       return Media.findById(id);
@@ -78,7 +91,10 @@ const resolveFunctions = {
         var media = ids.map((id) => { return Media.findById(id) });
         return Q.all(media);
       });
-    }
+    },
+    logged_in(_, args, context) {
+      return typeof context.user_id !== 'undefined';
+    },
   },
   Media: {
     reviews(obj, args, context) {
@@ -105,7 +121,9 @@ const resolveFunctions = {
     createUser(_, args) {
       // default dateJoined must be in resolver because it must be run every time
       args.dateJoined = new Date();
-      return User.create(args);
+      return User
+        .findOrCreate({where: args, defaults: {}})
+        .spread( (instance, value) => instance);
     }
   },
   GraphQLURL: GraphQLURL,

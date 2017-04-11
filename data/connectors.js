@@ -17,20 +17,27 @@ const db = new Sequelize('reeldb', 'reelservice', databasekey, {
   dialect: 'postgres',
 });
 
+// TODO: add some primary key types
 const User = db.define('user', {
   userName: {
     type: Sequelize.STRING,
   },
-  firstName: {
-    type: Sequelize.STRING,
-  },
-  lastName: {
+  fullName: {
     type: Sequelize.STRING,
   },
   dateJoined: {
     type: Sequelize.DATE,
   },
   email: {
+    type: Sequelize.STRING,
+  },
+  smallPhoto: {
+    type: Sequelize.STRING,
+  },
+  completedWalkthrough: {
+    type: Sequelize.BOOLEAN,
+  },
+  fbID: {
     type: Sequelize.STRING,
   }
 });
