@@ -13,16 +13,21 @@ var parsePhoneNumber = function(value) {
   return value
 }
 
-var filterGenres(genres) {
-  filterFunction = function(genre) {
-    return !genres.includes(genre);
+var createDoesNotInclude = function(list) {
+  return function(obj) {
+    return !list.includes(obj);
   }
-  return function(filterFunction) {
-    return Object.keys(genresResponse)
+}
+
+var filterGenres = function(genres) {
+  var filterFunction = createDoesNotInclude(genres);
+  return function(genresResponse) {
+    Object.keys(genresResponse)
       .filter(filterFunction)
       .forEach(function (genre) {
         delete genresResponse[genre];
       })
+    return genresResponse;
   }
 }
 
@@ -102,7 +107,8 @@ const resolveFunctions = {
           return rp(requestOptions);
         }).then(filterGenres(genres))
         .then(genresResponse => {
-          return genresResponse.map(function (genre) {
+	  console.log(genresResponse);
+          return Object.keys(genresResponse).map(function (genre) {
             return { name: genre }
           });
           //var genres = genresResponse.map((genre) => { return Media.findById(id) });
