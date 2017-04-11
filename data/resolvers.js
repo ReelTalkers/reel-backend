@@ -58,11 +58,11 @@ const resolveFunctions = {
         }
       })
     },
-    recommendations(_, { userIds, genre, quantity }) {
+    recommendations(_, { userIds, genres, quantity }) {
       var requestOptions = {
           uri: 'http://localhost:5000/recommendations',
           method: 'POST',
-          body: { quantity: quantity, genre: genre, method: "least_misery" },
+          body: { quantity: quantity, method: "least_misery" },
           json: true // Automatically parses the JSON string in the response
       };
 
@@ -83,14 +83,26 @@ const resolveFunctions = {
         users.push(userPromise);
       }
 
+      var filterGenres(genre) {
+        return !genres.includes(genre);
+      }
+
       users = Q.all(users);
       return users.then((users) => {
-        requestOptions.body.users = users;
-        return rp(requestOptions);
-      }).then(ids => {
-        var media = ids.map((id) => { return Media.findById(id) });
-        return Q.all(media);
-      });
+          requestOptions.body.users = users;
+          return rp(requestOptions);
+        }).then(genresResponse => {
+          Object.keys(genresResponse).filter(filterGenres)
+            .forEach(function (genre) {
+              delete genresResponse[genre];
+            })
+            .map(function (genre) {
+              return { name: genre }
+            });
+          return genresResponse;
+          //var genres = genresResponse.map((genre) => { return Media.findById(id) });
+          //return Q.all(genres);
+        });
     },
     logged_in(_, args, context) {
       return typeof context.user_id !== 'undefined';

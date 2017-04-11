@@ -95,7 +95,12 @@ type Media {
 #   last_updated: Date
 #   type: MediaType
  }
-#
+
+type Genre {
+  name: String
+  media: [Media]
+}
+
 type Review {
    id: ID!
    score: Int
@@ -113,7 +118,7 @@ type Query {
   all_media(limit: Int, offset: Int): [Media]
   media(id: String): Media
   search_media(title: String): [Media]
-  recommendations(userIds: [String], genre: String, quantity: Int): [Media]
+  recommendations(userIds: [String], genres: [String], quantity: Int): [Genre]
   logged_in: Boolean
 }
 
