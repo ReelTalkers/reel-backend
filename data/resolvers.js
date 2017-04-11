@@ -13,6 +13,19 @@ var parsePhoneNumber = function(value) {
   return value
 }
 
+var filterGenres(genres) {
+  filterFunction = function(genre) {
+    return !genres.includes(genre);
+  }
+  return function(filterFunction) {
+    return Object.keys(genresResponse)
+      .filter(filterFunction)
+      .forEach(function (genre) {
+        delete genresResponse[genre];
+      })
+  }
+}
+
 const resolveFunctions = {
   Query: {
     user(_, { id, userName }) {
@@ -83,23 +96,15 @@ const resolveFunctions = {
         users.push(userPromise);
       }
 
-      var filterGenres(genre) {
-        return !genres.includes(genre);
-      }
-
       users = Q.all(users);
       return users.then((users) => {
           requestOptions.body.users = users;
           return rp(requestOptions);
-        }).then(genresResponse => {
-          Object.keys(genresResponse).filter(filterGenres)
-            .forEach(function (genre) {
-              delete genresResponse[genre];
-            })
-            .map(function (genre) {
-              return { name: genre }
-            });
-          return genresResponse;
+        }).then(filterGenres(genres))
+        .then(genresResponse => {
+          return genresResponse.map(function (genre) {
+            return { name: genre }
+          });
           //var genres = genresResponse.map((genre) => { return Media.findById(id) });
           //return Q.all(genres);
         });
