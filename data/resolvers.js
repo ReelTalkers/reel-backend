@@ -7,6 +7,9 @@ import {
   GraphQLPassword
 } from 'graphql-custom-types';
 import rp from "request-promise";
+var fs = require('fs');
+
+var guideboxkey = fs.readFileSync('guideboxkey.key', 'utf8')
 
 var parsePhoneNumber = function(value) {
   return value
@@ -113,7 +116,52 @@ const resolveFunctions = {
           department: "Writing"
         }
       })
-    }
+    },
+    sources(obj, args, context) {
+      var requestOptions = {
+          uri: 'http://api-public.guidebox.com/v2/search?type=movie&field=title&query=' + obj.title,
+          qs: {
+              api_key: guideboxkey // -> uri + '?api_key=xxxxx%20xxxxx'
+          },
+          headers: {
+              'User-Agent': 'Request-Promise'
+          },
+          json: true // Automatically parses the JSON string in the response
+      };
+
+      var findId = function(results) {
+        return results[0].id;
+      }
+
+      var requestMovie = function(requestOptions) {
+        return function(id) {
+          requestOptions.uri = 'http://api-public.guidebox.com/v2/movies/' + id;
+          return rp(requestOptions);
+        }
+      }
+
+      var parseSources = function(results) {
+        // Do we want to implement the following?
+        // free_web_sources
+        // tv_everywhere_web_sources
+        var sources = [];
+        results.subscription_web_sources.forEach((source) => {
+          sources.push({name:source.display_name, link: source.link, type:"Subscription", price:0.0 })
+        });
+        results.purchase_web_sources.forEach((source) => {
+          source.formats.forEach((format) => {
+            sources.push({ name: source.display_name, link: source.link, type:format.type, price:format.price })
+          })
+        });
+
+        return sources;
+      }
+
+      return rp(requestOptions)
+        .then(findId)
+        .then(requestMovie(requestOptions))
+        .then(parseSources)
+    },
   },
   Review: {
     media(obj, args, context) {

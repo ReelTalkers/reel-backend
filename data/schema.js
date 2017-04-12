@@ -28,11 +28,6 @@ scalar GraphQLDateTime
 scalar GraphQLLimitedString
 scalar GraphQLPassword
 
-enum SourceType {
-  SUBSCRIPTION
-  PAID
-}
-
 type User {
   id: ID!
   userName: String
@@ -73,7 +68,8 @@ type Crew {
 type Source {
   name: String
   link: String
-  type: SourceType
+  type: String
+  price: Float
 }
 #
 type Media {
