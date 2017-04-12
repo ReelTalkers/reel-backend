@@ -107,7 +107,7 @@ const Person = db.define('person', {
 });
 
 // Junction between people and movies for production roles
-const Crew = db.define('credit', {
+const Crew = db.define('crew', {
   department: {
     type: Sequelize.STRING
   },
@@ -116,8 +116,8 @@ const Crew = db.define('credit', {
   }
 });
 
-Media.hasMany(Crew, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
-Person.hasMany(Crew, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+Media.hasMany(Crew, { foreignKey: { name:'mediaId', allowNull: false }, onDelete: 'CASCADE' });
+Person.hasMany(Crew, { foreignKey: { name:'personId', allowNull: false }, onDelete: 'CASCADE' });
 
 const Cast = db.define('cast', {
   character: {
@@ -128,8 +128,8 @@ const Cast = db.define('cast', {
   }
 });
 
-Person.hasMany(Cast, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
-Media.hasMany(Cast, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+Person.hasMany(Cast, { foreignKey: { name:'personId', allowNull: false }, onDelete: 'CASCADE' });
+Media.hasMany(Cast, { foreignKey: { name:'mediaId', allowNull: false }, onDelete: 'CASCADE' });
 
 // Sync models we have declared with our database
 
@@ -138,18 +138,14 @@ User.sync({ force: true }).then(() => {
     User.create(mock.user);
 });
 
-Person.sync({ force: true }).then(() => {
-  _.times(2, () => {
-    return Person.create({
-      firstName: casual.first_name,
-      lastName: casual.last_name
-    });
-  });
-});
+Person.sync({ force: false });
 
 Review.sync({ force: true });
 
 Media.sync({ force: false });
+
+Cast.sync({force: false});
+Crew.sync({force: false});
 
 // We no longer use this, but it is still useful as an example for api queries
 /*

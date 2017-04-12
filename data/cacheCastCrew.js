@@ -5,10 +5,11 @@ var fs = require('fs');
 var Promise = require("bluebird");
 
 var tmdbkey = fs.readFileSync('tmdbkey.key', 'utf8');
-var idStream = fs.createReadStream("data/missingIDs.csv");
+var idStream = fs.createReadStream("data/movieIDs.csv");
 
 var ids = []
 var globalIndex = 1
+var intervalId = null
 
 var movieOptions = {
     uri: 'https://api.themoviedb.org/3/movie/',
@@ -23,14 +24,14 @@ var movieOptions = {
 
 // Return a promise telling whether a movie is present in the db. Uses imdbID
 var checkMovie = function(idPair) {
-  return Media.findById(idPair[0])
+  return Media.findById(("tt" + idPair[0]))
     .then((media) => {
-      return (null==media);
+      return (null!==media);
     });
 }
 
 var findCredits = function(tmdbId) {
-  movieOptions.uri = "https://api.themoviedb.org/3/movie/" + id + "/credits";
+  movieOptions.uri = "https://api.themoviedb.org/3/movie/" + tmdbId + "/credits";
   return rp(movieOptions);
 }
 
@@ -40,6 +41,7 @@ var parseCrew = function(credits) {
       department: crewMember.department,
       job: crewMember.job,
       personId: crewMember.id,
+      mediaId: credits.id,
       name: crewMember.name,
       profile_path: crewMember.profile_path
     }
@@ -53,6 +55,7 @@ var parseCast = function(credits) {
       character: castMember.character,
       order: castMember.order,
       personId: castMember.id,
+      mediaId: credits.id,
       name: castMember.name,
       profile_path: castMember.profile_path
     }
@@ -64,7 +67,7 @@ var createPersonReturnCredit = function(credit) {
   var returnCredit = function() {
     return credit;
   }
-  return function() {
+  return function(person) {
     if(!person) {
       return Person.create({id: credit.personId, name: credit.name, profile_path: credit.profile_path})
         .then(returnCredit);
@@ -76,15 +79,25 @@ var createPersonReturnCredit = function(credit) {
 
 var checkPersonExists = function(credit) {
   return Person.findById(credit.personId)
-    .then(createPersonReturnCredit);
+    .then(createPersonReturnCredit(credit));
 }
 
 var createCrew = function(crew) {
-  return Crew.create(crew);
+  return Crew.create(crew)
+    .catch(function(err) {
+      console.log("----- ERROR ----- : " + err);
+    });
 }
 
+var logError = function(cast) {
+  return function(err) {
+    console.log("----- ERROR ----- : " + err);
+    console.log("--- Cast --- : " + cast);
+  }
+}
 var createCast = function(cast) {
-  return Cast.create(cast);
+  return Cast.create(cast)
+    .catch(logError(cast));
 }
 
 var cacheCredits = function(tmdbID) {
@@ -103,12 +116,15 @@ var cachingLoop = function(ids) {
     cacheCredits(ids[globalIndex][1]);
     globalIndex = globalIndex + 1;
   }
+
+  if(globalIndex>=ids.length)
+    clearInterval(intervalId);
 }
 
 var cacheAllCredits = function(ids) {
   ids = Promise.filter(ids, checkMovie);
   ids.then((ids) => {
-    var timerID = setInterval(someCachingFunction, 13000);
+    intervalId = setInterval(cachingLoop, 13000);
     cachingLoop(ids);
   })
 }

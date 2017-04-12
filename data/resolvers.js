@@ -1,5 +1,5 @@
 import { GraphQLScalarType } from 'graphql';
-import { User, Person, Media, Review } from './connectors';
+import { User, Person, Media, Review, Cast, Crew } from './connectors';
 import {
   GraphQLURL,
   GraphQLDateTime,
@@ -38,6 +38,12 @@ const resolveFunctions = {
     },
     people() {
       return Person.findAll();
+    },
+    crew() {
+      return Crew.findAll();
+    },
+    cast() {
+      return Cast.findAll();
     },
     all_media(_, { limit, offset }) {
       return Media.findAll({
