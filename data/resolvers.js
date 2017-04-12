@@ -99,6 +99,20 @@ const resolveFunctions = {
       return obj.getCasts({
         limit: args.limit
       });
+    },
+    directors(obj, args, context) {
+      return obj.getCrews({
+        where: {
+          job: "Director"
+        }
+      })
+    },
+    writers(obj, args, context) {
+      return obj.getCrews({
+        where: {
+          department: "Writing"
+        }
+      })
     }
   },
   Review: {
