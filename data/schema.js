@@ -56,11 +56,15 @@ type Person {
 type Cast {
   character: String
   order: Int
+  mediaId: ID
+  personId: ID
 }
 
 type Crew {
   department: String
   job: String
+  mediaId: ID
+  personId: ID
 }
 
 # Where you can watch a movie

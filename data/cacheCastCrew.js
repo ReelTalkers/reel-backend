@@ -35,32 +35,36 @@ var findCredits = function(tmdbId) {
   return rp(movieOptions);
 }
 
-var parseCrew = function(credits) {
-  var crew = credits.crew.map((crewMember) => {
-    return {
-      department: crewMember.department,
-      job: crewMember.job,
-      personId: crewMember.id,
-      mediaId: credits.id,
-      name: crewMember.name,
-      profile_path: crewMember.profile_path
-    }
-  });
-  return crew;
+var parseCrew = function(imdbID) {
+  return function(credits) {
+    var crew = credits.crew.map((crewMember) => {
+      return {
+        department: crewMember.department,
+        job: crewMember.job,
+        personId: crewMember.id,
+        mediaId: ("tt" + imdbID),
+        name: crewMember.name,
+        profile_path: crewMember.profile_path
+      }
+    });
+    return crew;
+  }
 }
 
-var parseCast = function(credits) {
-  var cast = credits.cast.map((castMember) => {
-    return {
-      character: castMember.character,
-      order: castMember.order,
-      personId: castMember.id,
-      mediaId: credits.id,
-      name: castMember.name,
-      profile_path: castMember.profile_path
-    }
-  });
-  return cast;
+var parseCast = function(imdbID) {
+  return function(credits) {
+    var cast = credits.cast.map((castMember) => {
+      return {
+        character: castMember.character,
+        order: castMember.order,
+        personId: castMember.id,
+        mediaId: ("tt"+imdbID),
+        name: castMember.name,
+        profile_path: castMember.profile_path
+      }
+    });
+    return cast;
+  }
 }
 
 var createPersonReturnCredit = function(credit) {
@@ -82,38 +86,52 @@ var checkPersonExists = function(credit) {
     .then(createPersonReturnCredit(credit));
 }
 
-var createCrew = function(crew) {
-  return Crew.create(crew)
-    .catch(function(err) {
-      console.log("----- ERROR ----- : " + err);
-    });
-}
-
-var logError = function(cast) {
+var logError = function(value) {
   return function(err) {
-    console.log("----- ERROR ----- : " + err);
-    console.log("--- Cast --- : " + cast);
+    console.log("----- ERROR ----- : " + err.parent.code);
+    console.log("--- Value --- : " + value.mediaId);
   }
 }
-var createCast = function(cast) {
-  return Cast.create(cast)
-    .catch(logError(cast));
+
+var createCrew = function(crew) {
+  crew.forEach((crewMember) => {
+    Crew.create(crewMember)
+      .then((res) => {
+        console.log("------ CREW CREATED SUCCESSFULLY ------")
+      })
+      .catch(logError(crewMember));
+  });
 }
 
-var cacheCredits = function(tmdbID) {
+var createCast = function(cast) {
+  cast.forEach((castMember) => {
+    Cast.create(castMember)
+      .then((res) => {
+        console.log("------ CAST CREATED SUCCESSFULLY ------")
+      })
+      .catch(logError(castMember));
+  });
+}
+
+var cacheCredits = function(tmdbID, imdbID) {
   var credits = findCredits(tmdbID);
-  var crew = credits.then(parseCrew);
-  var cast = credits.then(parseCast);
-  crew.then(checkPersonExists)
+  var crew = credits.then(parseCrew(imdbID));
+  var cast = credits.then(parseCast(imdbID));
+  crew = Promise.map(crew, checkPersonExists)
     .then(createCrew);
-  cast.then(checkPersonExists)
+  cast = Promise.map(cast, checkPersonExists)
     .then(createCast);
+}
+
+var otherCaching = function(ids) {
+  intervalId = setInterval(cachingLoop, 13000);
+  cachingLoop(ids)
 }
 
 var cachingLoop = function(ids) {
   var currentIndex = globalIndex;
   while(globalIndex<currentIndex+40 && globalIndex<ids.length) {
-    cacheCredits(ids[globalIndex][1]);
+    cacheCredits(ids[globalIndex][1], ids[globalIndex][0]);
     globalIndex = globalIndex + 1;
   }
 
@@ -124,14 +142,17 @@ var cachingLoop = function(ids) {
 var cacheAllCredits = function(ids) {
   ids = Promise.filter(ids, checkMovie);
   ids.then((ids) => {
-    intervalId = setInterval(cachingLoop, 13000);
-    cachingLoop(ids);
+    otherCaching(ids);
   })
 }
 
+var i = 0
+
 csv.fromStream(idStream)
   .on("data", function(data) {
-    ids.push([data[1], data[2]]);
+    if(i<100)
+      ids.push([data[1], data[2]]);
+    i++
   })
   .on("end",function() {
     cacheAllCredits(ids);
