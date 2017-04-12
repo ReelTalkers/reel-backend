@@ -1,5 +1,5 @@
 import { GraphQLScalarType } from 'graphql';
-import { User, Person, Media, Review } from './connectors';
+import { User, Person, Media, Review, Cast, Crew } from './connectors';
 import {
   GraphQLURL,
   GraphQLDateTime,
@@ -58,6 +58,12 @@ const resolveFunctions = {
     },
     people() {
       return Person.findAll();
+    },
+    crew() {
+      return Crew.findAll();
+    },
+    cast() {
+      return Cast.findAll();
     },
     all_media(_, { limit, offset }) {
       return Media.findAll({
@@ -127,6 +133,25 @@ const resolveFunctions = {
   Media: {
     reviews(obj, args, context) {
       return obj.getReviews();
+    },
+    cast(obj, args, context) {
+      return obj.getCasts({
+        limit: args.limit
+      });
+    },
+    directors(obj, args, context) {
+      return obj.getCrews({
+        where: {
+          job: "Director"
+        }
+      })
+    },
+    writers(obj, args, context) {
+      return obj.getCrews({
+        where: {
+          department: "Writing"
+        }
+      })
     }
   },
   Review: {
@@ -140,7 +165,32 @@ const resolveFunctions = {
   User: {
     reviews(obj, args, context) {
       return obj.getReviews();
+    },
+  },
+  Person: {
+    roles(obj, args, context) {
+      // Sequelize auto-naming ftw
+      return obj.getCasts();
+    },
+    credits(obj, args, context) {
+      return obj.getCrews();
     }
+  },
+  Crew: {
+    media(obj, args, context) {
+      return Media.findById(obj.mediaId);
+    },
+    person(obj, args, context) {
+      return Person.findById(obj.personId);
+    },
+  },
+  Cast: {
+    media(obj, args, context) {
+      return Media.findById(obj.mediaId);
+    },
+    person(obj, args, context) {
+      return Person.findById(obj.personId);
+    },
   },
   Mutation: {
     createReview(_, args) {

@@ -6,12 +6,14 @@
   "scripts": {
     "start": "nodemon ./server.js --exec babel-node",
     "cache_data": "babel-node ./data/cacheTMDb.js",
+    "cache_credits": "babel-node ./data/cacheCastCrew.js",
     "find_missing_media": "babel-node ./data/findMissingMedia.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bluebird": "^3.5.0",
     "body-parser": "^1.16.0",
     "casual": "^1.5.10",
     "connect-sqlite3": "^0.9.9",
@@ -30,6 +32,7 @@
     "q": "^1.5.0",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
+    "q": "^1.5.0",
     "request": "^2.79.0",
     "request-promise": "^4.1.1",
     "sequelize": "^3.30.1"

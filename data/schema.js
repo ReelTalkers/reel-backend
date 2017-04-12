@@ -49,8 +49,24 @@ type User {
 # # Profile of someone who has been associated with shows
 type Person {
   id: ID!
-  firstName: String
-  lastName: String
+  name: String
+  profile_path: String
+  roles: [Cast]
+  credits: [Crew]
+}
+
+type Cast {
+  character: String
+  order: Int
+  media: Media
+  person: Person
+}
+
+type Crew {
+  department: String
+  job: String
+  media: Media
+  person: Person
 }
 
 # Where you can watch a movie
@@ -63,8 +79,8 @@ type Source {
 type Media {
    backdrop_path: String
    budget: Int
-   cast: [Person]
-   directors: [Person]
+   cast(limit: Int): [Cast]
+   directors: [Crew]
    id: ID!
    genres: [String]
    original_language: String
@@ -81,7 +97,7 @@ type Media {
    title: String
    tmdb_average: Float
    tmdb_votes: Int
-   writers: [Person]
+   writers: [Crew]
 
 #   plot: String
 #   full_plot: String
@@ -114,6 +130,8 @@ type Query {
   user(id: String, userName: String): User
   current_user: User
   users: [User]
+  cast: [Cast]
+  crew: [Crew]
   people: [Person]
   all_media(limit: Int, offset: Int): [Media]
   media(id: String): Media
