@@ -146,13 +146,9 @@ var cacheAllCredits = function(ids) {
   })
 }
 
-var i = 0
-
 csv.fromStream(idStream)
   .on("data", function(data) {
-    if(i<100)
-      ids.push([data[1], data[2]]);
-    i++
+    ids.push([data[1], data[2]]);
   })
   .on("end",function() {
     cacheAllCredits(ids);
