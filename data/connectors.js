@@ -107,7 +107,7 @@ const Person = db.define('person', {
 });
 
 // Junction between people and movies for production roles
-const Credit = db.define('credit', {
+const Crew = db.define('credit', {
   department: {
     type: Sequelize.STRING
   },
@@ -116,8 +116,8 @@ const Credit = db.define('credit', {
   }
 });
 
-Media.hasMany(Credit, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
-Person.hasMany(Credit, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+Media.hasMany(Crew, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+Person.hasMany(Crew, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
 
 const Cast = db.define('cast', {
   character: {
@@ -189,4 +189,4 @@ const Movie = {
 }
 */
 
-export { User, Person, Media, Review, Credit, Cast };
+export { User, Person, Media, Review, Crew, Cast };
