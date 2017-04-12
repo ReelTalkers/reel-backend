@@ -115,13 +115,16 @@ const resolveFunctions = {
         }).then(filterGenres(genres)) // Makes call to closure function at the top of this file
         .then(genresResponse => {
           var genres = []
-          for(key in Object.keys(genresResponse)) {
-            var genreMedia = genresResponse[key].map(function(id) => {
+          Object.keys(genresResponse).forEach(function(key,index) {
+	    console.log(key)
+	    console.log(genresResponse)
+	    console.log(genresResponse[key])
+            var genreMedia = genresResponse[key].map((id) => {
               return Media.findById(id);
             });
             genreMedia = Q.all(genreMedia);
             genres.push({ name: key, media: genreMedia });
-          }
+          });
           genres = Q.all(genres);
           return genres;
         });
