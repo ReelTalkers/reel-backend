@@ -78,7 +78,7 @@ const resolveFunctions = {
       return Media.findAll({
         where: {
           title: {
-            $like: ('%'+title+'%'),
+            $iLike: ('%'+title+'%'),
           }
         }
       })
