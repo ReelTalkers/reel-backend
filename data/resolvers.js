@@ -130,7 +130,7 @@ const resolveFunctions = {
       };
 
       var findId = function(results) {
-        return results[0].id;
+        return results.results[0].id;
       }
 
       var requestMovie = function(requestOptions) {
