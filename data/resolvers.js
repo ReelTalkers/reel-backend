@@ -94,6 +94,11 @@ const resolveFunctions = {
   Media: {
     reviews(obj, args, context) {
       return obj.getReviews();
+    },
+    cast(obj, args, context) {
+      return obj.getCasts({
+        limit: args.limit
+      });
     }
   },
   Review: {
@@ -107,7 +112,32 @@ const resolveFunctions = {
   User: {
     reviews(obj, args, context) {
       return obj.getReviews();
+    },
+  },
+  Person: {
+    roles(obj, args, context) {
+      // Sequelize auto-naming ftw
+      return obj.getCasts();
+    },
+    credits(obj, args, context) {
+      return obj.getCrews();
     }
+  },
+  Crew: {
+    media(obj, args, context) {
+      return Media.findById(obj.mediaId);
+    },
+    person(obj, args, context) {
+      return Person.findById(obj.personId);
+    },
+  },
+  Cast: {
+    media(obj, args, context) {
+      return Media.findById(obj.mediaId);
+    },
+    person(obj, args, context) {
+      return Person.findById(obj.personId);
+    },
   },
   Mutation: {
     createReview(_, args) {

@@ -51,20 +51,22 @@ type Person {
   id: ID!
   name: String
   profile_path: String
+  roles: [Cast]
+  credits: [Crew]
 }
 
 type Cast {
   character: String
   order: Int
-  mediaId: ID
-  personId: ID
+  media: Media
+  person: Person
 }
 
 type Crew {
   department: String
   job: String
-  mediaId: ID
-  personId: ID
+  media: Media
+  person: Person
 }
 
 # Where you can watch a movie
@@ -77,8 +79,8 @@ type Source {
 type Media {
    backdrop_path: String
    budget: Int
-   cast: [Person]
-   directors: [Person]
+   cast(limit: Int): [Cast]
+   directors: [Crew]
    id: ID!
    genres: [String]
    original_language: String
@@ -95,7 +97,7 @@ type Media {
    title: String
    tmdb_average: Float
    tmdb_votes: Int
-   writers: [Person]
+   writers: [Crew]
 
 #   plot: String
 #   full_plot: String
