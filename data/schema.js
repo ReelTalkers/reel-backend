@@ -127,6 +127,7 @@ type Query {
   all_media(limit: Int, offset: Int): [Media]
   media(id: String): Media
   search_media(title: String): [Media]
+  search_users(username: String): [User]
   recommendations(userId: String): [Media]
   logged_in: Boolean
 }

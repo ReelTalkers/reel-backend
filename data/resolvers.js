@@ -39,6 +39,15 @@ const resolveFunctions = {
     users() {
       return User.findAll();
     },
+    search_users(_, { username }) {
+      return User.findAll({
+        where: {
+          username:  {
+            $like: ('%'+username+'%')
+          }
+        }
+      })
+    },
     people() {
       return Person.findAll();
     },
