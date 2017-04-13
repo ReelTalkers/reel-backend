@@ -7,9 +7,10 @@ import {
   GraphQLPassword
 } from 'graphql-custom-types';
 import rp from "request-promise";
+import { GUIDEBOX_KEY } from '../keys.js';
 var fs = require('fs');
 
-var guideboxkey = fs.readFileSync('guideboxkey.key', 'utf8')
+var guideboxkey = GUIDEBOX_KEY
 
 var parsePhoneNumber = function(value) {
   return value

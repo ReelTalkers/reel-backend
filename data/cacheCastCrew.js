@@ -3,8 +3,9 @@ import rp from "request-promise";
 import csv from "fast-csv";
 var fs = require('fs');
 var Promise = require("bluebird");
+import { TMDB_KEY } from '../keys.js';
 
-var tmdbkey = fs.readFileSync('tmdbkey.key', 'utf8');
+var tmdbkey = TMDB_KEY;
 var idStream = fs.createReadStream("data/movieIDs.csv");
 
 var ids = []

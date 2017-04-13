@@ -1,9 +1,10 @@
 import { Media } from './connectors';
 import rp from "request-promise";
 import csv from "fast-csv";
+import { TMDB_KEY } from '../keys.js';
 var fs = require('fs');
 
-var tmdbkey = fs.readFileSync('tmdbkey.key', 'utf8');
+var tmdbkey = TMDB_KEY;
 var idStream = fs.createReadStream("data/missingIDs.csv");
 
 var tmdbIDs = []

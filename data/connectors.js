@@ -2,11 +2,12 @@ import Sequelize from 'sequelize';
 import casual from 'casual';
 import _ from 'lodash';
 import rp from "request-promise";
+import { GUIDEBOX_KEY, TMDB_KEY } from '../keys.js';
 var fs = require('fs');
 var mock = require('./mock.json');
 
-var tmdbkey = fs.readFileSync('tmdbkey.key', 'utf8');
-var guideboxkey = fs.readFileSync('guideboxkey.key', 'utf8')
+var tmdbkey = TMDB_KEY;
+var guideboxkey = GUIDEBOX_KEY;
 
 const db = new Sequelize('database', null, null, {
   dialect: 'sqlite',
