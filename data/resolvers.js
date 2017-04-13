@@ -211,8 +211,22 @@ const resolveFunctions = {
     },
   },
   Mutation: {
-    createReview(_, args) {
-      return Review.create(args);
+    reviewMedia(_, args) {
+      var updateOrCreate = function(args) {
+        return function(currentReview) {
+          if(currentReview) {
+            return currentReview.update({ score: args.score });
+          } else {
+            return Review.create(args);
+          }
+        }
+      }
+      return Review.findOne({
+        where: {
+          mediaId: args.mediaId,
+          userId: args.userId
+        }
+      }).then(updateOrCreate(args));
     },
     createUser(_, args) {
       // default dateJoined must be in resolver because it must be run every time
