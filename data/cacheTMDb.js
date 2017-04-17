@@ -1,12 +1,10 @@
 import { Media } from './connectors';
 import rp from "request-promise";
 import csv from "fast-csv";
+import { TMDB_KEY } from '../keys.js';
 var fs = require('fs');
 
-var tmdbkey = fs.readFileSync('tmdbkey.key', 'utf8');
-
-// Hack to get rid of extra line we're reading from the file
-tmdbkey = tmdbkey.slice(0,-1);
+var tmdbkey = TMDB_KEY;
 var idStream = fs.createReadStream("data/missingIDs.csv");
 
 var tmdbIDs = []

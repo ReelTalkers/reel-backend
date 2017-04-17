@@ -3,8 +3,9 @@ import rp from "request-promise";
 import csv from "fast-csv";
 var fs = require('fs');
 var Promise = require("bluebird");
+import { TMDB_KEY } from '../keys.js';
 
-var tmdbkey = fs.readFileSync('tmdbkey.key', 'utf8');
+var tmdbkey = TMDB_KEY;
 var idStream = fs.createReadStream("data/movieIDs.csv");
 
 var ids = []
@@ -123,13 +124,14 @@ var cacheCredits = function(tmdbID, imdbID) {
     .then(createCast);
 }
 
-var otherCaching = function(ids) {
+var otherCaching = function() {
   intervalId = setInterval(cachingLoop, 13000);
-  cachingLoop(ids)
+  cachingLoop()
 }
 
-var cachingLoop = function(ids) {
+var cachingLoop = function() {
   var currentIndex = globalIndex;
+  console.log(ids);
   while(globalIndex<currentIndex+40 && globalIndex<ids.length) {
     cacheCredits(ids[globalIndex][1], ids[globalIndex][0]);
     globalIndex = globalIndex + 1;
@@ -139,17 +141,22 @@ var cachingLoop = function(ids) {
     clearInterval(intervalId);
 }
 
-var cacheAllCredits = function(ids) {
-  ids = Promise.filter(ids, checkMovie);
-  ids.then((ids) => {
-    otherCaching(ids);
-  })
+var cacheAllCredits = function() {
+  Promise.filter(ids, checkMovie)
+    .then((filteredIDs) => {
+      ids = filteredIDs
+      otherCaching();
+    })
 }
+
+var i = 0;
 
 csv.fromStream(idStream)
   .on("data", function(data) {
-    ids.push([data[1], data[2]]);
+    if(i<150)
+      ids.push([data[1], data[2]]);
+    i++;
   })
   .on("end",function() {
-    cacheAllCredits(ids);
+    cacheAllCredits();
   });
