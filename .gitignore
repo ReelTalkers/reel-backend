@@ -11,3 +11,4 @@ database.sqlite
 unsuccessfulRequests.txt
 keys.js
 sessions.db
+nohup.out
