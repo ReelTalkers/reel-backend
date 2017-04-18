@@ -218,7 +218,7 @@ const resolveFunctions = {
           if(currentReview) {
             return currentReview.update({ score: args.score });
           } else {
-            return Review.create({ mediaId: args.mediaId, score: args.score, userId: context.userId}});
+            return Review.create({ mediaId: args.mediaId, score: args.score, userId: context.userId});
           }
         }
       }
