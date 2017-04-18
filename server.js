@@ -11,6 +11,9 @@ import Sequelize from 'sequelize';
 var SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 import { SESSION_SECRET } from './keys.js';
+var databasekey = fs.readFileSync('database.key','utf8')
+// Cut out the new line at the end of the file read for the db key
+databasekey = databasekey.slice(0,-1)
 
 const PORT = 3000;
 // TODO: Currently this is set up to accept requests from anywhere
@@ -26,22 +29,25 @@ var corsOptions = {
 };
 app.use(cors(corsOptions));
 
-var sequelize = new Sequelize(
-"database",
-null,
-null, {
-    "dialect": "sqlite", // TODO: use postgres
-    "storage": "./session.sqlite"
-});
+const sessions = new Sequelize(
+  'reelsessions',
+  'reelservice',
+  databasekey,
+  {
+    host: 'localhost',
+    port: 5432,
+    dialect: 'postgres',
+  }
+);
 // In prod we will want sessions to persist
-sequelize.sync({ force: true });
+sessions.sync({ force: true });
 
 var sessionOpts = {
   saveUninitialized: true, // saved new sessions
   resave: true, // do not automatically write to the session store
   secret: SESSION_SECRET,
   store: new SequelizeStore({
-    db: sequelize
+    db: sessions
   }),
   cookie : { httpOnly: true, maxAge: 86400000 } // configure when sessions expires
 }
