@@ -8,6 +8,7 @@ import passport from 'passport';
 import session from 'express-session';
 import cors from 'cors';
 import Sequelize from 'sequelize';
+var fs = require('fs');
 var SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 import { SESSION_SECRET } from './keys.js';
