@@ -6,8 +6,9 @@ import schema from './data/schema.js';
 import rp from 'request-promise';
 import passport from 'passport';
 import session from 'express-session';
-var SQLiteStore = require('connect-sqlite3')(session);
 import cors from 'cors';
+import Sequelize from 'sequelize';
+var SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 import { SESSION_SECRET } from './keys.js';
 
@@ -20,17 +21,29 @@ require('./auth.js');
 var app = express();
 
 var corsOptions = {
-  origin: 'http://localhost:8080',
+  origin: 'http://localhost:8080', // eventually change this to our domain
   credentials: true // <-- REQUIRED backend setting
 };
 app.use(cors(corsOptions));
+
+var sequelize = new Sequelize(
+"database",
+null,
+null, {
+    "dialect": "sqlite",
+    "storage": "./session.sqlite"
+});
+// In prod we will want sessions to persist
+sequelize.sync({ force: true });
 
 var sessionOpts = {
   saveUninitialized: true, // saved new sessions
   resave: true, // do not automatically write to the session store
   secret: SESSION_SECRET,
-  store: new SQLiteStore,
-  cookie : { httpOnly: true, maxAge: 2419200000 } // configure when sessions expires
+  store: new SequelizeStore({
+    db: sequelize
+  }),
+  cookie : { httpOnly: true, maxAge: 86400000 } // configure when sessions expires
 }
 
 app.use(bodyParser.json())
