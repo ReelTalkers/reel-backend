@@ -2,14 +2,16 @@ import Sequelize from 'sequelize';
 import casual from 'casual';
 import _ from 'lodash';
 import rp from "request-promise";
+import { GUIDEBOX_KEY, TMDB_KEY } from '../keys.js';
 var fs = require('fs');
 var mock = require('./mock.json');
 
-var tmdbkey = fs.readFileSync('tmdbkey.key', 'utf8');
-var guideboxkey = fs.readFileSync('guideboxkey.key', 'utf8')
 var databasekey = fs.readFileSync('database.key','utf8')
 // Cut out the new line at the end of the file read for the db key
 databasekey = databasekey.slice(0,-1)
+
+var tmdbkey = TMDB_KEY;
+var guideboxkey = GUIDEBOX_KEY;
 
 const db = new Sequelize('reeldb', 'reelservice', databasekey, {
   host: 'localhost',

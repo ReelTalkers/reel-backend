@@ -28,11 +28,6 @@ scalar GraphQLDateTime
 scalar GraphQLLimitedString
 scalar GraphQLPassword
 
-enum SourceType {
-  SUBSCRIPTION
-  PAID
-}
-
 type User {
   id: ID!
   userName: String
@@ -73,7 +68,8 @@ type Crew {
 type Source {
   name: String
   link: String
-  type: SourceType
+  type: String
+  price: Float
 }
 #
 type Media {
@@ -137,12 +133,13 @@ type Query {
   media(id: String): Media
   search_media(title: String): [Media]
   recommendations(userIds: [String], genres: [String], quantity: Int): [Genre]
+  search_users(username: String): [User]
   logged_in: Boolean
 }
 
 # this schema allows the following mutation:
 type Mutation {
-  createReview (
+  reviewMedia (
     userId: ID
     mediaId: ID
     score: Int
