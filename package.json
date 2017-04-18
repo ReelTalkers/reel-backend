@@ -16,6 +16,7 @@
     "bluebird": "^3.5.0",
     "body-parser": "^1.16.0",
     "casual": "^1.5.10",
+    "connect-session-sequelize": "^4.1.0",
     "connect-sqlite3": "^0.9.9",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.1",
