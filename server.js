@@ -45,7 +45,7 @@ app.use('/graphql', bodyParser.json(), graphqlExpress(request => {
   const id = request.user? request.user.id: request.user;
   return ({
     schema: schema ,
-    context: { user_id: id },
+    context: { userId: id },
   });
 }));
 app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql', }));

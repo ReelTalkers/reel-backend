@@ -135,7 +135,6 @@ type Query {
 # this schema allows the following mutation:
 type Mutation {
   reviewMedia (
-    userId: ID
     mediaId: ID
     score: Int
   ): Review
