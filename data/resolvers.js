@@ -49,10 +49,10 @@ const resolveFunctions = {
     },
     current_user(_, args, context) {
       // if the user is not logged in
-      if (!context.user_id) {
+      if (!context.userId) {
         return null
       } else {
-        let id = context.user_id.toString();
+        let id = context.userId.toString();
         let where = { id };
         return User.find({ where });
       }
@@ -143,7 +143,7 @@ const resolveFunctions = {
         });
     },
     logged_in(_, args, context) {
-      return typeof context.user_id !== 'undefined';
+      return typeof context.userId !== 'undefined';
     },
   },
   Media: {
@@ -254,22 +254,22 @@ const resolveFunctions = {
     },
   },
   Mutation: {
-    reviewMedia(_, args) {
-      var updateOrCreate = function(args) {
+    reviewMedia(_, args, context) {
+      var updateOrCreate = function(args, context) {
         return function(currentReview) {
           if(currentReview) {
             return currentReview.update({ score: args.score });
           } else {
-            return Review.create(args);
+            return Review.create({ mediaId: args.mediaId, score: args.score, userId: context.userId}});
           }
         }
       }
       return Review.findOne({
         where: {
           mediaId: args.mediaId,
-          userId: args.userId
+          userId: context.userId
         }
-      }).then(updateOrCreate(args));
+      }).then(updateOrCreate(args, context));
     },
     createUser(_, args) {
       // default dateJoined must be in resolver because it must be run every time
