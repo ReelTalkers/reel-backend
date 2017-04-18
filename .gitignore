@@ -11,3 +11,4 @@ database.sqlite
 unsuccessfulRequests.txt
 keys.js
 session.sqlite
+sessions.db
