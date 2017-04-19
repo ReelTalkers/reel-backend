@@ -287,7 +287,8 @@ const resolveFunctions = {
     addUserToGroup(_, { id }, context) {
       var addUser = function(id) {
         return function(user) {
-          var group = user.lastGroup.push(id);
+          var group = user.lastGroup;
+          group.push(id);
           return user.update({ lastGroup: group }).then((user) => { return user.lastGroup });
         }
       }
