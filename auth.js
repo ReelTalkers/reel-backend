@@ -17,8 +17,7 @@ passport.use(new FacebookStrategy({
       dateJoined: new Date(),
       email: profile.emails[0].value,
       smallPhoto: profile.photos[0].value,
-      completedWalkthrough: false,
-      lastGroup: []
+      completedWalkthrough: false
     };
     console.log("Trying to create user");
     // where: A hash of search attributes.

@@ -43,7 +43,8 @@ const User = db.define('user', {
     type: Sequelize.STRING,
   },
   lastGroup: {
-    type: Sequelize.ARRAY(Sequelize.STRING)
+    type: Sequelize.ARRAY(Sequelize.STRING),
+    defaultValue: []
   }
 });
 
