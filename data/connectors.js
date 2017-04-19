@@ -43,7 +43,6 @@ const User = db.define('user', {
     type: Sequelize.STRING,
   },
   group: {
-    type: Sequelize.ARRAY(Sequelize.STRING),
     defaultValue: []
   }
 });
