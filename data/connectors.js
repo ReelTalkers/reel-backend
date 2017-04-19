@@ -41,6 +41,9 @@ const User = db.define('user', {
   },
   fbID: {
     type: Sequelize.STRING,
+  },
+  lastGroup: {
+    type: Sequelize.Array(Sequelize.STRING)
   }
 });
 

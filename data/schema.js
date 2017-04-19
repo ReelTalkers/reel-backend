@@ -38,6 +38,7 @@ type User {
   smallPhoto: String
   fbID: String
   completedWalkthrough: Boolean
+  lastGroup: [ID]
   # private: Boolean
 }
 
@@ -149,6 +150,12 @@ type Mutation {
     fullName: String
     email: String
   ): User
+  addUserToGroup(
+    id: ID
+  ): [ID]
+  removeUserFromGroup(
+    id: ID
+  ): [ID]
 }
 
 # we need to tell the server which types represent the root query

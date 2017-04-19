@@ -283,6 +283,29 @@ const resolveFunctions = {
       return User
         .findOrCreate({where: args, defaults: {}})
         .spread( (instance, value) => instance);
+    },
+    addUserToGroup(_, { id }, context) {
+      var addUser = function(id) {
+        return function(user) {
+          var group = user.lastGroup.push(id);
+          return user.update({ lastGroup: group }).then((user) => { return user.lastGroup });
+        }
+      }
+      return User.findById(context.userId)
+        .then(addUser(id));
+    },
+    removeUserFromGroup(_, { id }, context) {
+      var removeUser = funtion(id) {
+        return function(user) {
+          var group = user.lastGroup;
+          var index = group.indexOf(id);
+          if (index > -1)
+            group.splice(index, 1)
+          return user.update({ lastGroup: group}).then((user) => { return user.lastGroup });
+        }
+      }
+      return User.findById(context.userId)
+        .then(removeUser(id));
     }
   },
   GraphQLURL: GraphQLURL,
