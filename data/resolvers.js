@@ -96,7 +96,7 @@ const resolveFunctions = {
         }
       })
     },
-    recommendations(_, { userIds, genres, quantity }) {
+    recommendations(_, { userIds, genres, quantity }, context) {
       var requestOptions = {
           uri: 'http://localhost:5000/recommendations',
           method: 'POST',
@@ -105,6 +105,7 @@ const resolveFunctions = {
       };
 
       var users = [];
+      userIds.push(context.userId);
       for(var id in userIds) {
         var userPromise = User.findById(userIds[id]).then(u => {
           return Q.all([u.getReviews(), u.id]);
@@ -129,9 +130,6 @@ const resolveFunctions = {
         .then(genresResponse => {
           var genres = []
           Object.keys(genresResponse).forEach(function(key,index) {
-	    console.log(key)
-	    console.log(genresResponse)
-	    console.log(genresResponse[key])
             var genreMedia = genresResponse[key].map((id) => {
               return Media.findById(id);
             });
