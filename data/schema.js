@@ -85,6 +85,7 @@ type Media {
    production_companies: [String]
    release_date: String
    revenue: Int
+   review: Review
    reviews: [Review]
    runtime: Int
    sources: [Source]
