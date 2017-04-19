@@ -150,6 +150,14 @@ const resolveFunctions = {
     reviews(obj, args, context) {
       return obj.getReviews();
     },
+    review(obj, args, context) {
+      return Review.findOne({
+       where: {
+         mediaId: obj.id,
+         userId: context.userId
+       }
+     });
+    },
     cast(obj, args, context) {
       return obj.getCasts({
         limit: args.limit
