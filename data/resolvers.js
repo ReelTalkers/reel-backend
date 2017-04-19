@@ -287,10 +287,14 @@ const resolveFunctions = {
     addUserToGroup(_, { id }, context) {
       var addUser = function(id) {
         return function(user) {
-          var group = new Set(user.lastGroup);
-          group.add(id);
-          group = Array.from(group);
-          return user.update({ lastGroup: group }).then((user) => { return user.lastGroup });
+          var newGroup = new Set(user.group);
+
+          let where = { id };
+          newUser = User.find({ where });
+
+          newGroup.add(newUser);
+          newGroup = Array.from(newGroup);
+          return user.update({ group: newGroup }).then((user) => { return user.group });
         }
       }
       return User.findById(context.userId)
@@ -299,11 +303,13 @@ const resolveFunctions = {
     removeUserFromGroup(_, { id }, context) {
       var removeUser = function(id) {
         return function(user) {
-          var group = user.lastGroup;
-          var index = group.indexOf(id);
-          if (index > -1)
-            group.splice(index, 1)
-          return user.update({ lastGroup: group}).then((user) => { return user.lastGroup });
+          var newGroup = user.group;
+
+          newGroup = newGroup.filter(function( user ) {
+            return user.id !== id;
+          });
+
+          return user.update({ group: newGroup}).then((user) => { return user.group });
         }
       }
       return User.findById(context.userId)

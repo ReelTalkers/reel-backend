@@ -38,7 +38,7 @@ type User {
   smallPhoto: String
   fbID: String
   completedWalkthrough: Boolean
-  lastGroup: [ID]
+  group: [User]
   # private: Boolean
 }
 
