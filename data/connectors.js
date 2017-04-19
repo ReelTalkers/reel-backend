@@ -42,7 +42,7 @@ const User = db.define('user', {
   fbID: {
     type: Sequelize.STRING,
   },
-  lastGroup: {
+  group: {
     type: Sequelize.ARRAY(Sequelize.STRING),
     defaultValue: []
   }
