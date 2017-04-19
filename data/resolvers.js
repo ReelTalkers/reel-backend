@@ -290,7 +290,7 @@ const resolveFunctions = {
           var newGroup = new Set(user.group);
 
           let where = { id };
-          newUser = User.find({ where });
+          let newUser = User.find({ where });
 
           newGroup.add(newUser);
           newGroup = Array.from(newGroup);
