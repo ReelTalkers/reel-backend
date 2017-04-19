@@ -152,10 +152,10 @@ type Mutation {
   ): User
   addUserToGroup(
     id: ID
-  ): [ID]
+  ): [User]
   removeUserFromGroup(
     id: ID
-  ): [ID]
+  ): [User]
 }
 
 # we need to tell the server which types represent the root query
