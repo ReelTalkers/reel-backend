@@ -295,7 +295,7 @@ const resolveFunctions = {
         .then(addUser(id));
     },
     removeUserFromGroup(_, { id }, context) {
-      var removeUser = funtion(id) {
+      var removeUser = function(id) {
         return function(user) {
           var group = user.lastGroup;
           var index = group.indexOf(id);
