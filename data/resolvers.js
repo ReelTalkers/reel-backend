@@ -290,9 +290,9 @@ const resolveFunctions = {
     addUserToGroup(_, { id }, context) {
       var addUser = function(id) {
         return function(user) {
-          let newUser = User.findById(id);
-
-          return user.addGroupMember(newUser).then((user) => { return user.getGroupMembers() });
+          return User.findById(id)
+            .then((newUser) => user.addGroupMember(newUser))
+            .then((user) => { return user.getGroupMembers() });
         }
       }
       return User.findById(context.userId)
@@ -301,9 +301,9 @@ const resolveFunctions = {
     removeUserFromGroup(_, { id }, context) {
       var removeUser = function(id) {
         return function(user) {
-          let userToRemove = User.findById(id);
-
-          return user.removeGroupMember(userToRemove).then((user) => { return user.getGroupMembers() });
+          return User.findById(id)
+            .then((userToRemove) => user.removeGroupMember(userToRemove))
+            .then((user) => { return user.getGroupMembers() });
         }
       }
       return User.findById(context.userId)
