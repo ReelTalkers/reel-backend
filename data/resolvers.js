@@ -291,7 +291,7 @@ const resolveFunctions = {
       var addUser = function(id) {
         return function(user) {
           return User.findById(id)
-            .then((newUser) => user.addGroupMember(newUser))
+            .then((newUser) => {console.log(user); return user.addGroupMember(newUser);})
             .then((user) => {
               return user.getGroupMembers()
             });
