@@ -175,7 +175,7 @@ const resolveFunctions = {
         }
       })
     },
-    similar_movies(obj, args, context) {
+    similar_media(obj, args, context) {
       var requestOptions = {
           uri: 'http://localhost:5000/similar_movies',
           method: 'POST',
