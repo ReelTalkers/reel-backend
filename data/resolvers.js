@@ -292,7 +292,12 @@ const resolveFunctions = {
         return function(user) {
           return User.findById(id)
             .then((newUser) => user.addGroupMember(newUser))
-            .then((user) => { return user.getGroupMembers() });
+            .then((user) => {
+              console.log("*****");
+              console.log(user);
+              console.log("*****");
+              return user.getGroupMembers()
+            });
         }
       }
       return User.findById(context.userId)
