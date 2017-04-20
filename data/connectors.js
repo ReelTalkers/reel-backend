@@ -44,7 +44,7 @@ const User = db.define('user', {
   }
 });
 
-const UserGroup = sequelize.define('userGroup', {});
+const UserGroup = db.define('userGroup', {});
 User.belongsToMany(User, { as: 'GroupMembers', through: 'UserGroup' });
 
 // See sequailize enums to update some of these fields
