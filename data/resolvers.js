@@ -109,15 +109,8 @@ const resolveFunctions = {
       var users = [];
       // For testing without front-end
       if(context.userId)
-        userIds = User.findById(context.userId)
-          .then(user => user.getGroupMembers())
-          .then(groupMembers => {
-            const groupIds = groupMembers.map(user => user.id);
-            console.log(groupIds);
-            return groupIds.push(context.userId)
-          });
         userIds.push(context.userId);
-
+        
       for(var id in userIds) {
         var userPromise = User.findById(userIds[id]).then(u => {
           return Q.all([u.getReviews(), u.id]);
