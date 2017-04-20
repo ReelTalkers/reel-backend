@@ -112,8 +112,9 @@ const resolveFunctions = {
         userIds = User.findById(context.userId)
           .then(user => user.getGroupMembers())
           .then(groupMembers => {
-            console.log(groupMembers);
-            return groupMembers.push(context.userId)
+            const groupIds = groupMembers.map(user => user.id);
+            console.log(groupIds);
+            return groupIds.push(context.userId)
           });
         userIds.push(context.userId);
 
