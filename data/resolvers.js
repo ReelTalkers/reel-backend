@@ -62,8 +62,8 @@ const resolveFunctions = {
     },
     search_users(_, { username, quantity }) {
       return User.findAll({
+        limit: quantity,
         where: {
-          limit: quantity,
           username:  {
             $like: ('%'+username+'%')
           }
@@ -90,8 +90,8 @@ const resolveFunctions = {
     },
     search_media(_, { title, quantity }) {
       return Media.findAll({
+        limit: quantity,
         where: {
-          limit: quantity,
           title: {
             $iLike: ('%'+title+'%'),
           }
