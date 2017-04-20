@@ -175,6 +175,19 @@ const resolveFunctions = {
         }
       })
     },
+    similar_movies(obj, args, context) {
+      var requestOptions = {
+          uri: 'http://localhost:5000/similar_movies',
+          method: 'POST',
+          body: { quantity: args.quantity, movies: [obj.id] },
+          json: true // Automatically parses the JSON string in the response
+      };
+
+      return rp(requestOptions)
+        .then((response) => {
+          return response.map((id) => Media.findById(id));
+        })
+    },
     sources(obj, args, context) {
       var requestOptions = {
           uri: 'http://api-public.guidebox.com/v2/search?type=movie&field=title&query=' + obj.title,

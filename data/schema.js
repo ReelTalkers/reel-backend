@@ -89,6 +89,7 @@ type Media {
    review: Review
    reviews: [Review]
    runtime: Int
+   similar_movies(quantity: Int): [Media]
    sources: [Source]
    status: Boolean
    tagline: String
