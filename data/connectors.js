@@ -41,9 +41,6 @@ const User = db.define('user', {
   },
   fbID: {
     type: Sequelize.STRING,
-  },
-  group: {
-    defaultValue: []
   }
 });
 
