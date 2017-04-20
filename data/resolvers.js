@@ -65,7 +65,7 @@ const resolveFunctions = {
         limit: quantity,
         where: {
           fullName:  {
-            $like: ('%'+fullName+'%')
+            $iLike: ('%'+fullName+'%')
           }
         }
       })
