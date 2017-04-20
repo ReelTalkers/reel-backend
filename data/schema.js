@@ -134,9 +134,9 @@ type Query {
   people: [Person]
   all_media(limit: Int, offset: Int): [Media]
   media(id: String): Media
-  search_media(title: String): [Media]
+  search_media(title: String, quantity: Int): [Media]
   recommendations(userIds: [String], genres: [String], quantity: Int): [Genre]
-  search_users(username: String): [User]
+  search_users(username: String, quantity: Int): [User]
   logged_in: Boolean
 }
 

@@ -60,9 +60,10 @@ const resolveFunctions = {
     users() {
       return User.findAll();
     },
-    search_users(_, { username }) {
+    search_users(_, { username, quantity }) {
       return User.findAll({
         where: {
+          limit: quantity,
           username:  {
             $like: ('%'+username+'%')
           }
@@ -87,9 +88,10 @@ const resolveFunctions = {
     media(_, { id }) {
       return Media.findById(id);
     },
-    search_media(_, { title }) {
+    search_media(_, { title, quantity }) {
       return Media.findAll({
         where: {
+          limit: quantity,
           title: {
             $iLike: ('%'+title+'%'),
           }
