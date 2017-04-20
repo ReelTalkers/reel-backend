@@ -234,7 +234,7 @@ const resolveFunctions = {
       return obj.getReviews();
     },
     groupMembers(obj, args, context) {
-      return obj.groupMembers();
+      return obj.getGroupMembers();
     }
   },
   Person: {
