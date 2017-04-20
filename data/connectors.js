@@ -45,7 +45,7 @@ const User = db.define('user', {
 });
 
 const UserGroup = db.define('userGroup', {});
-User.belongsToMany(User, { as: { singular: 'groupMember', plural: 'groupMembers' }, through: 'userGroup' });
+User.belongsToMany(User, { as: 'groupMembers', through: 'userGroup' });
 
 // See sequailize enums to update some of these fields
 // .ARRAY is a type if we are using PostgreSQL (deal with genres then?)
