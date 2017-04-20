@@ -107,7 +107,9 @@ const resolveFunctions = {
       };
 
       var users = [];
-      userIds.push(context.userId);
+      // For debugging
+      if(context.userId)
+        userIds.push(context.userId);
       for(var id in userIds) {
         var userPromise = User.findById(userIds[id]).then(u => {
           return Q.all([u.getReviews(), u.id]);
