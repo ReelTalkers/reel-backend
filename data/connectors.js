@@ -44,6 +44,7 @@ const User = db.define('user', {
   }
 });
 
+const UserGroup = sequelize.define('userGroup', {});
 User.belongsToMany(User, { as: 'GroupMembers', through: 'UserGroup' });
 
 // See sequailize enums to update some of these fields
@@ -163,6 +164,8 @@ User.sync({ force: true }).then(() => {
       Review.create(mock.reviews[review]);
     }
   });
+}).then(() => {
+  UserGroup.sync({ force: true });
 });
 
 Person.sync({ force: false });
