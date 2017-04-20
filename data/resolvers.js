@@ -107,7 +107,7 @@ const resolveFunctions = {
       };
 
       var users = [];
-      // For debugging
+      // For testing without front-end
       if(context.userId)
         userIds.push(context.userId);
       for(var id in userIds) {
