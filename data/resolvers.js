@@ -60,12 +60,12 @@ const resolveFunctions = {
     users() {
       return User.findAll();
     },
-    search_users(_, { userName, quantity }) {
+    search_users(_, { fullName, quantity }) {
       return User.findAll({
         limit: quantity,
         where: {
-          userName:  {
-            $like: ('%'+userName+'%')
+          fullName:  {
+            $like: ('%'+fullName+'%')
           }
         }
       })
