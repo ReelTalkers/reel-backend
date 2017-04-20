@@ -292,8 +292,8 @@ const resolveFunctions = {
         return function(user) {
           return User.findById(id)
             .then((newUser) => user.addGroupMember(newUser))
-            .then((user) => {
-              console.log(Object.getOwnPropertyNames(user));
+            .then(() => {
+              console.log(user);
               return user.getGroupMembers()
             });
         }
