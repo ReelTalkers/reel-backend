@@ -233,6 +233,9 @@ const resolveFunctions = {
     reviews(obj, args, context) {
       return obj.getReviews();
     },
+    groupMembers(obj, args, context) {
+      return obj.groupMembers();
+    }
   },
   Person: {
     roles(obj, args, context) {
