@@ -77,7 +77,7 @@ type Media {
    backdrop_path: String
    budget: Int
    cast(limit: Int): [Cast]
-   credits: [Cast]
+   credits: [Crew]
    directors: [Crew]
    id: ID!
    genres: [String]

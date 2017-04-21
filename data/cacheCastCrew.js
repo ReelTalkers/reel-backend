@@ -9,7 +9,7 @@ var tmdbkey = TMDB_KEY;
 var idStream = fs.createReadStream("data/movieIDs.csv");
 
 var ids = []
-var globalIndex = 1
+var globalIndex = 0
 var intervalId = null
 
 var movieOptions = {
@@ -154,5 +154,6 @@ csv.fromStream(idStream)
     ids.push([data[1], data[2]]);
   })
   .on("end",function() {
+    ids = [["0110912", "680"]]
     cacheAllCredits();
   });
