@@ -98,11 +98,11 @@ const resolveFunctions = {
         }
       })
     },
-    recommendations(_, { userIds, genres, quantity }, context) {
+    recommendations(_, { userIds, genres, minYear, quantity }, context) {
       var requestOptions = {
           uri: 'http://localhost:5000/recommendations',
           method: 'POST',
-          body: { quantity: quantity, method: "least_misery" },
+          body: { quantity: quantity, min_year: minYear, method: "least_misery" },
           json: true // Automatically parses the JSON string in the response
       };
 
@@ -110,7 +110,7 @@ const resolveFunctions = {
       // For testing without front-end
       if(context.userId)
         userIds.push(context.userId);
-        
+
       for(var id in userIds) {
         var userPromise = User.findById(userIds[id]).then(u => {
           return Q.all([u.getReviews(), u.id]);
