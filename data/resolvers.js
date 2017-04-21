@@ -60,12 +60,12 @@ const resolveFunctions = {
     users() {
       return User.findAll();
     },
-    search_users(_, { username, quantity }) {
+    search_users(_, { fullName, quantity }) {
       return User.findAll({
         limit: quantity,
         where: {
-          username:  {
-            $like: ('%'+username+'%')
+          fullName:  {
+            $iLike: ('%'+fullName+'%')
           }
         }
       })
@@ -110,6 +110,7 @@ const resolveFunctions = {
       // For testing without front-end
       if(context.userId)
         userIds.push(context.userId);
+        
       for(var id in userIds) {
         var userPromise = User.findById(userIds[id]).then(u => {
           return Q.all([u.getReviews(), u.id]);
