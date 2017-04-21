@@ -14,8 +14,12 @@ csv.fromStream(idStream)
     if(i>1 && data[2]!="") {
       Media.findById(imdbID)
         .then((media) => {
-          if(media==null) {
-            missingIDs.push(data);
+          if(media!=null) {
+            media.getCasts().then((cast) => {
+              if(!cast) {
+                missingIDs.push(media.id);
+              }
+            })
           }
         })
     }
