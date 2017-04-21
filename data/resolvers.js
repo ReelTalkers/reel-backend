@@ -165,6 +165,11 @@ const resolveFunctions = {
         limit: args.limit
       });
     },
+    credits(obj, args, context) {
+      return obj.getCrews({
+        limit: args.limit
+      });
+    },
     directors(obj, args, context) {
       return obj.getCrews({
         where: {
