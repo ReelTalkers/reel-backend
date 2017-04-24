@@ -40,6 +40,7 @@ var parseCrew = function(imdbID) {
   return function(credits) {
     var crew = credits.crew.map((crewMember) => {
       return {
+        id: crewMember.credit_id,
         department: crewMember.department,
         job: crewMember.job,
         personId: crewMember.id,
@@ -52,90 +53,104 @@ var parseCrew = function(imdbID) {
   }
 }
 
-var parseCast = function(imdbID) {
-  return function(credits) {
-    var cast = credits.cast.map((castMember) => {
-      return {
-        character: castMember.character,
-        order: castMember.order,
-        personId: castMember.id,
-        mediaId: ("tt"+imdbID),
-        name: castMember.name,
-        profile_path: castMember.profile_path
-      }
+var parseCast = function(imdbID, creditsPromise) {
+  return function() {
+    return creditsPromise.then((credits) => {
+      var cast = credits.cast.map((castMember) => {
+        return {
+          id: castMember.credit_id,
+          character: castMember.character,
+          order: castMember.order,
+          personId: castMember.id,
+          mediaId: ("tt"+imdbID),
+          name: castMember.name,
+          profile_path: castMember.profile_path
+        }
+      });
+      return cast;
     });
-    return cast;
   }
 }
 
-var createPersonReturnCredit = function(credit) {
-  var returnCredit = function() {
-    return credit;
-  }
+var createPersonIfMissing = function(credit) {
   return function(person) {
     if(!person) {
-      return Person.create({id: credit.personId, name: credit.name, profile_path: credit.profile_path})
-        .then(returnCredit);
-    } else {
-      return credit;
+      return Person.create({id: credit.personId, profile_path: credit.profile_path, name: credit.name});
     }
   }
 }
 
-var checkPersonExists = function(credit) {
-  return Person.findById(credit.personId)
-    .then(createPersonReturnCredit(credit));
+var createAllCrew = function(crew) {
+  return function() {
+    if(crew.length>0) {
+      var crewMember = crew.pop();
+      return Person.findById(crewMember.personId)
+        .then(createPersonIfMissing(crewMember))
+        .then(createCrewMember(crewMember))
+        .then(createAllCrew(crew))
+    } else {
+      return true
+    }
+  }
+}
+
+var createAllCast = function(cast) {
+  return function() {
+    if(cast.length>0) {
+      var castMember = cast.pop();
+      return Person.findById(castMember.personId)
+        .then(createPersonIfMissing(castMember))
+        .then(createCastMember(castMember))
+        .then(createAllCast(cast))
+    } else {
+      return true
+    }
+  }
+}
+
+var createCrewMember = function(crewMember) {
+  return function() {
+    Crew.create(crewMember)
+      .then((res) => {
+        console.log("------ CREW MEMBER CREATED SUCCESSFULLY ------")
+      })
+      .catch(logError(crewMember));
+  }
+}
+
+var createCastMember = function(castMember) {
+  return function() {
+    Cast.create(castMember)
+      .then((res) => {
+        console.log("------ CAST MEMBER CREATED SUCCESSFULLY ------")
+      })
+      .catch(logError(castMember));
+  }
 }
 
 var logError = function(value) {
   return function(err) {
-    console.log("----- ERROR ----- : " + err.parent.code);
-    console.log("--- Value --- : " + value.mediaId);
+    //console.log("----- ERROR ----- : " + err);
+    //console.log("--- Value --- : " + value);
   }
-}
-
-var createCrew = function(crew) {
-  crew.forEach((crewMember) => {
-    Crew.create(crewMember)
-      .then((res) => {
-        console.log("------ CREW CREATED SUCCESSFULLY ------")
-      })
-      .catch(logError(crewMember));
-  });
-}
-
-var createCast = function(cast) {
-  cast.forEach((castMember) => {
-    Cast.create(castMember)
-      .then((res) => {
-        console.log("------ CAST CREATED SUCCESSFULLY ------")
-      })
-      .catch(logError(castMember));
-  });
 }
 
 var cacheCredits = function(tmdbID, imdbID) {
   var credits = findCredits(tmdbID);
-  var crew = credits.then(parseCrew(imdbID));
-  var cast = credits.then(parseCast(imdbID));
-  crew = Promise.map(crew, checkPersonExists)
-    .then(createCrew);
-  cast = Promise.map(cast, checkPersonExists)
-    .then(createCast);
+  credits.then(parseCrew(imdbID))
+    .then((crew) => createAllCrew(crew)())
+    .then(parseCast(imdbID, credits))
+    .then((cast) => createAllCast(cast)());
 }
 
 var otherCaching = function() {
-  intervalId = setInterval(cachingLoop, 13000);
+  intervalId = setInterval(cachingLoop, 1000);
   cachingLoop()
 }
 
 var cachingLoop = function() {
-  var currentIndex = globalIndex;
-  console.log(ids);
-  while(globalIndex<currentIndex+40 && globalIndex<ids.length) {
-    cacheCredits(ids[globalIndex][1], ids[globalIndex][0]);
-    globalIndex = globalIndex + 1;
-  }
+  cacheCredits(ids[globalIndex][1], ids[globalIndex][0]);
+  globalIndex = globalIndex + 1;
 
   if(globalIndex>=ids.length)
     clearInterval(intervalId);
@@ -154,6 +169,5 @@ csv.fromStream(idStream)
     ids.push([data[1], data[2]]);
   })
   .on("end",function() {
-    ids = [["0110912", "680"]]
     cacheAllCredits();
   });

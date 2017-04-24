@@ -126,6 +126,9 @@ const Crew = db.define('crew', {
   department: {
     type: Sequelize.STRING
   },
+  id: {
+    type: Sequelize.STRING, primaryKey: true
+  },
   job: {
     type: Sequelize.STRING
   }
@@ -137,6 +140,9 @@ Person.hasMany(Crew, { foreignKey: { name:'personId', allowNull: false }, onDele
 const Cast = db.define('cast', {
   character: {
     type: Sequelize.STRING
+  },
+  id: {
+    type: Sequelize.STRING, primaryKey: true
   },
   order: {
     type: Sequelize.INTEGER
