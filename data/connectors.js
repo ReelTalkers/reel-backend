@@ -11,7 +11,8 @@ var guideboxkey = GUIDEBOX_KEY;
 
 const db = new Sequelize('database', null, null, {
   dialect: 'sqlite',
-  storage: './database.sqlite'
+  storage: './database.sqlite',
+  logging: false
 });
 
 // TODO: add some primary key types
@@ -112,6 +113,9 @@ const Crew = db.define('crew', {
   department: {
     type: Sequelize.STRING
   },
+  id: {
+    type: Sequelize.STRING, primaryKey: true
+  },
   job: {
     type: Sequelize.STRING
   }
@@ -123,6 +127,9 @@ Person.hasMany(Crew, { foreignKey: { name:'personId', allowNull: false }, onDele
 const Cast = db.define('cast', {
   character: {
     type: Sequelize.STRING
+  },
+  id: {
+    type: Sequelize.STRING, primaryKey: true
   },
   order: {
     type: Sequelize.INTEGER
