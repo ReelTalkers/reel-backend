@@ -118,7 +118,8 @@ const resolveFunctions = {
     },
     cast(obj, args, context) {
       return obj.getCasts({
-        limit: args.limit
+        limit: args.limit,
+        order: [['order', 'ASC']]
       });
     },
     directors(obj, args, context) {

@@ -11,8 +11,7 @@ var guideboxkey = GUIDEBOX_KEY;
 
 const db = new Sequelize('database', null, null, {
   dialect: 'sqlite',
-  storage: './database.sqlite',
-  logging: false
+  storage: './database.sqlite'
 });
 
 // TODO: add some primary key types
