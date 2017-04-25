@@ -44,7 +44,7 @@ var orderByGenres = function(requestedGenres) {
 }
 
 var sortGenres = function(requestedGenres) {
-  var sortFunction = orderByGenres(genres);
+  var sortFunction = orderByGenres(requestedGenres);
   return function(genreList) {
     genreList.sort(sortFunction);
     return genreList;
