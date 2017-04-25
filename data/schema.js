@@ -146,7 +146,7 @@ type Mutation {
   reviewMedia (
     mediaId: ID
     score: Int
-  ): Review
+  ): Media
   createUser (
     userName: String
     fullName: String
