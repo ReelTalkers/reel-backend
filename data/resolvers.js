@@ -38,8 +38,10 @@ var filterGenres = function(genres) {
 }
 
 var orderByGenres = function(requestedGenres) {
-  return function(genre) {
-    return requestedGenres.findIndex((genreName) => { genre.name === genreName } );
+  return function(genreA, genreB) {
+    var indexA = requestedGenres.findIndex((genreName) => { return (genreA.name == genreName) } );
+    var indexB = requestedGenres.findIndex((genreName) => { return (genreB.name == genreName) } );
+    return (indexA - indexB);
   }
 }
 
