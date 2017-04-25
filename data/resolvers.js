@@ -303,7 +303,10 @@ const resolveFunctions = {
           userId: context.userId
         }
       }).then(updateOrCreate(args, context))
-      .then(Media.findById(args.mediaId));
+      .then( value => {
+        console.log("*****************");
+        console.log(Media.findById(args.mediaId));
+      });
     },
     createUser(_, args) {
       // default dateJoined must be in resolver because it must be run every time
