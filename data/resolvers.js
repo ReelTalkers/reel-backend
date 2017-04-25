@@ -26,6 +26,7 @@ var createDoesNotInclude = function(list) {
 
 var filterGenres = function(genres) {
   var filterFunction = createDoesNotInclude(genres);
+
   return function(genresResponse) {
     Object.keys(genresResponse)
       .filter(filterFunction)
@@ -33,6 +34,20 @@ var filterGenres = function(genres) {
         delete genresResponse[genre];
       })
     return genresResponse;
+  }
+}
+
+var orderByGenres = function(requestedGenres) {
+  return function(genre) {
+    return requestedGenres.findIndex(genre.name);
+  }
+}
+
+var sortGenres = function(requestedGenres) {
+  var sortFunction = orderByGenres(genres);
+  return function(genreList) {
+    genreList.sort(sortFunction);
+    return genreList;
   }
 }
 
@@ -143,7 +158,7 @@ const resolveFunctions = {
           });
           genres = Q.all(genres);
           return genres;
-        });
+        }).then(sortGenres(genres));
     },
     logged_in(_, args, context) {
       return typeof context.userId !== 'undefined';
