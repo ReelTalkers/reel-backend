@@ -25,7 +25,7 @@ require('./auth.js');
 var app = express();
 
 var corsOptions = {
-  origin: 'http://localhost:8080', // eventually change this to our domain
+  origin: 'http://172.20.19.145:8080', // eventually change this to our domain
   credentials: true // <-- REQUIRED backend setting
 };
 app.use(cors(corsOptions));
