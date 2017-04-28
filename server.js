@@ -25,7 +25,7 @@ require('./auth.js');
 var app = express();
 
 var corsOptions = {
-  origin: 'http://172.20.19.145:8080', // eventually change this to our domain
+  origin: 'http://localhost:8080', // eventually change this to our domain
   credentials: true // <-- REQUIRED backend setting
 };
 app.use(cors(corsOptions));
@@ -79,10 +79,10 @@ app.get('/',
 
 app.get('/auth/facebook', passport.authenticate('facebook'));
 app.get('/auth/facebook/callback',
-  passport.authenticate('facebook', { failureRedirect: 'http://172.20.19.145:8080/login' }),
+  passport.authenticate('facebook', { failureRedirect: 'http://localhost:8080/login' }),
     function(req, res) {
       // Successful authentication, redirect home.
-      res.redirect('http://172.20.19.145:8080/');
+      res.redirect('http://localhost:8080/');
     });
 
 app.listen(PORT, () => console.log('Now browse to localhost:3000/graphiql'));
