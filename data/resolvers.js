@@ -245,11 +245,13 @@ const resolveFunctions = {
         results.subscription_web_sources.forEach((source) => {
           sources.push({name:source.display_name, link: source.link, type:"Subscription", price:0.0 })
         });
+        /*
         results.purchase_web_sources.forEach((source) => {
           source.formats.forEach((format) => {
             sources.push({ name: source.display_name, link: source.link, type:format.type, price:format.price })
           })
         });
+        */
 
         return sources;
       }
