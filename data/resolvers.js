@@ -157,6 +157,7 @@ const resolveFunctions = {
               return Media.findById(id);
             });
             genreMedia = Q.all(genreMedia);
+            // We filter out nulls caused by TV series recommendations
             genreMedia = Promise.filter(genreMedia, (m) => { return null !== m });
             genres.push({ name: key, media: genreMedia });
           });
