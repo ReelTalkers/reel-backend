@@ -17,6 +17,7 @@ var databasekey = fs.readFileSync('database.key','utf8')
 databasekey = databasekey.slice(0,-1)
 
 const PORT = 3000;
+const ORIGIN = 'http://reeltalk.student.cwru.edu:8080';
 // TODO: Currently this is set up to accept requests from anywhere
 // in prod we will probably want to proxy it to /api or set up cors so that only
 // our frontend can access this
@@ -25,7 +26,7 @@ require('./auth.js');
 var app = express();
 
 var corsOptions = {
-  origin: 'http://reeltalk.student.cwru.edu:8080', // eventually change this to our domain
+  origin: ORIGIN, // eventually change this to our domain
   credentials: true // <-- REQUIRED backend setting
 };
 app.use(cors(corsOptions));
@@ -79,10 +80,10 @@ app.get('/',
 
 app.get('/auth/facebook', passport.authenticate('facebook', { scope: [ 'email' ] }));
 app.get('/auth/facebook/callback',
-  passport.authenticate('facebook', { failureRedirect: 'http://reeltalk.student.cwru.edu:8080/login' }),
+  passport.authenticate('facebook', { failureRedirect: ORIGIN+'/login' }),
     function(req, res) {
       // Successful authentication, redirect home.
-      res.redirect('http://reeltalk.student.cwru.edu:8080/');
+      res.redirect(ORIGIN+'/');
     });
 
 app.listen(PORT, () => console.log('Now browse to localhost:3000/graphiql'));
