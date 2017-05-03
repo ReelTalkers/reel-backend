@@ -10,6 +10,7 @@ import rp from "request-promise";
 import Q from 'q';
 import { GUIDEBOX_KEY } from '../keys.js';
 var fs = require('fs');
+var Promise = require("bluebird");
 
 var guideboxkey = GUIDEBOX_KEY
 
@@ -156,6 +157,7 @@ const resolveFunctions = {
               return Media.findById(id);
             });
             genreMedia = Q.all(genreMedia);
+            genreMedia = Promise.filter(genreMedia, (m) => { return null !== m });
             genres.push({ name: key, media: genreMedia });
           });
           genres = Q.all(genres);
